@@ -130,6 +130,43 @@ void filters_vs_MET(TString dataset){
   // then use GetName, returns char* (also use w GetEntry)
 
   else if(dataset == "TChiToWZ"){
+
+    TBranch *b_CSCTightHaloFilter;
+    TBranch        *b_METFilters;   //!
+    TBranch        *b_globalSuperTightHalo2016Filter;   //!
+    TBranch        *b_goodVerticesFilter;   //!
+    TBranch        *b_HBHENoiseIsoFilter;   //!
+    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
+    TBranch        *b_BadPFMuonFilter;   //!
+    TBranch        *b_met;   //!
+
+    Float_t         met_f;
+    Int_t           METFilters;
+    Int_t           CSCTightHaloFilter;
+    Int_t           globalSuperTightHalo2016Filter;
+    Int_t           goodVerticesFilter;
+    Int_t           HBHENoiseIsoFilter;
+    Int_t           EcalDeadCellTriggerPrimitiveFilter;
+    UInt_t          BadPFMuonFilter;
+
+
+
+    chain->SetBranchAddress("met",&met_f,&b_met);
+    chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+
+
+
+
     filter_names.push_back("globalSuperTightHalo2016Filter");
     filter_names.push_back("goodVerticesFilter");
     filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
@@ -166,10 +203,6 @@ void filters_vs_MET(TString dataset){
   cout << "finished adding files to tchain" << endl;
 
   chain->Draw(">>list0","METFilters > 0");
-
-
-
-
 
 
   TCanvas *cv = new TCanvas("cv","cv");

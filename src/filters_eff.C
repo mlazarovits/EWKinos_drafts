@@ -104,7 +104,7 @@ void filters_eff(TString dataset, TString metcut="", bool pass = true){
   else{
     cout << "met cut: " << metcut << endl;
     chain->Draw(">>list0",metcut);
-    TEventList *list0 = (TEventList*)gDirectory->Get("list0"); //list of selected events
+    TEventList *list0 = (TEventList*)gDirectory->Get("list0"); //list of met events
     met_Nentries = list0->GetN();
     met_entries = (float)met_Nentries;
     cout << "total entries with met cut: " << met_entries << endl;
