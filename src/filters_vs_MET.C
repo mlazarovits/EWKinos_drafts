@@ -10,7 +10,6 @@
 #include "TPad.h"
 #include "TBranch.h"
 #include "TString.h"
-#include "filterTools.h"
 #include "TFileCollection.h"
 using namespace std;
 
@@ -224,8 +223,6 @@ void filters_vs_MET(TString dataset){
 
 
   //CMSmark();
-  gStyle->SetOptTitle(kFALSE);
-  gStyle->SetOptStat(0);
   cv->Update();
   cv->SaveAs(sample+".pdf");
 
