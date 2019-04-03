@@ -13,14 +13,19 @@
 #include "TFileCollection.h"
 using namespace std;
 
+
+
+
+
+
 void filters_vs_MET(TString dataset){
   vector<TString> filter_names;
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
-  Int_t Nentries;
-  Int_t Npassed;
-  Int_t Nfailed;
+  float Nentries;
+  float Npassed;
+  float Nfailed;
 
 
 
@@ -182,22 +187,103 @@ void filters_vs_MET(TString dataset){
 
   
   cout << "finished adding files to tchain" << endl;
-  Nentries = chain->GetEntries();
+  Nentries = (float)chain->GetEntries();
   TString pass_str = filter_names[0] + "== 0";
   TString fail_str = filter_names[0] + "== 1";
-  Npassed = chain->GetEntries(pass_str);
-  Nfailed = chain->GetEntries(fail_str);
-  if(Npassed + Nfailed != Nentries){
-    cout << "error: entries do not add up" << endl;
+  Npass = (float)chain->GetEntries(pass_str);
+  Nfail = (float)chain->GetEntries(fail_str);
+  float Npass_met;
+  float Nfail_met;
+  if(Npass + Nfail != Nentries){
+    cout << "error: total entries do not add up" << endl;
     return;
   }
 
 
-  
+  float fail_eff = (Nfailed/Nentries)*100;
+  float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff));
+  cout << "fail efficiency: " << fail_eff << "+/- " << fail_sigma << endl;
+
+  vector<float> met_bins;
+  int metNBins = 10; //10 met bins
+  int metInterval = 50 //10 bins of 50 GeV
+
+  for(int i = 0; i < metNBins; i++){
+    met_bins.push_back(i*metInterval);
+  }
+
+  vector<float> met_effs; //failed entries percentage
+  vector<float> met_uncerts;
+  vector<TGraphErrors*> gr;
+  TMultiGraph* mg = new TMultiGraph();
+
+
+  for(int i = 0; i < filter_names.size(); i++){
+    for(int j = 0; j < metNBins-1; j++){
+      TString met_cut = Form("met > %f && met < %f",metbins[j],metbins[j+1]);
+      TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
+      TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
+      
+      float Nentries_met = (float)chain->GetEntries(met_cut);
+      Npass_met = (float)chain->GetEntries(pass_cut);
+      Nfail_met = (float)chain->GetEntries(fail_cut);
+      if(Npass_met + Nfail_met != Nentries_met){
+        cout << "error: met entries do not add up" << endl;
+        return;
+      }
+
+      float met_eff = (Nfail_met/Nentries_met)*100;
+      float eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
+
+      met_effs.push_back(met_eff);
+      met_uncerts.push_back(eff_uncert);
+    //check met_effs, met_uncerts and met_bins-1 all have same length
+    }
+    gr.push_back(new TGraphErrors(metNBins,met_effs,met_uncerts));
+    mg->Add(gr[i]);
+
+  }
+
+  TCanvas* cv = new TCanvas("cv","cv",800,600);
+  cv->SetTopMargin(0.09);
+  cv->SetGrid();
+  mg->Draw("ap");
+
+  TLegend* leg1,*leg2;
+
+  leg2 = new TLegend(0.2,0.69,0.475,0.88);
+  for(int i = 0; i < filter_names.size(); i++){
+    leg2->AddEntry(gr[i],filter_names[i].c_str());
+  }
+  leg2->SetTextSize(0.033);
+  leg2->Draw("same");
+
+  cv->Update();
 
 
 
+  //CMS Mark
+  TLatex mark;
+  mark.SetNDC(true);
 
+  double fontScale = 6.5/8;
+
+  mark.SetTextAlign(11);
+  mark.SetTextSize(0.042 * fontScale * 1.25);
+  mark.SetTextFont(61);
+  mark.DrawLatex(gPad->GetLeftMargin()/*+0.05*/, 1 - (gPad->GetTopMargin() - 0.017), "CMS");
+  mark.SetTextSize(0.042 * fontScale);
+  mark.SetTextFont(52);
+  mark.DrawLatex(gPad->GetLeftMargin()+0.095/*+0.14*/, 1 - (gPad->GetTopMargin() - 0.017), "Preliminary");
+  //mark.SetTextFont(42);
+  //mark.SetTextAlign(31);
+  //mark.DrawLatex(1 - gPad->GetRightMargin(), 1 - (gPad->GetTopMargin() - 0.017), "35.9 fb^{-1} (13 TeV)");
+
+  cv->Update();
+
+  cv->SaveAs("filters_eff.pdf");
+
+  cv->Close();
 
 
 
