@@ -32,8 +32,9 @@ void eff_vs_MET(TString dataset){
   float fail_eff = -999;
   float fail_sigma = -999;
   float Nentries_met = -999;
-  float fail_eff = -999;
-  float fail_sigma = -999;
+  float met_eff = -999;
+  float eff_uncert = -999;
+  
   int metNBins = 10; //10 met bins
   int metInterval = 50; //10 bins of 50 GeV
   Float_t met_bins[metNBins]; //empty bins to be filled with met values
