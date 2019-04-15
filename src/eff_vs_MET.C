@@ -24,9 +24,25 @@ void eff_vs_MET(TString dataset){
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
-  float Nentries;
-  float Npass;
-  float Nfail;
+  float Nentries = -999;
+  float Npass = -999;
+  float Nfail = -999;
+  float Npass_met = -999;
+  float Nfail_met = -999;
+  float fail_eff = -999;
+  float fail_sigma = -999;
+  float Nentries_met = -999;
+  float fail_eff = -999;
+  float fail_sigma = -999;
+  int metNBins = 10; //10 met bins
+  int metInterval = 50; //10 bins of 50 GeV
+  Float_t met_bins[metNBins]; //empty bins to be filled with met values
+  Float_t met_effs[metNBins]; //failed entries percentage
+  Float_t eff_uncerts[metNBins];
+  Float_t met_uncerts[metNBins];
+  vector<TGraphErrors*> gr;
+  TMultiGraph* mg = new TMultiGraph();
+
 
 
 
@@ -190,30 +206,33 @@ void eff_vs_MET(TString dataset){
   
   cout << "finished adding files to tchain" << endl;
   Nentries = (float)chain->GetEntries();
+  cout << "got Nentries" << endl;
+  cout << "Nentries " << Nentries << endl;
+
   TString pass_str = filter_names[0] + "== 0";
   TString fail_str = filter_names[0] + "== 1";
+  cout << "set pass/fail strings" << endl;
+
   Npass = (float)chain->GetEntries(pass_str);
+  cout << "got Npass" << endl;
+  cout << "Npass " << Npass << endl;
+
   Nfail = (float)chain->GetEntries(fail_str);
-  float Npass_met;
-  float Nfail_met;
+  cout << "got Nfail" << endl;
+  cout << "Nfail " << Nfail << endl;
+
+
+
   if(Npass + Nfail != Nentries){
     cout << "error: total entries do not add up" << endl;
     return;
   }
 
+  cout << "checked for correct number of entries" << endl;
 
-  float fail_eff = (Nfail/Nentries)*100;
-  float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
-  cout << "fail efficiency: " << fail_eff << "+/- " << fail_sigma << endl;
-
-  int metNBins = 10; //10 met bins
-  int metInterval = 50; //10 bins of 50 GeV
-  Float_t met_bins[metNBins]; //empty bins to be filled with met values
-  Float_t met_effs[metNBins]; //failed entries percentage
-  Float_t eff_uncerts[metNBins];
-  Float_t met_uncerts[metNBins];
-  vector<TGraphErrors*> gr;
-  TMultiGraph* mg = new TMultiGraph();
+  fail_eff = (Nfail/Nentries)*100;
+  fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
+  cout << "fail efficiency: " << fail_eff << " +/- " << fail_sigma << endl;
 
   for(int i = 0; i < metNBins; i++){
     met_bins[i] = i*metInterval;
@@ -222,13 +241,13 @@ void eff_vs_MET(TString dataset){
 
 
 
-  for(uint i = 0; i < filter_names.size(); i++){
-    for(uint j = 0; j < metNBins-1; j++){
+  for(int i = 0; i < filter_names.size(); i++){
+    for(int j = 0; j < metNBins-1; j++){
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
-      float Nentries_met = (float)chain->GetEntries(met_cut);
+      Nentries_met = (float)chain->GetEntries(met_cut);
       Npass_met = (float)chain->GetEntries(pass_cut);
       Nfail_met = (float)chain->GetEntries(fail_cut);
       if(Npass_met + Nfail_met != Nentries_met){
@@ -236,8 +255,8 @@ void eff_vs_MET(TString dataset){
         return;
       }
 
-      float met_eff = (Nfail_met/Nentries_met)*100;
-      float eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
+      met_eff = (Nfail_met/Nentries_met)*100;
+      eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
 
       met_effs[i] = met_eff;
       eff_uncerts[i] = eff_uncert;
