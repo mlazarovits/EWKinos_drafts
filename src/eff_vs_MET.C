@@ -10,12 +10,12 @@
 #include "TPad.h"
 #include "TBranch.h"
 #include "TString.h"
+#include "TGraphErrors.h"
+#include "TMultiGraph.h"
+#include "TLegend.h"
 #include "TFileCollection.h"
+#include <vector>
 using namespace std;
-
-
-
-
 
 
 void filters_vs_MET(TString dataset){
@@ -24,8 +24,9 @@ void filters_vs_MET(TString dataset){
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
   float Nentries;
-  float Npassed;
-  float Nfailed;
+  float Npass;
+  float Nfail;
+
 
 
 
@@ -201,26 +202,27 @@ void filters_vs_MET(TString dataset){
 
 
   float fail_eff = (Nfailed/Nentries)*100;
-  float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff));
+  float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
   cout << "fail efficiency: " << fail_eff << "+/- " << fail_sigma << endl;
 
   vector<float> met_bins;
   int metNBins = 10; //10 met bins
-  int metInterval = 50 //10 bins of 50 GeV
-
-  for(int i = 0; i < metNBins; i++){
-    met_bins.push_back(i*metInterval);
-  }
-
+  int metInterval = 50; //10 bins of 50 GeV
   vector<float> met_effs; //failed entries percentage
   vector<float> met_uncerts;
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
 
+  for(int i = 0; i < metNBins; i++){
+    met_bins.push_back(i*metInterval);
+  }
+
+
+
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins-1; j++){
-      TString met_cut = Form("met > %f && met < %f",metbins[j],metbins[j+1]);
+      TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
