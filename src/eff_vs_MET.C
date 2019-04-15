@@ -13,7 +13,6 @@
 #include "TMultiGraph.h"
 #include "TLegend.h"
 #include "TFileCollection.h"
-#include "TString.h"
 #include "TLatex.h"
 #include <string>
 #include <cmath>
