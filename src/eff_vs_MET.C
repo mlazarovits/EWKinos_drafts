@@ -13,6 +13,7 @@
 #include "TMultiGraph.h"
 #include "TLegend.h"
 #include "TFileCollection.h"
+#include "TString.h"
 #include "TLatex.h"
 #include <cmath>
 using namespace std;
@@ -215,7 +216,7 @@ void filters_vs_MET(TString dataset){
   TMultiGraph* mg = new TMultiGraph();
 
   for(int i = 0; i < metNBins; i++){
-    met_bins.push_back(i*metInterval);
+    met_bins[i] = i*metInterval;
   }
 
 
