@@ -238,9 +238,9 @@ void filters_vs_MET(TString dataset){
       float met_eff = (Nfail_met/Nentries_met)*100;
       float eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
 
-      met_effs.push_back(met_eff);
-      eff_uncerts.push_back(eff_uncert);
-      met_uncerts.push_back(0);
+      met_effs[i] = met_eff;
+      eff_uncerts[i] = eff_uncert;
+      met_uncerts[i] = 0;
     //check met_effs, met_uncerts and met_bins-1 all have same length
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
@@ -259,7 +259,7 @@ void filters_vs_MET(TString dataset){
   leg2 = new TLegend(0.2,0.69,0.475,0.88);
   for(int i = 0; i < filter_names.size(); i++){
     TString tmpstr = Form(gr[i],filter_names[i])
-    leg2->AddEntry(tmpstr);
+    leg2->AddEntry(tmpstr.c_str());
   }
   leg2->SetTextSize(0.033);
   leg2->Draw("same");
