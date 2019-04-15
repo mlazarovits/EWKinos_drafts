@@ -9,7 +9,6 @@
 #include "TCut.h"
 #include "TPad.h"
 #include "TBranch.h"
-#include "TString.h"
 #include "TGraphErrors.h"
 #include "TMultiGraph.h"
 #include "TLegend.h"
@@ -206,11 +205,12 @@ void filters_vs_MET(TString dataset){
   float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
   cout << "fail efficiency: " << fail_eff << "+/- " << fail_sigma << endl;
 
-  vector<float> met_bins;
+  vector<float> met_bins; //empty bins to be filled with met values
   int metNBins = 10; //10 met bins
   int metInterval = 50; //10 bins of 50 GeV
-  vector<float*> met_effs; //failed entries percentage
-  vector<float*> met_uncerts;
+  vector<float> met_effs; //failed entries percentage
+  vector<float> eff_uncerts;
+  vector<float> met_uncerts;
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
 
@@ -239,10 +239,15 @@ void filters_vs_MET(TString dataset){
       float eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
 
       met_effs.push_back(met_eff);
-      met_uncerts.push_back(eff_uncert);
+      eff_uncerts.push_back(eff_uncert);
+      met_uncerts.push_back(0);
     //check met_effs, met_uncerts and met_bins-1 all have same length
     }
-    gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts));
+    cout << "met bins" << met_bins.size() << endl;
+    cout << "met_effs" << met_effs.size() << endl;
+    cout << "eff_uncerts" << eff_uncerts.size() << endl;
+    gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
+
     mg->Add(gr[i]);
 
   }
