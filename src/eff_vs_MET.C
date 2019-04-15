@@ -14,7 +14,8 @@
 #include "TMultiGraph.h"
 #include "TLegend.h"
 #include "TFileCollection.h"
-#include <vector>
+#include "TLatex.h"
+#include <cmath>
 using namespace std;
 
 
@@ -241,7 +242,7 @@ void filters_vs_MET(TString dataset){
       met_uncerts.push_back(eff_uncert);
     //check met_effs, met_uncerts and met_bins-1 all have same length
     }
-    gr.push_back(new TGraphErrors(metNBins,met_bins[j],met_effs,met_uncerts));
+    gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts));
     mg->Add(gr[i]);
 
   }
