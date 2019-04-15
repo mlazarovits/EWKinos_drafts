@@ -260,7 +260,7 @@ void filters_vs_MET(TString dataset){
   leg2 = new TLegend(0.2,0.69,0.475,0.88);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
-    leg2->AddEntry(gr[i],filter_names[i].c_str());
+    leg2->AddEntry(gr[i],filter_names[i].str());
   }
   leg2->SetTextSize(0.033);
   leg2->Draw("same");
