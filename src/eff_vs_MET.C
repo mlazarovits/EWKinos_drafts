@@ -20,7 +20,7 @@ using namespace std;
 
 
 void filters_vs_MET(TString dataset){
-  vector<string> filter_names;
+  vector<TString> filter_names;
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
@@ -224,9 +224,9 @@ void filters_vs_MET(TString dataset){
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins-1; j++){
-      string met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
-      string fail_cut = filter_names[i] + "== 0 && " + met_cut; 
-      string pass_cut = filter_names[i] + "== 1 && " + met_cut;
+      TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
+      TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
+      TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
       float Nentries_met = (float)chain->GetEntries(met_cut);
       Npass_met = (float)chain->GetEntries(pass_cut);
@@ -260,7 +260,7 @@ void filters_vs_MET(TString dataset){
   leg2 = new TLegend(0.2,0.69,0.475,0.88);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
-    leg2->AddEntry(gr[i],filter_names[i].c_str());
+    leg2->AddEntry(gr[i],filter_names[i].Data());
   }
   leg2->SetTextSize(0.033);
   leg2->Draw("same");
