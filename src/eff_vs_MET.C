@@ -205,12 +205,12 @@ void filters_vs_MET(TString dataset){
   float fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
   cout << "fail efficiency: " << fail_eff << "+/- " << fail_sigma << endl;
 
-  vector<float> met_bins; //empty bins to be filled with met values
   int metNBins = 10; //10 met bins
   int metInterval = 50; //10 bins of 50 GeV
-  vector<float> met_effs; //failed entries percentage
-  vector<float> eff_uncerts;
-  vector<float> met_uncerts;
+  Float_t met_bins[metNBins]; //empty bins to be filled with met values
+  Float_t met_effs[metNBins]; //failed entries percentage
+  Float_t eff_uncerts[metNBins];
+  Float_t met_uncerts[metNBins];
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
 
@@ -261,7 +261,7 @@ void filters_vs_MET(TString dataset){
 
   leg2 = new TLegend(0.2,0.69,0.475,0.88);
   for(int i = 0; i < filter_names.size(); i++){
-    leg2->AddEntry(gr[i],filter_names[i].c_str());
+    leg2->AddEntry(Form(gr[i],filter_names[i]));
   }
   leg2->SetTextSize(0.033);
   leg2->Draw("same");
