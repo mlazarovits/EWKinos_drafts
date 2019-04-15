@@ -19,7 +19,7 @@
 using namespace std;
 
 
-void filters_vs_MET(TString dataset){
+void eff_vs_MET(TString dataset){
   vector<TString> filter_names;
   TString draw_string="";
   TString sample ="";
@@ -222,8 +222,8 @@ void filters_vs_MET(TString dataset){
 
 
 
-  for(int i = 0; i < filter_names.size(); i++){
-    for(int j = 0; j < metNBins-1; j++){
+  for(uint i = 0; i < filter_names.size(); i++){
+    for(uint j = 0; j < metNBins-1; j++){
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
