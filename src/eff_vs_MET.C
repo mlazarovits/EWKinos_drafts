@@ -20,7 +20,7 @@ using namespace std;
 
 
 void filters_vs_MET(TString dataset){
-  vector<TString> filter_names;
+  vector<string> filter_names;
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
@@ -225,8 +225,8 @@ void filters_vs_MET(TString dataset){
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins-1; j++){
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
-      TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
-      TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
+      string fail_cut = filter_names[i] + "== 0 && " + met_cut; 
+      string pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
       float Nentries_met = (float)chain->GetEntries(met_cut);
       Npass_met = (float)chain->GetEntries(pass_cut);
