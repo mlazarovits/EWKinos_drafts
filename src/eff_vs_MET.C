@@ -243,9 +243,6 @@ void filters_vs_MET(TString dataset){
       met_uncerts.push_back(0);
     //check met_effs, met_uncerts and met_bins-1 all have same length
     }
-    cout << "met bins" << met_bins.size() << endl;
-    cout << "met_effs" << met_effs.size() << endl;
-    cout << "eff_uncerts" << eff_uncerts.size() << endl;
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
 
     mg->Add(gr[i]);
@@ -261,7 +258,8 @@ void filters_vs_MET(TString dataset){
 
   leg2 = new TLegend(0.2,0.69,0.475,0.88);
   for(int i = 0; i < filter_names.size(); i++){
-    leg2->AddEntry(Form(gr[i],filter_names[i]));
+    TString tmpstr = Form(gr[i],filter_names[i])
+    leg2->AddEntry(tmpstr);
   }
   leg2->SetTextSize(0.033);
   leg2->Draw("same");
