@@ -232,7 +232,7 @@ void eff_vs_MET(TString dataset){
   cout << "checked for correct number of entries" << endl;
 
   fail_eff = (Nfail/Nentries)*100;
-  fail_sigma = sqrt(Nentries*fail_eff*(1-fail_eff))*100;
+  fail_sigma = sqrt((fail_eff*(1-fail_eff))/Nentries)*100; //CHECK THIS FORMULA -- MAY BE WRONG
   cout << "fail efficiency: " << fail_eff << " +/- " << fail_sigma << endl;
 
   for(int i = 0; i < metNBins; i++){
@@ -251,22 +251,34 @@ void eff_vs_MET(TString dataset){
       Nentries_met = (float)chain->GetEntries(met_cut);
       Npass_met = (float)chain->GetEntries(pass_cut);
       Nfail_met = (float)chain->GetEntries(fail_cut);
+      cout << "Npass_met " << Npass_met << endl;
+      cout << "Nfail_met " << Nfail_met << endl;
+      cout << "Nentries_met " << Nentries_met << endl;
+
       if(Npass_met + Nfail_met != Nentries_met){
         cout << "error: met entries do not add up" << endl;
         return;
       }
 
+      cout << "checked for correct number of met entries" << endl;
+
       met_eff = (Nfail_met/Nentries_met)*100;
-      eff_uncert = sqrt(met_eff*(1-met_eff)/Nentries_met)*100;
+      eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
+
+      cout << "calculated met_eff and eff_uncert for met bin: " << met_bins[j] << endl;
 
       met_effs[i] = met_eff;
       eff_uncerts[i] = eff_uncert;
       met_uncerts[i] = 0;
-    //check met_effs, met_uncerts and met_bins-1 all have same length
+
+      cout << "end of met_bins for loop" << endl;
+
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
 
+
     mg->Add(gr[i]);
+    cout << "added TGraphErrors to vector" << endl;
 
   }
 
