@@ -37,7 +37,7 @@ void eff_vs_MET(TString dataset){
 
   int metNBins = 10; //10 met bins
   // int metInterval = 50; //10 bins of 50 GeV
-  int metHigh = 1000
+  int metHigh = 1000;
   int metLow = 0;
   int metInterval = (metHigh - metLow)/metNBins;
   cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
