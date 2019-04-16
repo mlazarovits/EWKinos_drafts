@@ -242,7 +242,7 @@ void eff_vs_MET(TString dataset){
 
 
 
-  for(int i = 0; i < metNBins; i++){
+  for(int i = 0; i < metNBins+1; i++){
     met_bins[i] = i*metInterval;
     cout << "met limit: " << met_bins[i] << endl;
   }
