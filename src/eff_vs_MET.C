@@ -34,7 +34,7 @@ void eff_vs_MET(TString dataset){
   float Nentries_met = -999;
   float met_eff = -999;
   float eff_uncert = -999;
-  
+
   int metNBins = 10; //10 met bins
   int metInterval = 50; //10 bins of 50 GeV
   Float_t met_bins[metNBins]; //empty bins to be filled with met values
@@ -210,8 +210,8 @@ void eff_vs_MET(TString dataset){
   cout << "got Nentries" << endl;
   cout << "Nentries " << Nentries << endl;
 
-  TString pass_str = filter_names[0] + "== 0";
-  TString fail_str = filter_names[0] + "== 1";
+  TString pass_str = filter_names[0] + "== 1";
+  TString fail_str = filter_names[0] + "== 0";
   cout << "set pass/fail strings" << endl;
 
   Npass = (float)chain->GetEntries(pass_str);
