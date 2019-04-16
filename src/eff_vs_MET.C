@@ -250,15 +250,16 @@ void eff_vs_MET(TString dataset){
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
       Nentries_met = (double)chain->GetEntries(met_cut);
-      Npass_met = (double)chain->GetEntries(pass_cut);
-      Nfail_met = (double)chain->GetEntries(fail_cut);
-      cout << "Npass_met " << Npass_met << endl;
-      cout << "Nfail_met " << Nfail_met << endl;
       cout << "Nentries_met " << Nentries_met << endl;
+      Npass_met = (double)chain->GetEntries(pass_cut);
+      cout << "Npass_met " << Npass_met << endl;
+      Nfail_met = (double)chain->GetEntries(fail_cut);
+      cout << "Nfail_met " << Nfail_met << endl;
+      
 
       if(Npass_met + Nfail_met != Nentries_met){
         cout << "error: met entries do not add up" << endl;
-        return;
+        continue;
       }
 
       cout << "checked for correct number of met entries" << endl;
