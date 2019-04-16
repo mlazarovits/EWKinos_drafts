@@ -237,6 +237,7 @@ void eff_vs_MET(TString dataset){
 
   for(int i = 0; i < metNBins; i++){
     met_bins[i] = i*metInterval;
+    cout << "met limit: " << met[i] << endl;
   }
 
 
@@ -265,7 +266,7 @@ void eff_vs_MET(TString dataset){
       met_eff = (Nfail_met/Nentries_met)*100;
       eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
 
-      cout << "calculated met_eff and eff_uncert for met bin: " << met_bins[j] << endl;
+      cout << "calculated met_eff and eff_uncert for met bin: " << j << endl;
 
       met_effs[i] = met_eff;
       eff_uncerts[i] = eff_uncert;
@@ -275,7 +276,7 @@ void eff_vs_MET(TString dataset){
 
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
-
+    cout << "created new TGraphErrors" << endl;
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
