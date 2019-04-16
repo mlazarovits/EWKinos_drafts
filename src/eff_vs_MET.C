@@ -36,7 +36,12 @@ void eff_vs_MET(TString dataset){
   float eff_uncert = -999;
 
   int metNBins = 10; //10 met bins
-  int metInterval = 50; //10 bins of 50 GeV
+  // int metInterval = 50; //10 bins of 50 GeV
+  int metHigh = 1000
+  int metLow = 0;
+  int metInterval = (metHigh - metLow)/metNBins;
+  cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
+  cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
   Float_t met_bins[metNBins]; //empty bins to be filled with met values
   Float_t met_effs[metNBins]; //failed entries percentage
   Float_t eff_uncerts[metNBins];
@@ -235,6 +240,8 @@ void eff_vs_MET(TString dataset){
   fail_sigma = sqrt((fail_eff*(1-fail_eff))/Nentries)*100; //CHECK THIS FORMULA -- MAY BE WRONG
   cout << "fail efficiency: " << fail_eff << " +/- " << fail_sigma << endl;
 
+
+
   for(int i = 0; i < metNBins; i++){
     met_bins[i] = i*metInterval;
     cout << "met limit: " << met_bins[i] << endl;
@@ -269,9 +276,9 @@ void eff_vs_MET(TString dataset){
 
       cout << "calculated met_eff and eff_uncert for met bin: " << j << endl;
 
-      met_effs[i] = met_eff;
-      eff_uncerts[i] = eff_uncert;
-      met_uncerts[i] = 0;
+      met_effs[j] = met_eff;
+      eff_uncerts[j] = eff_uncert;
+      met_uncerts[j] = 0;
 
       cout << "end of met_bins for loop" << endl;
 
