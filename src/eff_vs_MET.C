@@ -27,11 +27,11 @@ void eff_vs_MET(TString dataset){
   float Nentries = -999;
   float Npass = -999;
   float Nfail = -999;
-  float Npass_met = -999;
-  float Nfail_met = -999;
+  double Npass_met = -999;
+  double Nfail_met = -999;
   float fail_eff = -999;
   float fail_sigma = -999;
-  float Nentries_met = -999;
+  double Nentries_met = -999;
   float met_eff = -999;
   float eff_uncert = -999;
 
@@ -248,9 +248,9 @@ void eff_vs_MET(TString dataset){
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       
-      Nentries_met = (float)chain->GetEntries(met_cut);
-      Npass_met = (float)chain->GetEntries(pass_cut);
-      Nfail_met = (float)chain->GetEntries(fail_cut);
+      Nentries_met = (double)chain->GetEntries(met_cut);
+      Npass_met = (double)chain->GetEntries(pass_cut);
+      Nfail_met = (double)chain->GetEntries(fail_cut);
       cout << "Npass_met " << Npass_met << endl;
       cout << "Nfail_met " << Nfail_met << endl;
       cout << "Nentries_met " << Nentries_met << endl;
