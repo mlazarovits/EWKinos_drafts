@@ -119,14 +119,14 @@ void eff_vs_MET(TString dataset){
 
 
     filter_names.push_back("globalSuperTightHalo2016Filter");
-    filter_names.push_back("goodVerticesFilter");
-    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-    filter_names.push_back("BadChargedCandidateFilter");
-    filter_names.push_back("BadPFMuonFilter");
-    filter_names.push_back("HBHENoiseFilter");
-    filter_names.push_back("HBHEIsoNoiseFilter");
-    filter_names.push_back("CSCTightHaloFilter");
-    filter_names.push_back("METFilters");
+    // filter_names.push_back("goodVerticesFilter");
+    // filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    // filter_names.push_back("BadChargedCandidateFilter");
+    // filter_names.push_back("BadPFMuonFilter");
+    // filter_names.push_back("HBHENoiseFilter");
+    // filter_names.push_back("HBHEIsoNoiseFilter");
+    // filter_names.push_back("CSCTightHaloFilter");
+    // filter_names.push_back("METFilters");
 
     TFileCollection *dyJetsToLL= new TFileCollection("dyJetsToLL","dyJetsToLL");
     dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220245/0000/stopFlatNtuples_*");
@@ -185,11 +185,11 @@ void eff_vs_MET(TString dataset){
 
     filter_names.push_back("globalSuperTightHalo2016Filter");
     filter_names.push_back("goodVerticesFilter");
-    // filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-    // filter_names.push_back("BadChargedCandidateFilter");
-    // filter_names.push_back("BadPFMuonFilter");
-    // filter_names.push_back("HBHENoiseIsoFilter");
-    // filter_names.push_back("CSCTightHaloFilter");
+    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    filter_names.push_back("BadChargedCandidateFilter");
+    filter_names.push_back("BadPFMuonFilter");
+    filter_names.push_back("HBHENoiseIsoFilter");
+    filter_names.push_back("CSCTightHaloFilter");
     filter_names.push_back("METFilters");
 
     //2016 dataset
@@ -212,19 +212,15 @@ void eff_vs_MET(TString dataset){
   
   cout << "finished adding files to tchain" << endl;
   Nentries = (float)chain->GetEntries();
-  cout << "got Nentries" << endl;
   cout << "Nentries " << Nentries << endl;
 
   TString pass_str = filter_names[0] + "== 1";
   TString fail_str = filter_names[0] + "== 0";
-  cout << "set pass/fail strings" << endl;
 
   Npass = (float)chain->GetEntries(pass_str);
-  cout << "got Npass" << endl;
   cout << "Npass " << Npass << endl;
 
   Nfail = (float)chain->GetEntries(fail_str);
-  cout << "got Nfail" << endl;
   cout << "Nfail " << Nfail << endl;
 
 
@@ -249,9 +245,10 @@ void eff_vs_MET(TString dataset){
 
 
 
-
   for(int i = 0; i < filter_names.size(); i++){
-    for(int j = 0; j < metNBins-1; j++){
+    for(int j = 0; j < metNBins; j++){
+      cout << "met low: " << met[j] << endl;
+      cout << "met high: "<< met[j+1] << endl;
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
