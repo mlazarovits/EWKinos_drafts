@@ -240,9 +240,9 @@ void eff_vs_MET(TString dataset){
 
   for(int i = 0; i < metNBins+1; i++){
     met_bins[i] = i*metInterval;
-    cout << "met limit: " << met_bins[i] << endl;
+    
   }
-
+  cout << "met bins: " << met_bins << endl;
 
 
   for(int i = 0; i < filter_names.size(); i++){
@@ -250,6 +250,12 @@ void eff_vs_MET(TString dataset){
       cout << "met loop #: " << j << endl;
       cout << "met low: " << met_bins[j] << endl;
       cout << "met high: "<< met_bins[j+1] << endl;
+      for(j == 1){
+        if(met_bins[j] == 0){
+          cout << "met_bins == 0" << endl;
+          return;
+        }
+      }
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
@@ -270,10 +276,14 @@ void eff_vs_MET(TString dataset){
 
       cout << "checked for correct number of met entries" << endl;
 
-      met_eff = (Nfail_met/Nentries_met)*100;
-      eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
-
-      cout << "calculated met_eff and eff_uncert for met bin: " << j << endl;
+      if(Nentries_met == 0){
+        met_eff = 0;
+        met_uncerts = 0;
+      }
+      else{
+        met_eff = (Nfail_met/Nentries_met)*100;
+        eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
+      }
 
       met_effs[j] = met_eff;
       eff_uncerts[j] = eff_uncert;
