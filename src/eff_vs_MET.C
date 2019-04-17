@@ -240,20 +240,27 @@ void eff_vs_MET(TString dataset){
 
   for(int i = 0; i < metNBins+1; i++){
     met_bins[i] = i*metInterval;
+    cout << "met bins: " << met_bins[i] << endl;
     
   }
-  cout << "met bins: " << met_bins << endl;
-
+  
+  cout << "met_bins[1] " << met_bins[1] << met_bins[0+1] << endl;
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
       cout << "met low: " << met_bins[j] << endl;
       cout << "met high: "<< met_bins[j+1] << endl;
+
+
+
       if(j == 1 && met_bins[j] == 0){
-          cout << "met_bins == 0" << endl;
-          return;
+        cout << "met_bins[1] == 0" << endl;
+        return;
       }
+
+
+
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
