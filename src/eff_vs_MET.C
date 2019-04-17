@@ -250,11 +250,9 @@ void eff_vs_MET(TString dataset){
       cout << "met loop #: " << j << endl;
       cout << "met low: " << met_bins[j] << endl;
       cout << "met high: "<< met_bins[j+1] << endl;
-      for(j == 1){
-        if(met_bins[j] == 0){
+      if(j == 1 && met_bins[j] == 0){
           cout << "met_bins == 0" << endl;
           return;
-        }
       }
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
