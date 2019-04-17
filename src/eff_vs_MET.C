@@ -42,7 +42,7 @@ void eff_vs_MET(TString dataset){
   int metInterval = (metHigh - metLow)/metNBins;
   cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
-  Float_t met_bins[metNBins]; //empty bins to be filled with met values
+  Float_t met_bins[metNBins+1]; //values of high/low met for cuts
   Float_t met_effs[metNBins]; //failed entries percentage
   Float_t eff_uncerts[metNBins];
   Float_t met_uncerts[metNBins];
@@ -185,11 +185,11 @@ void eff_vs_MET(TString dataset){
 
     filter_names.push_back("globalSuperTightHalo2016Filter");
     filter_names.push_back("goodVerticesFilter");
-    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-    filter_names.push_back("BadChargedCandidateFilter");
-    filter_names.push_back("BadPFMuonFilter");
-    filter_names.push_back("HBHENoiseIsoFilter");
-    filter_names.push_back("CSCTightHaloFilter");
+    // filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    // filter_names.push_back("BadChargedCandidateFilter");
+    // filter_names.push_back("BadPFMuonFilter");
+    // filter_names.push_back("HBHENoiseIsoFilter");
+    // filter_names.push_back("CSCTightHaloFilter");
     filter_names.push_back("METFilters");
 
     //2016 dataset
