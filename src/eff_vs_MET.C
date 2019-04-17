@@ -55,13 +55,6 @@ void eff_vs_MET(TString dataset){
 
 
 
-
-
-
-
-  cout << "finished initializing" << endl;
-
-
   
   //filter_names.push_back("noBadMuonsFilter");
   //filter_names.push_back("badMuonsFilter");
@@ -244,12 +237,13 @@ void eff_vs_MET(TString dataset){
     
   }
   
-  cout << "met_bins[1] " << met_bins[1] << met_bins[0+1] << endl;
+  cout << "met_bins[1] " << met_bins[1] << " met_bins[0+1] " << met_bins[0+1] << endl;
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
       cout << "met low: " << met_bins[j] << endl;
+      cout << "met_bins[j-1]: " << met_bins[j-1] << endl;
       cout << "met high: "<< met_bins[j+1] << endl;
 
 
@@ -279,7 +273,6 @@ void eff_vs_MET(TString dataset){
       //   continue;
       // }
 
-      cout << "checked for correct number of met entries" << endl;
 
       if(Nentries_met == 0){
         met_eff = 0;
@@ -294,11 +287,9 @@ void eff_vs_MET(TString dataset){
       eff_uncerts[j] = eff_uncert;
       met_uncerts[j] = 0;
 
-      cout << "end of met_bins for loop" << endl;
 
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
-    cout << "created new TGraphErrors" << endl;
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
