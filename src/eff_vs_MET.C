@@ -230,12 +230,6 @@ void eff_vs_MET(TString dataset){
   cout << "fail efficiency: " << fail_eff << " +/- " << fail_sigma << endl;
 
 
-
-  for(int i = 0; i < metNBins+1; i++){
-    met_bins[i] = i*metInterval;
-    cout << "met bins: " << met_bins[i] << endl;
-    
-  }
   
   cout << "met_bins[1] " << met_bins[1] << " met_bins[0+1] " << met_bins[0+1] << endl;
 
@@ -245,6 +239,7 @@ void eff_vs_MET(TString dataset){
       cout << "met low: " << met_bins[j] << endl;
       cout << "met_bins[j-1]: " << met_bins[j-1] << endl;
       cout << "met high: "<< met_bins[j+1] << endl;
+      cout << "met_bins[j+2]: "<< met_bins[j+2] << endl;
 
 
 
