@@ -276,7 +276,7 @@ void eff_vs_MET(TString dataset){
 
       if(Nentries_met == 0){
         met_eff = 0;
-        met_uncerts = 0;
+        eff_uncerts = 0;
       }
       else{
         met_eff = (Nfail_met/Nentries_met)*100;
