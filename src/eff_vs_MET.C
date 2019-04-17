@@ -202,9 +202,7 @@ void eff_vs_MET(TString dataset){
   }
   
 
-  
-  cout << "finished adding files to tchain" << endl;
-  Nentries = (float)chain->GetEntries();
+    Nentries = (float)chain->GetEntries();
   cout << "Nentries " << Nentries << endl;
 
   TString pass_str = filter_names[0] + "== 1";
@@ -238,6 +236,7 @@ void eff_vs_MET(TString dataset){
   }
   
   cout << "met_bins[1] " << met_bins[1] << " met_bins[0+1] " << met_bins[0+1] << endl;
+  cout << "met_bins[0] " << met_bins[0] << endl;
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
