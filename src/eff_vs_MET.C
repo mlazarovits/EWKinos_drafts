@@ -242,11 +242,11 @@ void eff_vs_MET(TString dataset){
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
-      cout << "met low: " << met_bins[j] << endl;
+      //cout << "met low: " << met_bins[j] << endl;
       //cout << "met_bins[j-1]: " << met_bins[j-1] << endl;
       cout << "met_bins[1] " << met_bins[1] << endl;
-      cout << "met high: "<< met_bins[j+1] << endl;
-      cout << "met_bins[j+2]: "<< met_bins[j+2] << endl;
+      //cout << "met high: "<< met_bins[j+1] << endl;
+      //cout << "met_bins[j+2]: "<< met_bins[j+2] << endl;
 
 
 
@@ -254,6 +254,7 @@ void eff_vs_MET(TString dataset){
         cout << "met_bins[1] == 0" << endl;
         return;
       }
+      cout << "met_bins[1] " << met_bins[1] << endl;
 
 
 
@@ -261,6 +262,7 @@ void eff_vs_MET(TString dataset){
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       cout << fail_cut << endl;
+      cout << "met_bins[1] " << met_bins[1] << endl;
       
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
@@ -268,7 +270,7 @@ void eff_vs_MET(TString dataset){
       // cout << "Npass_met " << Npass_met << endl;
       Nfail_met = (double)chain->GetEntries(fail_cut);
       cout << "Nfail_met " << Nfail_met << endl;
-      
+      cout << "met_bins[1] " << met_bins[1] << endl;
 
       // if(Npass_met + Nfail_met != Nentries_met){
       //   cout << "error: met entries do not add up" << endl;
@@ -284,10 +286,12 @@ void eff_vs_MET(TString dataset){
         met_eff = (Nfail_met/Nentries_met)*100;
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
       }
+      cout << "met_bins[1] " << met_bins[1] << endl;
 
       met_effs[j] = met_eff;
       eff_uncerts[j] = eff_uncert;
       met_uncerts[j] = 0;
+      cout << "met_bins[1] " << met_bins[1] << endl;
 
 
     }
