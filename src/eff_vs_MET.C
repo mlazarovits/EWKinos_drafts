@@ -27,10 +27,11 @@ void eff_vs_MET(TString dataset){
   float Nentries = -999;
   float Npass = -999;
   float Nfail = -999;
-  double Npass_met = -999;
-  double Nfail_met = -999;
   float fail_eff = -999;
   float fail_sigma = -999;
+
+  double Npass_met = -999;
+  double Nfail_met = -999;
   double Nentries_met = -999;
   float met_eff = -999;
   float eff_uncert = -999;
@@ -230,7 +231,7 @@ void eff_vs_MET(TString dataset){
 
 
   for(int i = 0; i < metNBins+1; i++){
-    met_bins[i] = i*metInterval;
+    met_bins[i] = (Float_t)i*metInterval;
     cout << "met bins: " << met_bins[i] << endl;
     
   }
@@ -276,7 +277,7 @@ void eff_vs_MET(TString dataset){
 
 
       if(Nentries_met == 0){
-        met_eff = 0;
+        met_eff = 0; //if there are no events in the met range, should the eff be 1?
         eff_uncert = 0;
       }
       else{
