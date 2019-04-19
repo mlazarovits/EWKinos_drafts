@@ -106,9 +106,21 @@ void eff_vs_MET(TString dataset){
     // chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     // chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 
-    // chain->SetBranchStatus("*",0);
-    // chain->SetBranchStatus("*Filter*",1);
-    // chain->SetBranchStatus("met",1);
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("met",1);
+    chain->SetBranchStatus("METFilters", 1);
+    chain->SetBranchStatus("CSCTightHaloFilter", 1);
+    chain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
+    chain->SetBranchStatus("goodVerticesFilter", 1);
+    chain->SetBranchStatus("ecalBadCalibFilter", 1);
+    chain->SetBranchStatus("HBHENoiseIsoFilter", 1;
+    chain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
+    chain->SetBranchStatus("BadPFMuonFilter", 1;
+    chain->SetBranchStatus("HBHENoiseFilter", 1);
+    chain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
+    chain->SetBranchStatus("BadChargedCandidateFilter", 1);
+
+
 
 
 
@@ -280,7 +292,7 @@ for uniform distribution: (b-a)/sqrt(12)
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       cout << fail_cut << endl;
-      
+
       
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
