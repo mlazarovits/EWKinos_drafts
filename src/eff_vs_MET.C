@@ -239,6 +239,31 @@ void eff_vs_MET(TString dataset){
   cout << "met_bins[1] " << met_bins[1] << " met_bins[0+1] " << met_bins[0+1] << endl;
   cout << "met_bins[0] " << met_bins[0] << endl;
 
+/*
+  Nfilters;
+  Nmet;
+
+  NPass[Nfilter][Nmet];
+  NTot[Nmet];
+  for(...events...)
+    GetEntry()
+    for(...met...)
+      if(eventmet in bin)
+        NTot[imet]+= 1.
+        for(...filter...) 
+          if(filterpass)
+            NPadd[ifilter][imet]
+*/
+
+
+
+/*
+
+met_sig = sqrt(avg(met^2) - (avg(met))^2)
+avg(met) = sum(met)/Nbin
+for uniform distribution: (b-a)/sqrt(12)
+*/
+
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
@@ -266,6 +291,7 @@ void eff_vs_MET(TString dataset){
       
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
+      cout << "met_bins[1] " << met_bins[1] << endl;
       // Npass_met = (double)chain->GetEntries(pass_cut);
       // cout << "Npass_met " << Npass_met << endl;
       Nfail_met = (double)chain->GetEntries(fail_cut);
