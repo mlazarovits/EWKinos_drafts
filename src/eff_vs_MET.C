@@ -43,7 +43,7 @@ void eff_vs_MET(TString dataset){
   int metInterval = (metHigh - metLow)/metNBins;
   cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
-  Float_t met_bins[metNBins+1]; //values of high/low met for cuts
+  Float_t met_bins1[metNBins+1]; //values of high/low met for cuts
   Float_t met_effs[metNBins]; //failed entries percentage
   Float_t eff_uncerts[metNBins];
   Float_t met_uncerts[metNBins];
@@ -106,9 +106,9 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 
-    // chain->SetBranchStatus("*",0);
-    // chain->SetBranchStatus("*Filter*",1);
-    // chain->SetBranchStatus("met",1);
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
 
 
 
@@ -231,14 +231,11 @@ void eff_vs_MET(TString dataset){
 
 
   for(int i = 0; i < metNBins+1; i++){
-    met_bins[i] = (Float_t)i*metInterval;
-    cout << "met bins: " << met_bins[i] << endl;
+    met_bins1[i] = (Float_t)i*metInterval;
+    cout << "met bins: " << met_bins1[i] << endl;
     
   }
   
-  cout << "met_bins[1] " << met_bins[1] << " met_bins[0+1] " << met_bins[0+1] << endl;
-  cout << "met_bins[0] " << met_bins[0] << endl;
-
 /*
   Nfilters;
   Nmet;
@@ -267,22 +264,22 @@ for uniform distribution: (b-a)/sqrt(12)
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
-      //cout << "met low: " << met_bins[j] << endl;
-      //cout << "met_bins[j-1]: " << met_bins[j-1] << endl;
-      cout << "met_bins[1] " << met_bins[1] << endl;
-      //cout << "met high: "<< met_bins[j+1] << endl;
-      //cout << "met_bins[j+2]: "<< met_bins[j+2] << endl;
+      //cout << "met low: " << met_bins1[j] << endl;
+      //cout << "met_bins1[j-1]: " << met_bins1[j-1] << endl;
+      cout << "met_bins1[1] " << met_bins1[1] << endl;
+      //cout << "met high: "<< met_bins1[j+1] << endl;
+      //cout << "met_bins1[j+2]: "<< met_bins1[j+2] << endl;
 
 
 
-      if(j == 1 && met_bins[j] == 0){
-        cout << "met_bins[1] == 0" << endl;
+      if(j == 1 && met_bins1[j] == 0){
+        cout << "met_bins1[1] == 0" << endl;
         return;
       }
 
 
 
-      TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
+      TString met_cut = Form("met > %f && met < %f",met_bins1[j],met_bins1[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       cout << fail_cut << endl;
@@ -290,10 +287,10 @@ for uniform distribution: (b-a)/sqrt(12)
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
       ////////////////////////////////////////////////////////////////////////////////////
-      ////////////HERE IS WHERE MET_BINS[1] CHANGES FROM 100 TO 0 IN FIRST LOOP///////////
+      ////////////HERE IS WHERE MET_BINS1[1] CHANGES FROM 100 TO 0 IN FIRST LOOP///////////
       ////////////////////////////////////////////////////////////////////////////////////
       
-      cout << "met_bins[1] " << met_bins[1] << endl;
+      cout << "met_bins1[1] " << met_bins1[1] << endl;
       // Npass_met = (double)chain->GetEntries(pass_cut);
       // cout << "Npass_met " << Npass_met << endl;
       Nfail_met = (double)chain->GetEntries(fail_cut);
@@ -320,7 +317,7 @@ for uniform distribution: (b-a)/sqrt(12)
 
 
     }
-    gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
+    gr.push_back(new TGraphErrors(metNBins,met_bins1,met_effs,met_uncerts,eff_uncerts));
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
