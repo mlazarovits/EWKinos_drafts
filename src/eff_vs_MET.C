@@ -93,18 +93,18 @@ void eff_vs_MET(TString dataset){
 
 
 
-    // chain->SetBranchAddress("met",&met_f,&b_met);
-    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-    // chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
-    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-    // chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
-    // chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
-    // chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+    chain->SetBranchAddress("met",&met_f,&b_met);
+    chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
+    chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+    chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
+    chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
+    chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 
     chain->SetBranchStatus("*",0);
     chain->SetBranchStatus("met",1);
@@ -113,14 +113,14 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
     chain->SetBranchStatus("goodVerticesFilter", 1);
     chain->SetBranchStatus("ecalBadCalibFilter", 1);
-    chain->SetBranchStatus("HBHENoiseIsoFilter", 1;
+    chain->SetBranchStatus("HBHENoiseIsoFilter", 1);
     chain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
     chain->SetBranchStatus("BadPFMuonFilter", 1;
     chain->SetBranchStatus("HBHENoiseFilter", 1);
     chain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
     chain->SetBranchStatus("BadChargedCandidateFilter", 1);
 
-
+    chain->SetBranchStatus("met",1);
 
 
 
