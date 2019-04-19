@@ -276,17 +276,6 @@ for uniform distribution: (b-a)/sqrt(12)
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop #: " << j << endl;
-      //cout << "met low: " << met_bins[j] << endl;
-      //cout << "met_bins[j-1]: " << met_bins[j-1] << endl;
-      cout << "met_bins[1] " << met_bins[1] << endl;
-      //cout << "met high: "<< met_bins[j+1] << endl;
-      //cout << "met_bins[j+2]: "<< met_bins[j+2] << endl;
-
-
-
-  
-
-
 
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
@@ -296,15 +285,6 @@ for uniform distribution: (b-a)/sqrt(12)
       
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
-      ////////////////////////////////////////////////////////////////////////////////////
-      ////////////HERE IS WHERE MET_BINS[1] CHANGES FROM 100 TO 0 IN FIRST LOOP///////////
-      ////////////////////////////////////////////////////////////////////////////////////
-      
-      cout << "met_bins[1] " << met_bins[1] << endl;
-      if(met_bins[1] == 0){
-        cout << "met_bins[1] == 0" << endl;
-        return;
-      }
       // Npass_met = (double)chain->GetEntries(pass_cut);
       // cout << "Npass_met " << Npass_met << endl;
       Nfail_met = (double)chain->GetEntries(fail_cut);
@@ -324,8 +304,10 @@ for uniform distribution: (b-a)/sqrt(12)
       else{
         met_eff = (Nfail_met/Nentries_met)*100;
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
+        cout << "met_eff: " << met_eff << endl;
+        cout << "eff_uncert: " << eff_uncert << endl;
       }
-      
+
       met_effs[j] = met_eff;
       eff_uncerts[j] = eff_uncert;
       met_uncerts[j] = 0;
@@ -333,6 +315,26 @@ for uniform distribution: (b-a)/sqrt(12)
 
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
+
+    if(i/3 == 0){
+      gr[i]->SetMarkerStyle(22);
+    } 
+    else {
+      gr[i]->SetMarkerStyle(21);
+    }
+    if(i%3 == 0){ // prerad
+      gr[i]->SetMarkerColor(kRed+2);
+      gr[i]->SetLineColor(kRed+2);
+    }
+    if(i%4 == 0){ // 8e14
+      gr[i]->SetMarkerColor(kGreen+2);
+      gr[i]->SetLineColor(kGreen+2);
+    }
+    if(i%2 == 1){ // 1.5e15
+      gr[i]->SetMarkerColor(kBlue+2);
+      gr[i]->SetLineColor(kBlue+2);
+    }
+    gr[i]->SetMarkerSize(2);
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
@@ -346,12 +348,12 @@ for uniform distribution: (b-a)/sqrt(12)
 
   TLegend* leg1,*leg2;
 
-  leg2 = new TLegend(0.2,0.69,0.475,0.88);
+  leg2 = new TLegend();
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
   }
-  leg2->SetTextSize(0.033);
+  // leg2->SetTextSize(0.033);
   leg2->Draw("same");
 
   cv->Update();
@@ -359,22 +361,17 @@ for uniform distribution: (b-a)/sqrt(12)
 
 
   //CMS Mark
-  TLatex mark;
-  mark.SetNDC(true);
-
-  double fontScale = 6.5/8;
-
-  mark.SetTextAlign(11);
-  mark.SetTextSize(0.042 * fontScale * 1.25);
-  mark.SetTextFont(61);
-  mark.DrawLatex(gPad->GetLeftMargin()/*+0.05*/, 1 - (gPad->GetTopMargin() - 0.017), "CMS");
-  mark.SetTextSize(0.042 * fontScale);
-  mark.SetTextFont(52);
-  mark.DrawLatex(gPad->GetLeftMargin()+0.095/*+0.14*/, 1 - (gPad->GetTopMargin() - 0.017), "Preliminary");
-  //mark.SetTextFont(42);
-  //mark.SetTextAlign(31);
-  //mark.DrawLatex(1 - gPad->GetRightMargin(), 1 - (gPad->GetTopMargin() - 0.017), "35.9 fb^{-1} (13 TeV)");
-
+  TLatex l;
+  l.SetTextFont(132);
+  l.SetNDC();
+  l.SetTextSize(0.035);
+  l.SetTextFont(42);
+  l.DrawLatex(0.47,0.943,"Fermilab TB Nov. 2018 FBK LGAD *Preliminary*");
+  l.SetTextSize(0.04);
+  l.SetTextFont(61);
+  l.DrawLatex(0.16,0.943,"CMS");
+  l.SetTextFont(52);
+  l.DrawLatex(0.23,0.943,"Preliminary");
   cv->Update();
 
   cv->SaveAs(sample+"_filters_eff.pdf");
