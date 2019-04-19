@@ -115,7 +115,7 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchStatus("ecalBadCalibFilter", 1);
     chain->SetBranchStatus("HBHENoiseIsoFilter", 1);
     chain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
-    chain->SetBranchStatus("BadPFMuonFilter", 1;
+    chain->SetBranchStatus("BadPFMuonFilter", 1);
     chain->SetBranchStatus("HBHENoiseFilter", 1);
     chain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
     chain->SetBranchStatus("BadChargedCandidateFilter", 1);
