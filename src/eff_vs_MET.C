@@ -106,9 +106,9 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 
-    chain->SetBranchStatus("*",0);
-    chain->SetBranchStatus("*Filter*",1);
-    chain->SetBranchStatus("met",1);
+    // chain->SetBranchStatus("*",0);
+    // chain->SetBranchStatus("*Filter*",1);
+    // chain->SetBranchStatus("met",1);
 
 
 
@@ -258,7 +258,7 @@ void eff_vs_MET(TString dataset){
 
 
 /*
-
+not necessary, just for overkill; doesn't add any new info into plot
 met_sig = sqrt(avg(met^2) - (avg(met))^2)
 avg(met) = sum(met)/Nbin
 for uniform distribution: (b-a)/sqrt(12)
@@ -279,7 +279,6 @@ for uniform distribution: (b-a)/sqrt(12)
         cout << "met_bins[1] == 0" << endl;
         return;
       }
-      cout << "met_bins[1] " << met_bins[1] << endl;
 
 
 
@@ -287,16 +286,18 @@ for uniform distribution: (b-a)/sqrt(12)
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
       cout << fail_cut << endl;
-      cout << "met_bins[1] " << met_bins[1] << endl;
       
       Nentries_met = (double)chain->GetEntries(met_cut);
       cout << "Nentries_met " << Nentries_met << endl;
+      ////////////////////////////////////////////////////////////////////////////////////
+      ////////////HERE IS WHERE MET_BINS[1] CHANGES FROM 100 TO 0 IN FIRST LOOP///////////
+      ////////////////////////////////////////////////////////////////////////////////////
+      
       cout << "met_bins[1] " << met_bins[1] << endl;
       // Npass_met = (double)chain->GetEntries(pass_cut);
       // cout << "Npass_met " << Npass_met << endl;
       Nfail_met = (double)chain->GetEntries(fail_cut);
       cout << "Nfail_met " << Nfail_met << endl;
-      cout << "met_bins[1] " << met_bins[1] << endl;
 
       // if(Npass_met + Nfail_met != Nentries_met){
       //   cout << "error: met entries do not add up" << endl;
@@ -312,12 +313,10 @@ for uniform distribution: (b-a)/sqrt(12)
         met_eff = (Nfail_met/Nentries_met)*100;
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
       }
-      cout << "met_bins[1] " << met_bins[1] << endl;
 
       met_effs[j] = met_eff;
       eff_uncerts[j] = eff_uncert;
       met_uncerts[j] = 0;
-      cout << "met_bins[1] " << met_bins[1] << endl;
 
 
     }
