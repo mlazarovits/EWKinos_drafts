@@ -328,7 +328,8 @@ for uniform distribution: (b-a)/sqrt(12)
         cout << "met_uncerts: " << met_uncerts[j] << endl;
         cout << "eff_uncerts: " << eff_uncerts[j] << endl;
         gr[i]->RemovePoint(j);
-        gr[i]->SetPoint(j+1,met_plot[j+1],met_effs[j+1]);
+        j = j-1;
+        
       }
 
     }
@@ -384,7 +385,7 @@ for uniform distribution: (b-a)/sqrt(12)
 
   //CMS Mark
   TLatex l;
-  l.SetTextFont(132);
+  // l.SetTextFont(132);
   l.SetNDC();
   l.SetTextSize(0.035);
   l.SetTextFont(42);
