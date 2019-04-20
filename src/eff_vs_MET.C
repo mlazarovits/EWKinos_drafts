@@ -301,9 +301,10 @@ for uniform distribution: (b-a)/sqrt(12)
 
       if(Nentries_met == 0 && Nfail_met == 0){
         //don't include points with no events in the met interval
-        met_effs[j] = -999;
-        eff_uncerts[j] = -999;
-        met_uncerts[j] = -999;
+        met_effs[j] = 0;
+        eff_uncerts[j] = 0;
+        met_uncerts[j] = 0;
+        met_plot[j] = 0;
       }
       else{
         met_eff = (Nfail_met/Nentries_met);
@@ -321,15 +322,13 @@ for uniform distribution: (b-a)/sqrt(12)
     //remove points with no entries in met interval
     
     for(int j = 0; j < metNBins; j++){
-      if(met_effs[j] == -999 && eff_uncerts[j] == -999 && met_uncerts[j] == -999){
+      if(met_effs[j] == 0 && eff_uncerts[j] == 0 && met_uncerts[j] == 0){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
         cout << "met_effs: " << met_effs[j] << endl;
         cout << "met_uncerts: " << met_uncerts[j] << endl;
         cout << "eff_uncerts: " << eff_uncerts[j] << endl;
         gr[i]->RemovePoint(j);
-        j = j-1;
-        
       }
 
     }
