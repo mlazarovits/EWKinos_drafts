@@ -318,31 +318,21 @@ for uniform distribution: (b-a)/sqrt(12)
     }
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
-    // cout << "metNBins: " << metNBins << endl;
-    // for(int i = 0; i < metNBins; i++){
-    //   cout << "entry #: " << i << endl;
-    //   cout << "met_plot: " << met_plot[i] << endl;
-    //   cout << "met_effs: " << met_effs[i] << endl;
-    //   cout << "met_uncerts: " << met_uncerts[i] << endl;
-    //   cout << "eff_uncerts: " << eff_uncerts[i] << endl;
-    // }
-
     //remove points with no entries in met interval
     for(int j = 0; j < metNBins; j++){
       Double_t x, y;
       gr[i]->GetPoint(j,x,y);
-
-      // if(met_effs[j] == -999 && eff_uncerts[j] == -999 && met_uncerts[j] == -999){
       if(y == -999){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
+        cout << "x: " << x << endl;
         cout << "met_effs: " << met_effs[j] << endl;
         cout << "met_uncerts: " << met_uncerts[j] << endl;
         cout << "eff_uncerts: " << eff_uncerts[j] << endl;
-
-        gr[i]->RemovePoint(j);
       }
+      gr[i]->RemovePoint(j);
     }
+    
     gr[i]->Print();
 
     if(i/3 == 0){
@@ -395,14 +385,14 @@ for uniform distribution: (b-a)/sqrt(12)
   //CMS Mark
   TLatex l;
   // l.SetTextFont(132);
-  l.SetNDC();
+  // l.SetNDC();
   l.SetTextSize(0.035);
   l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
   l.DrawLatex(0.11,0.9,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.17,0.9,"Preliminary");
+  l.DrawLatex(0.165,0.9,"Preliminary");
   cv->Update();
 
   cv->SaveAs(sample+"_filters_eff.pdf");
