@@ -319,18 +319,18 @@ for uniform distribution: (b-a)/sqrt(12)
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
     //remove points with no entries in met interval
-    Double_t x[metNBins], y[metNBins];
+    
     for(int j = 0; j < metNBins; j++){
-      gr[i]->GetPoint(j,x[j],y[j]);
-      if(y[j] == -999){
+      if(met_effs[j] = -999 && eff_uncerts[j] = -999 && met_uncerts[j] = -999;){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
-        cout << "x: " << x[j] << endl;
         cout << "met_effs: " << met_effs[j] << endl;
         cout << "met_uncerts: " << met_uncerts[j] << endl;
         cout << "eff_uncerts: " << eff_uncerts[j] << endl;
+        gr[i]->RemovePoint(j);
+        gr[i]->SetPoint(j+1,met_plot[j+1],met_effs[j+1]);
       }
-      gr[i]->RemovePoint(j);
+
     }
     
     gr[i]->Print();
@@ -384,10 +384,10 @@ for uniform distribution: (b-a)/sqrt(12)
 
   //CMS Mark
   TLatex l;
-  // l.SetTextFont(132);
-  // l.SetNDC();
-  // l.SetTextSize(0.035);
-  // l.SetTextFont(42);
+  l.SetTextFont(132);
+  l.SetNDC();
+  l.SetTextSize(0.035);
+  l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
   l.DrawLatex(0.11,0.9,"CMS");
