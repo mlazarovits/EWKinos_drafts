@@ -296,10 +296,15 @@ for uniform distribution: (b-a)/sqrt(12)
       // }
 
 
-      if(Nentries_met == 0){
-        met_eff = 0; //if there are no events in the met range, drop the point
+      if(Nentries_met != 0 && Nfail_met == 0){
+        //if all entries pass filter, fail efficiency is 0
+        met_eff = 0; 
         eff_uncert = 0;
 
+      }
+      else if(Nentries_met == 0 && Nfail_met == 0){
+        //don't include points with no events in the met interval
+        continue;
       }
       else{
         met_eff = (Nfail_met/Nentries_met)*100;
@@ -345,15 +350,17 @@ for uniform distribution: (b-a)/sqrt(12)
   cv->SetTopMargin(0.09);
   cv->SetGrid();
   mg->Draw("ap");
+  mg->SetXAxis();
 
   TLegend* leg1,*leg2;
 
-  leg2 = new TLegend();
+  leg2 = new TLegend(0.7,0.7,0.95,0.9);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
   }
   // leg2->SetTextSize(0.033);
+  leg2->SetFillStyle(0);
   leg2->Draw("same");
 
   cv->Update();
@@ -362,11 +369,10 @@ for uniform distribution: (b-a)/sqrt(12)
 
   //CMS Mark
   TLatex l;
-  l.SetTextFont(132);
+  // l.SetTextFont(132);
   l.SetNDC();
   l.SetTextSize(0.035);
   l.SetTextFont(42);
-  l.DrawLatex(0.47,0.943,"Fermilab TB Nov. 2018 FBK LGAD *Preliminary*");
   l.SetTextSize(0.04);
   l.SetTextFont(61);
   l.DrawLatex(0.16,0.943,"CMS");
