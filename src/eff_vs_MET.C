@@ -319,13 +319,13 @@ for uniform distribution: (b-a)/sqrt(12)
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
     //remove points with no entries in met interval
+    Double_t x[metNBins], y[metNBins];
     for(int j = 0; j < metNBins; j++){
-      Double_t x, y;
-      gr[i]->GetPoint(j,x,y);
+      gr[i]->GetPoint(j,x[j],y[j]);
       if(y == -999){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
-        cout << "x: " << x << endl;
+        cout << "x: " << x[j] << endl;
         cout << "met_effs: " << met_effs[j] << endl;
         cout << "met_uncerts: " << met_uncerts[j] << endl;
         cout << "eff_uncerts: " << eff_uncerts[j] << endl;
@@ -386,8 +386,8 @@ for uniform distribution: (b-a)/sqrt(12)
   TLatex l;
   // l.SetTextFont(132);
   // l.SetNDC();
-  l.SetTextSize(0.035);
-  l.SetTextFont(42);
+  // l.SetTextSize(0.035);
+  // l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
   l.DrawLatex(0.11,0.9,"CMS");
