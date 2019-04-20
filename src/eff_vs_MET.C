@@ -320,9 +320,12 @@ for uniform distribution: (b-a)/sqrt(12)
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
 
     cout << "metNBins: " << metNBins << endl;
-    cout << "met_bins: " << met_bins << endl;
-    cout << "met_effs: " << met_effs << endl;
-    cout << "met_uncerts: " << met_uncerts << endl;
+    for(int i = 0; i < metNBins; i++){
+      cout << "entry #: " << i << endl;
+      cout << "met_bins: " << met_bins[i] << endl;
+      cout << "met_effs: " << met_effs[i] << endl;
+      cout << "met_uncerts: " << met_uncerts[i] << endl;
+    }
     if(i/3 == 0){
       gr[i]->SetMarkerStyle(22);
     } 
@@ -377,7 +380,7 @@ for uniform distribution: (b-a)/sqrt(12)
   l.SetTextFont(61);
   l.DrawLatex(0.11,0.9,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.16,0.9,"Preliminary");
+  l.DrawLatex(0.17,0.9,"Preliminary");
   cv->Update();
 
   cv->SaveAs(sample+"_filters_eff.pdf");
