@@ -45,15 +45,11 @@ void eff_vs_MET(TString dataset){
   cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
 
-
-  TVectorT<float> met_effs;
-  TVectorT<float> eff_uncerts;
-  TVectorT<float> met_uncerts;
-  TVectorT<float> met_bins;
-  // float met_bins[metNBins+1]; //values of high/low met for cuts
-  // Float_t met_effs[metNBins]; //failed entries percentage
-  // Float_t eff_uncerts[metNBins];
-  // Float_t met_uncerts[metNBins];
+  float met_bins[metNBins+1]; //values of high/low met for cuts
+  Float_t met_effs[metNBins]; //failed entries percentage
+  Float_t eff_uncerts[metNBins];
+  Float_t met_uncerts[metNBins];
+  float met_plot[metNBins];
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
 
@@ -250,8 +246,8 @@ void eff_vs_MET(TString dataset){
 
 
   for(int i = 0; i < metNBins+1; i++){
-    // met_bins[i] = (Float_t)i*metInterval;
-    met_bins.push_back((float)i*metInterval);
+    met_bins[i] = (Float_t)i*metInterval;
+
     cout << "met bins: " << met_bins[i] << endl;
     
   }
@@ -284,6 +280,7 @@ for uniform distribution: (b-a)/sqrt(12)
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop#: " << j << endl;
+      met_plot[j] = (met_bins[j+1] + met_bins[j])/2
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
@@ -320,16 +317,14 @@ for uniform distribution: (b-a)/sqrt(12)
         cout << "eff_uncert: " << eff_uncert << endl;
       }
 
-      // met_effs[j] = met_eff;
-      // eff_uncerts[j] = eff_uncert;
-      // met_uncerts[j] = 0;
-      met_effs.push_back(met_eff);
-      eff_uncerts.push_back(eff_uncert);
-      met_uncerts.push_back(0);
+      met_effs[j] = met_eff;
+      eff_uncerts[j] = eff_uncert;
+      met_uncerts[j] = metInterval/2;
+
   
 
     }
-    gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
+    gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
     cout << "metNBins: " << metNBins << endl;
     for(int i = 0; i < metNBins; i++){
