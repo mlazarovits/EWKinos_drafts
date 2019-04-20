@@ -299,40 +299,50 @@ for uniform distribution: (b-a)/sqrt(12)
       //   continue;
       // }
 
-
-      if(Nentries_met != 0 && Nfail_met == 0){
-        //if all entries pass filter, fail efficiency is 0
-        met_eff = 0; 
-        eff_uncert = 0;
-
-      }
-      else if(Nentries_met == 0 && Nfail_met == 0){
+      if(Nentries_met == 0 && Nfail_met == 0){
         //don't include points with no events in the met interval
-        continue;
+        met_effs[j] = -999;
+        eff_uncerts[j] = -999;
+        met_uncerts[j] = -999;
       }
+      // else if(Nentries_met != 0 && Nfail_met == 0){
+      //   //if all entries pass filter, fail efficiency is 0
+      //   met_eff = 0; 
+      //   eff_uncert = 0;
+      //   met_effs[j] = met_eff;
+      //   eff_uncerts[j] = eff_uncert;
+      //   met_uncerts[j] = metInterval/2;
+
+      // }
       else{
-        met_eff = (Nfail_met/Nentries_met)*100;
+        met_eff = (Nfail_met/Nentries_met);
+        met_eff_perc = met_eff*100
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
         cout << "met_eff: " << met_eff << endl;
         cout << "eff_uncert: " << eff_uncert << endl;
+        met_effs[j] = met_eff_perc;
+        eff_uncerts[j] = eff_uncert;
+        met_uncerts[j] = metInterval/2;
       }
-
-      met_effs[j] = met_eff;
-      eff_uncerts[j] = eff_uncert;
-      met_uncerts[j] = metInterval/2;
-
-  
-
     }
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
     cout << "metNBins: " << metNBins << endl;
     for(int i = 0; i < metNBins; i++){
       cout << "entry #: " << i << endl;
-      cout << "met_bins: " << met_bins[i] << endl;
+      cout << "met_plot: " << met_plot[i] << endl;
       cout << "met_effs: " << met_effs[i] << endl;
       cout << "met_uncerts: " << met_uncerts[i] << endl;
+      cout << "eff_uncerts: " << eff_uncerts[i] << endl;
     }
+    //remove points with no entries in met interval
+    for(int j = 0; j < metNBins; j++){
+      if(met_effs[j] = -999 && eff_uncerts[j] = -999 && met_uncerts[j] = -999){
+        gr[i]->RemovePoint(j);
+      }
+    }
+
+
     if(i/3 == 0){
       gr[i]->SetMarkerStyle(22);
     } 
@@ -352,19 +362,22 @@ for uniform distribution: (b-a)/sqrt(12)
       gr[i]->SetLineColor(kBlue+2);
     }
     gr[i]->SetMarkerSize(2);
+    gr[i]->SetFillStyle(0);
+    gr[i]->SetFillColor(0);
+
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
 
   }
 
-  TCanvas* cv = new TCanvas("cv","cv",900,600);
+  TCanvas* cv = new TCanvas("cv","cv",1000,600);
   // cv->SetTopMargin(0.09);
   cv->SetGrid();
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-  TLegend* leg2 = new TLegend(0.5,0.7,0.7,0.9);
+  TLegend* leg2 = new TLegend(0.6,0.6,0.9,0.9);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
