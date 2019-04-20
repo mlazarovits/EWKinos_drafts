@@ -43,10 +43,16 @@ void eff_vs_MET(TString dataset){
   int metInterval = (metHigh - metLow)/metNBins;
   cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
-  float met_bins[metNBins+1]; //values of high/low met for cuts
-  Float_t met_effs[metNBins]; //failed entries percentage
-  Float_t eff_uncerts[metNBins];
-  Float_t met_uncerts[metNBins];
+
+
+  vector<float> met_effs;
+  std::vector<float> eff_uncerts;
+  std::vector<float> met_uncerts;
+  std::vector<float> met_bins;
+  // float met_bins[metNBins+1]; //values of high/low met for cuts
+  // Float_t met_effs[metNBins]; //failed entries percentage
+  // Float_t eff_uncerts[metNBins];
+  // Float_t met_uncerts[metNBins];
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
 
@@ -243,7 +249,8 @@ void eff_vs_MET(TString dataset){
 
 
   for(int i = 0; i < metNBins+1; i++){
-    met_bins[i] = (Float_t)i*metInterval;
+    // met_bins[i] = (Float_t)i*metInterval;
+    met_bins.push_back((float)i*metInterval);
     cout << "met bins: " << met_bins[i] << endl;
     
   }
@@ -275,6 +282,7 @@ for uniform distribution: (b-a)/sqrt(12)
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
+      cout << "met loop#: " << j << endl;
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
@@ -311,9 +319,12 @@ for uniform distribution: (b-a)/sqrt(12)
         cout << "eff_uncert: " << eff_uncert << endl;
       }
 
-      met_effs[j] = met_eff;
-      eff_uncerts[j] = eff_uncert;
-      met_uncerts[j] = 0;
+      // met_effs[j] = met_eff;
+      // eff_uncerts[j] = eff_uncert;
+      // met_uncerts[j] = 0;
+      met_effs.push_back(met_eff);
+      eff_uncerts.push_back(eff_uncert);
+      met_uncerts.push_back(0);
   
 
     }
