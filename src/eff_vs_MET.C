@@ -322,7 +322,7 @@ for uniform distribution: (b-a)/sqrt(12)
     Double_t x[metNBins], y[metNBins];
     for(int j = 0; j < metNBins; j++){
       gr[i]->GetPoint(j,x[j],y[j]);
-      if(y == -999){
+      if((int)y == -999){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
         cout << "x: " << x[j] << endl;
