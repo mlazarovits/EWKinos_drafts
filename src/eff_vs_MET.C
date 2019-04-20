@@ -14,6 +14,7 @@
 #include "TLegend.h"
 #include "TFileCollection.h"
 #include "TLatex.h"
+#include "TVector.h"
 #include <string>
 #include <cmath>
 using namespace std;
@@ -45,10 +46,10 @@ void eff_vs_MET(TString dataset){
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
 
 
-  vector<float> met_effs;
-  std::vector<float> eff_uncerts;
-  std::vector<float> met_uncerts;
-  std::vector<float> met_bins;
+  TVector<float> met_effs;
+  TVector<float> eff_uncerts;
+  TVector<float> met_uncerts;
+  TVector<float> met_bins;
   // float met_bins[metNBins+1]; //values of high/low met for cuts
   // Float_t met_effs[metNBins]; //failed entries percentage
   // Float_t eff_uncerts[metNBins];
