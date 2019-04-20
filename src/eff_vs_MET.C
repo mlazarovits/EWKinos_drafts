@@ -305,15 +305,6 @@ for uniform distribution: (b-a)/sqrt(12)
         eff_uncerts[j] = -999;
         met_uncerts[j] = -999;
       }
-      // else if(Nentries_met != 0 && Nfail_met == 0){
-      //   //if all entries pass filter, fail efficiency is 0
-      //   met_eff = 0; 
-      //   eff_uncert = 0;
-      //   met_effs[j] = met_eff;
-      //   eff_uncerts[j] = eff_uncert;
-      //   met_uncerts[j] = metInterval/2;
-
-      // }
       else{
         met_eff = (Nfail_met/Nentries_met);
         Float_t met_eff_perc = met_eff*100;
@@ -327,17 +318,22 @@ for uniform distribution: (b-a)/sqrt(12)
     }
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
-    cout << "metNBins: " << metNBins << endl;
-    for(int i = 0; i < metNBins; i++){
-      cout << "entry #: " << i << endl;
-      cout << "met_plot: " << met_plot[i] << endl;
-      cout << "met_effs: " << met_effs[i] << endl;
-      cout << "met_uncerts: " << met_uncerts[i] << endl;
-      cout << "eff_uncerts: " << eff_uncerts[i] << endl;
-    }
+    // cout << "metNBins: " << metNBins << endl;
+    // for(int i = 0; i < metNBins; i++){
+    //   cout << "entry #: " << i << endl;
+    //   cout << "met_plot: " << met_plot[i] << endl;
+    //   cout << "met_effs: " << met_effs[i] << endl;
+    //   cout << "met_uncerts: " << met_uncerts[i] << endl;
+    //   cout << "eff_uncerts: " << eff_uncerts[i] << endl;
+    // }
     //remove points with no entries in met interval
     for(int j = 0; j < metNBins; j++){
       if(met_effs[j] == -999 && eff_uncerts[j] == -999 && met_uncerts[j] == -999){
+        cout << "point #: " << j << endl;
+        cout << "met_plot: " << met_plot[j] << endl;
+        cout << "met_effs: " << met_effs[j] << endl;
+        cout << "met_uncerts: " << met_uncerts[j] << endl;
+        cout << "eff_uncerts: " << eff_uncerts[j] << endl;
         gr[i]->RemovePoint(j);
       }
     }
