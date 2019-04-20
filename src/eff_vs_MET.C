@@ -350,7 +350,7 @@ for uniform distribution: (b-a)/sqrt(12)
   cv->SetTopMargin(0.09);
   cv->SetGrid();
   mg->Draw("ap");
-  mg->SetXAxis();
+  mg->SetTitle(sample+" Filter efficiencies; met (GeV); fail efficiency %");
 
   TLegend* leg1,*leg2;
 
