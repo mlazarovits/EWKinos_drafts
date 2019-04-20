@@ -275,8 +275,6 @@ for uniform distribution: (b-a)/sqrt(12)
 
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
-      cout << "met loop #: " << j << endl;
-
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
@@ -346,21 +344,19 @@ for uniform distribution: (b-a)/sqrt(12)
 
   }
 
-  TCanvas* cv = new TCanvas("cv","cv",800,600);
-  cv->SetTopMargin(0.09);
+  TCanvas* cv = new TCanvas("cv","cv",900,600);
+  // cv->SetTopMargin(0.09);
   cv->SetGrid();
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter efficiencies; met (GeV); fail efficiency %");
 
-  TLegend* leg1,*leg2;
-
-  leg2 = new TLegend(0.7,0.7,0.95,0.9);
+  TLegend* leg2 = new TLegend(0.5,0.7,0.7,0.9);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
   }
   // leg2->SetTextSize(0.033);
-  leg2->SetFillStyle(0);
+  leg2->SetFillColor(0);
   leg2->Draw("same");
 
   cv->Update();
@@ -375,9 +371,9 @@ for uniform distribution: (b-a)/sqrt(12)
   l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
-  l.DrawLatex(0.16,0.943,"CMS");
+  l.DrawLatex(0.11,0.9,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.23,0.943,"Preliminary");
+  l.DrawLatex(0.18,0.9,"Preliminary");
   cv->Update();
 
   cv->SaveAs(sample+"_filters_eff.pdf");
