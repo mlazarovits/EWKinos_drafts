@@ -316,7 +316,7 @@ for uniform distribution: (b-a)/sqrt(12)
       // }
       else{
         met_eff = (Nfail_met/Nentries_met);
-        Float_t met_eff_perc = met_eff*100
+        Float_t met_eff_perc = met_eff*100;
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
         cout << "met_eff: " << met_eff << endl;
         cout << "eff_uncert: " << eff_uncert << endl;
