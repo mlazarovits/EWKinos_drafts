@@ -46,10 +46,10 @@ void eff_vs_MET(TString dataset){
   cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
 
 
-  TVector<float> met_effs;
-  TVector<float> eff_uncerts;
-  TVector<float> met_uncerts;
-  TVector<float> met_bins;
+  TVectorT<float> met_effs;
+  TVectorT<float> eff_uncerts;
+  TVectorT<float> met_uncerts;
+  TVectorT<float> met_bins;
   // float met_bins[metNBins+1]; //values of high/low met for cuts
   // Float_t met_effs[metNBins]; //failed entries percentage
   // Float_t eff_uncerts[metNBins];
