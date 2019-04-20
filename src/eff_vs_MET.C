@@ -280,7 +280,7 @@ for uniform distribution: (b-a)/sqrt(12)
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop#: " << j << endl;
-      met_plot[j] = (met_bins[j+1] + met_bins[j])/2
+      met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
