@@ -326,6 +326,7 @@ for uniform distribution: (b-a)/sqrt(12)
     //   cout << "met_uncerts: " << met_uncerts[i] << endl;
     //   cout << "eff_uncerts: " << eff_uncerts[i] << endl;
     // }
+
     //remove points with no entries in met interval
     for(int j = 0; j < metNBins; j++){
       if(met_effs[j] == -999 && eff_uncerts[j] == -999 && met_uncerts[j] == -999){
@@ -337,7 +338,7 @@ for uniform distribution: (b-a)/sqrt(12)
         gr[i]->RemovePoint(j);
       }
     }
-
+    gr[i]->Print();
 
     if(i/3 == 0){
       gr[i]->SetMarkerStyle(22);
