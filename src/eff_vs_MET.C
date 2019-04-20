@@ -319,6 +319,10 @@ for uniform distribution: (b-a)/sqrt(12)
     }
     gr.push_back(new TGraphErrors(metNBins,met_bins,met_effs,met_uncerts,eff_uncerts));
 
+    cout << "metNBins: " << metNBins << endl;
+    cout << "met_bins: " << met_bins << endl;
+    cout << "met_effs: " << met_effs << endl;
+    cout << "met_uncerts: " << met_uncerts << endl;
     if(i/3 == 0){
       gr[i]->SetMarkerStyle(22);
     } 
@@ -348,7 +352,7 @@ for uniform distribution: (b-a)/sqrt(12)
   // cv->SetTopMargin(0.09);
   cv->SetGrid();
   mg->Draw("ap");
-  mg->SetTitle(sample+" Filter efficiencies; met (GeV); fail efficiency %");
+  mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
   TLegend* leg2 = new TLegend(0.5,0.7,0.7,0.9);
   for(int i = 0; i < filter_names.size(); i++){
@@ -373,7 +377,7 @@ for uniform distribution: (b-a)/sqrt(12)
   l.SetTextFont(61);
   l.DrawLatex(0.11,0.9,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.18,0.9,"Preliminary");
+  l.DrawLatex(0.16,0.9,"Preliminary");
   cv->Update();
 
   cv->SaveAs(sample+"_filters_eff.pdf");
