@@ -322,7 +322,7 @@ for uniform distribution: (b-a)/sqrt(12)
 
     //remove points with no entries in met interval
     
-    for(int j = 0; j < metNBins; j++){
+    for(int j = metNBins; j > 0; j--){
       if(met_plot[j] == -999){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
