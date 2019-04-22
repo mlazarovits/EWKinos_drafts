@@ -280,7 +280,7 @@ for uniform distribution: (b-a)/sqrt(12)
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop#: " << j << endl;
-      met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
+      
       TString met_cut = Form("met > %f && met < %f",met_bins[j],met_bins[j+1]);
       TString fail_cut = filter_names[i] + "== 0 && " + met_cut; 
       TString pass_cut = filter_names[i] + "== 1 && " + met_cut;
@@ -301,10 +301,10 @@ for uniform distribution: (b-a)/sqrt(12)
 
       if(Nentries_met == 0 && Nfail_met == 0){
         //don't include points with no events in the met interval
-        met_effs[j] = 0;
-        eff_uncerts[j] = 0;
-        met_uncerts[j] = 0;
-        met_plot[j] = 0;
+        met_effs[j] = -999;
+        eff_uncerts[j] = -999;
+        met_uncerts[j] = -999;
+        met_plot[j] = -999;
       }
       else{
         met_eff = (Nfail_met/Nentries_met);
@@ -315,6 +315,7 @@ for uniform distribution: (b-a)/sqrt(12)
         met_effs[j] = met_eff_perc;
         eff_uncerts[j] = eff_uncert;
         met_uncerts[j] = metInterval/2;
+        met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
       }
     }
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
@@ -322,7 +323,7 @@ for uniform distribution: (b-a)/sqrt(12)
     //remove points with no entries in met interval
     
     for(int j = 0; j < metNBins; j++){
-      if(met_effs[j] == 0 && eff_uncerts[j] == 0 && met_uncerts[j] == 0){
+      if(met_plot[j] == -999){
         cout << "point #: " << j << endl;
         cout << "met_plot: " << met_plot[j] << endl;
         cout << "met_effs: " << met_effs[j] << endl;
