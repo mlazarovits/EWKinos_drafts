@@ -304,7 +304,7 @@ for uniform distribution: (b-a)/sqrt(12)
         met_effs[j] = -999;
         eff_uncerts[j] = -999;
         met_uncerts[j] = -999;
-        met_plot[j] = -999;
+        met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
       }
       else{
         met_eff = (Nfail_met/Nentries_met);
