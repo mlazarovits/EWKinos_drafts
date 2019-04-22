@@ -337,24 +337,28 @@ for uniform distribution: (b-a)/sqrt(12)
     gr[i]->Print();
 
     if(i/3 == 0){
-      gr[i]->SetMarkerStyle(22);
+      gr[i]->SetMarkerStyle(24);
     } 
-    else {
-      gr[i]->SetMarkerStyle(21);
+    else if(i/3 == 1){
+      gr[i]->SetMarkerStyle(25);
     }
-    if(i%3 == 0){ // prerad
+    else{
+      gr[i]->SetMarkerStyle(26);
+    }
+    if(i%3 == 0){ 
       gr[i]->SetMarkerColor(kRed+2);
       gr[i]->SetLineColor(kRed+2);
     }
-    if(i%4 == 0){ // 8e14
+    if(i%3 == 1){ 
       gr[i]->SetMarkerColor(kGreen+2);
       gr[i]->SetLineColor(kGreen+2);
     }
-    if(i%2 == 1){ // 1.5e15
+    if(i%3 == 2){
       gr[i]->SetMarkerColor(kBlue+2);
       gr[i]->SetLineColor(kBlue+2);
     }
-    gr[i]->SetMarkerSize(2);
+    gr[i]->SetMarkerSize(1);
+    gr[i]->SetLineWidth(5);
     gr[i]->SetFillStyle(0);
     gr[i]->SetFillColor(0);
 
@@ -370,7 +374,7 @@ for uniform distribution: (b-a)/sqrt(12)
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-  TLegend* leg2 = new TLegend(0.6,0.6,0.9,0.9);
+  TLegend* leg2 = new TLegend(0.1,0.6,0.4,0.9);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
@@ -391,12 +395,12 @@ for uniform distribution: (b-a)/sqrt(12)
   l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
-  l.DrawLatex(0.11,0.9,"CMS");
+  l.DrawLatex(0.11,0.91,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.165,0.9,"Preliminary");
+  l.DrawLatex(0.165,0.91,"Preliminary");
   cv->Update();
 
-  cv->SaveAs(sample+"_filters_eff.pdf");
+  cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
 
   // cv->Close();
 
