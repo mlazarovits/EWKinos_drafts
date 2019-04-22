@@ -310,7 +310,7 @@ for uniform distribution: (b-a)/sqrt(12)
         met_eff = (Nfail_met/Nentries_met);
         Float_t met_eff_perc = met_eff*100;
         eff_uncert = sqrt((met_eff*(1-met_eff))/Nentries_met)*100;
-        cout << "met_eff: " << met_eff << endl;
+        cout << "met_eff %: " << met_eff_perc << endl;
         cout << "eff_uncert: " << eff_uncert << endl;
         met_effs[j] = met_eff_perc;
         eff_uncerts[j] = eff_uncert;
@@ -370,14 +370,14 @@ for uniform distribution: (b-a)/sqrt(12)
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-  // TLegend* leg2 = new TLegend(0.6,0.6,0.9,0.9);
-  // for(int i = 0; i < filter_names.size(); i++){
-  //   // TString tmpstr = Form(gr[i],filter_names[i])
-  //   leg2->AddEntry(gr[i],filter_names[i].Data());
-  // }
-  // // leg2->SetTextSize(0.033);
-  // leg2->SetFillColor(0);
-  // leg2->Draw("same");
+  TLegend* leg2 = new TLegend(0.6,0.6,0.9,0.9);
+  for(int i = 0; i < filter_names.size(); i++){
+    // TString tmpstr = Form(gr[i],filter_names[i])
+    leg2->AddEntry(gr[i],filter_names[i].Data());
+  }
+  // leg2->SetTextSize(0.033);
+  leg2->SetFillColor(0);
+  leg2->Draw("same");
 
   cv->Update();
 
