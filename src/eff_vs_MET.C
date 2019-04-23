@@ -357,8 +357,8 @@ for uniform distribution: (b-a)/sqrt(12)
       gr[i]->SetMarkerColor(kBlue+2);
       gr[i]->SetLineColor(kBlue+2);
     }
-    gr[i]->SetMarkerSize(1);
-    gr[i]->SetLineWidth(5);
+    gr[i]->SetMarkerSize(2);
+    gr[i]->SetLineWidth(2);
     gr[i]->SetFillStyle(0);
     gr[i]->SetFillColor(0);
 
@@ -395,9 +395,9 @@ for uniform distribution: (b-a)/sqrt(12)
   l.SetTextFont(42);
   l.SetTextSize(0.04);
   l.SetTextFont(61);
-  l.DrawLatex(0.11,0.91,"CMS");
+  l.DrawLatex(0.11,0.905,"CMS");
   l.SetTextFont(52);
-  l.DrawLatex(0.165,0.91,"Preliminary");
+  l.DrawLatex(0.165,0.905,"Preliminary");
   cv->Update();
 
   cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
