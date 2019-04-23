@@ -346,16 +346,16 @@ for uniform distribution: (b-a)/sqrt(12)
       gr[i]->SetMarkerStyle(26);
     }
     if(i%3 == 0){ 
-      gr[i]->SetMarkerColor(kRed+2);
-      gr[i]->SetLineColor(kRed+2);
+      gr[i]->SetMarkerColor(kRed-7);
+      gr[i]->SetLineColor(kRed-7);
     }
     if(i%3 == 1){ 
-      gr[i]->SetMarkerColor(kGreen+2);
-      gr[i]->SetLineColor(kGreen+2);
+      gr[i]->SetMarkerColor(kGreen-7);
+      gr[i]->SetLineColor(kGreen-7);
     }
     if(i%3 == 2){
-      gr[i]->SetMarkerColor(kBlue+2);
-      gr[i]->SetLineColor(kBlue+2);
+      gr[i]->SetMarkerColor(kBlue-7);
+      gr[i]->SetLineColor(kBlue-7);
     }
     gr[i]->SetMarkerSize(2);
     gr[i]->SetLineWidth(2);
@@ -374,14 +374,14 @@ for uniform distribution: (b-a)/sqrt(12)
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-  TLegend* leg2 = new TLegend(0.1,0.6,0.4,0.9);
-  for(int i = 0; i < filter_names.size(); i++){
-    // TString tmpstr = Form(gr[i],filter_names[i])
-    leg2->AddEntry(gr[i],filter_names[i].Data());
-  }
-  // leg2->SetTextSize(0.033);
-  leg2->SetFillColor(0);
-  leg2->Draw("same");
+  // TLegend* leg2 = new TLegend(0.1,0.6,0.43,0.9);
+  // for(int i = 0; i < filter_names.size(); i++){
+  //   // TString tmpstr = Form(gr[i],filter_names[i])
+  //   leg2->AddEntry(gr[i],filter_names[i].Data());
+  // }
+  // // leg2->SetTextSize(0.033);
+  // leg2->SetFillColor(0);
+  // leg2->Draw("same");
 
   cv->Update();
 
