@@ -500,7 +500,7 @@ for uniform distribution: (b-a)/sqrt(12)
   }
   // leg2->SetTextSize(0.033);
   leg2->SetFillColor(0);
-  // leg2->SetFillStyle(0); //transparent
+  leg2->SetFillStyle(0); //transparent
   leg2->Draw("same");
 
   cv->Update();
