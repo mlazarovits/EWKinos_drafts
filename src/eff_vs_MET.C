@@ -192,7 +192,7 @@ void eff_vs_MET(TString dataset){
 
 
 
-    filter_names.push_back("globalSuperTightHalo2016Filter");
+    
     filter_names.push_back("goodVerticesFilter");
     filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
     filter_names.push_back("BadChargedCandidateFilter");
@@ -212,6 +212,126 @@ void eff_vs_MET(TString dataset){
     sample = TChiToWZ->GetName();
     cout << "sample: " << sample << endl;
   }
+
+  else if(dataset == "WJetsToLNu"){
+
+    // TBranch *b_CSCTightHaloFilter;
+    // TBranch        *b_METFilters;   //!
+    // TBranch        *b_globalSuperTightHalo2016Filter;   //!
+    // TBranch        *b_goodVerticesFilter;   //!
+    // TBranch        *b_HBHENoiseIsoFilter;   //!
+    // TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
+    // TBranch        *b_BadPFMuonFilter;   //!
+    // TBranch        *b_met;   //!
+
+    // Float_t         met_f;
+    // Int_t           METFilters;
+    // Int_t           CSCTightHaloFilter;
+    // Int_t           globalSuperTightHalo2016Filter;
+    // Int_t           goodVerticesFilter;
+    // Int_t           HBHENoiseIsoFilter;
+    // Int_t           EcalDeadCellTriggerPrimitiveFilter;
+    // UInt_t          BadPFMuonFilter;
+
+
+
+    // chain->SetBranchAddress("met",&met_f,&b_met);
+    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+    
+    filter_names.push_back("BadChargedCandidateFilter");
+    filter_names.push_back("BadPFMuonFilter");
+    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    filter_names.push_back("HBHENoiseIsoFilter");
+    filter_names.push_back("ecalBadCalibFilter");
+    filter_names.push_back("goodVerticesFilter");
+    filter_names.push_back("globalSuperTightHalo2016Filter");
+    filter_names.push_back("CSCTightHaloFilter");
+    filter_names.push_back("METFilters");
+
+    //2016 dataset
+    TFileCollection *WJetsToLNu = new TFileCollection("WJetsToLNu","WJetsToLNu");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020824/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020702/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020845/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020721/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020740/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020800/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181116_210752/0000/stopFlatNtuples_*");
+    WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_extWJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181219_234206/0000/stopFlatNtuples_*");
+
+    cout << "finished adding files to file list" << endl;
+
+    chain->AddFileInfoList((TCollection*)WJetsToLNu->GetList());
+    sample = WJetsToLNu->GetName();
+    cout << "sample: " << sample << endl;
+  }
+
+  else if(dataset == "TChiWH_HToGG"){
+
+    TBranch *b_CSCTightHaloFilter;
+    TBranch        *b_METFilters;   //!
+    TBranch        *b_globalSuperTightHalo2016Filter;   //!
+    TBranch        *b_goodVerticesFilter;   //!
+    TBranch        *b_HBHENoiseIsoFilter;   //!
+    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
+    TBranch        *b_BadPFMuonFilter;   //!
+    TBranch        *b_met;   //!
+
+    Float_t         met_f;
+    Int_t           METFilters;
+    Int_t           CSCTightHaloFilter;
+    Int_t           globalSuperTightHalo2016Filter;
+    Int_t           goodVerticesFilter;
+    Int_t           HBHENoiseIsoFilter;
+    Int_t           EcalDeadCellTriggerPrimitiveFilter;
+    UInt_t          BadPFMuonFilter;
+
+
+
+    // chain->SetBranchAddress("met",&met_f,&b_met);
+    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+    
+    filter_names.push_back("BadChargedCandidateFilter");
+    filter_names.push_back("BadPFMuonFilter");
+    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    filter_names.push_back("HBHENoiseIsoFilter");
+    filter_names.push_back("ecalBadCalibFilter");
+    filter_names.push_back("goodVerticesFilter");
+    filter_names.push_back("globalSuperTightHalo2016Filter");
+    filter_names.push_back("CSCTightHaloFilter");
+    filter_names.push_back("METFilters");
+
+    //2016 dataset
+    TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
+    TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
+    cout << "finished adding files to file list" << endl;
+
+    chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
+    sample = TChiWH_HToGG->GetName();
+    cout << "sample: " << sample << endl;
+  }
+
+
   else{
     cout << "error: not a valid dataset" << endl;
     return;
@@ -321,14 +441,13 @@ for uniform distribution: (b-a)/sqrt(12)
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
     //remove points with no entries in met interval
-    
     for(int j = metNBins; j > 0; j--){
       if(met_plot[j] == -999){
-        cout << "point #: " << j << endl;
-        cout << "met_plot: " << met_plot[j] << endl;
-        cout << "met_effs: " << met_effs[j] << endl;
-        cout << "met_uncerts: " << met_uncerts[j] << endl;
-        cout << "eff_uncerts: " << eff_uncerts[j] << endl;
+        // cout << "point #: " << j << endl;
+        // cout << "met_plot: " << met_plot[j] << endl;
+        // cout << "met_effs: " << met_effs[j] << endl;
+        // cout << "met_uncerts: " << met_uncerts[j] << endl;
+        // cout << "eff_uncerts: " << eff_uncerts[j] << endl;
         gr[i]->RemovePoint(j);
       }
 
