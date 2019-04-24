@@ -493,7 +493,7 @@ for uniform distribution: (b-a)/sqrt(12)
   mg->Draw("ap");
   mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-  TLegend* leg2 = new TLegend();
+  TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
   for(int i = 0; i < filter_names.size(); i++){
     // TString tmpstr = Form(gr[i],filter_names[i])
     leg2->AddEntry(gr[i],filter_names[i].Data());
