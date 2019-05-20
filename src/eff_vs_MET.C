@@ -51,7 +51,7 @@ void eff_vs_MET(TString dataset){
   float met_bins[metNBins+1]; //values of high/low met for cuts
   Float_t met_effs[metNBins]; //failed entries percentage
   Float_t eff_uncerts[metNBins];
-  Float_t met_uncerts[metNBins];
+  // Float_t met_uncerts[metNBins];
   float met_plot[metNBins];
   vector<TGraphErrors*> gr;
   TMultiGraph* mg = new TMultiGraph();
@@ -427,11 +427,11 @@ void eff_vs_MET(TString dataset){
   int Nmet = metNBins; //number of metbins
   int Nfilter = filter_names.size(); //number of filters
 
-  float NPass[Nfilter][Nmet]; //number of passed events
-  float NTot[Nmet]; //number of events in met_bin
-  float Neff[Nfilter][Nmet];
-  float Neff_uncert[NFilter][Nmet];
-  float met_uncerts[Nmet];
+  Float_t NPass[Nfilter][Nmet]; //number of passed events
+  Float_t NTot[Nmet]; //number of events in met_bin
+  Float_t Neff[Nfilter][Nmet];
+  Float_t Neff_uncert[NFilter][Nmet];
+  Float_t met_uncerts[Nmet];
 
   //counter
 
