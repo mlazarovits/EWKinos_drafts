@@ -71,18 +71,7 @@ void eff_vs_MET(TString dataset){
 
   //2017 dataset
   if(dataset == "dyJetsToLL"){
-    TBranch *b_CSCTightHaloFilter;
-    TBranch        *b_METFilters;   //!
-    TBranch        *b_globalSuperTightHalo2016Filter;   //!
-    TBranch        *b_goodVerticesFilter;   //!
-    TBranch        *b_ecalBadCalibFilter;   //!
-    TBranch        *b_HBHENoiseIsoFilter;   //!
-    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
-    TBranch        *b_BadChargedCandidateFilter;   //!
-    TBranch        *b_BadPFMuonFilter;   //!
-    TBranch        *b_HBHENoiseFilter;   //!
-    TBranch        *b_HBHEIsoNoiseFilter; 
-    TBranch        *b_met;   //!
+
 
     Float_t         met_f;
     Int_t           METFilters;
@@ -96,21 +85,35 @@ void eff_vs_MET(TString dataset){
     UInt_t          BadPFMuonFilter;
     UInt_t          HBHENoiseFilter;
     UInt_t          HBHEIsoNoiseFilter;
+    Float_t         evtWeight;
 
+    TBranch        *b_CSCTightHaloFilter;
+    TBranch        *b_METFilters;   //!
+    TBranch        *b_globalSuperTightHalo2016Filter;   //!
+    TBranch        *b_goodVerticesFilter;   //!
+    TBranch        *b_ecalBadCalibFilter;   //!
+    TBranch        *b_HBHENoiseIsoFilter;   //!
+    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
+    TBranch        *b_BadChargedCandidateFilter;   //!
+    TBranch        *b_BadPFMuonFilter;   //!
+    TBranch        *b_HBHENoiseFilter;   //!
+    TBranch        *b_HBHEIsoNoiseFilter; 
+    TBranch        *b_met;   //!
+    TBranch        *b_evtWeight;
 
-
-    // chain->SetBranchAddress("met",&met_f,&b_met);
-    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-    // chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
-    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-    // chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
-    // chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
-    // chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+    aux->fChain->SetBranchAddress("met",&met_f,&b_met);
+    aux->fChain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    aux->fChain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    aux->fChain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    aux->fChain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    aux->fChain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
+    aux->fChain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    aux->fChain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    aux->fChain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+    aux->fChain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
+    aux->fChain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
+    aux->fChain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+    aux->fChain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
     aux->fChain->SetBranchStatus("*",0);
     aux->fChain->SetBranchStatus("met",1);
@@ -425,7 +428,7 @@ void eff_vs_MET(TString dataset){
 */
 
   int Nmet = metNBins; //number of metbins
-  int Nfilter;
+  int NFilter;
   NFilter = filter_names.size(); //number of filters
 
   Float_t NPass[Nfilter][Nmet]; //number of passed events
@@ -439,14 +442,14 @@ void eff_vs_MET(TString dataset){
   for(int imet = 0; imet < Nmet; imet++){
     int met_evt = aux->fChain->GetEntry(imet);
     for(int j = 0; j < metNBins; j++){
-      if(aux->met < met_bins[j+1]){
-        NTot[j]+= 1.*aux->evtWeight;
+      if(met < met_bins[j+1]){
+        NTot[j]+= 1.*evtWeight;
         met_uncerts[j] = metInterval/2;
         met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
         continue;
       }      
-      for(int k = 0; k < Nfilter; k++){ 
-        if(aux->filter_names[k]==1){ //pass filter
+      for(int k = 0; k < NFilter; k++){ 
+        if(filter_names[k]==1){ //pass filter
           NPass[k][j] += 1.;
         }
       }
@@ -456,14 +459,14 @@ void eff_vs_MET(TString dataset){
 
 //efficiency
 for(int j = 0; j < metNBins; j++){
-  for(int k = 0; k < Nfilters; k++){
+  for(int k = 0; k < NFilter; k++){
     Neff[k][j] = NPass[k][j]/NTot[j];
     Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
   }
 }
 
 //make TGraph for each filter
-for(int i = 0; i < NFilters; i++){
+for(int i = 0; i < NFilter; i++){
   gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
   gr[i]->Print();
 
