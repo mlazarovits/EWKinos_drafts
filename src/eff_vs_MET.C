@@ -18,7 +18,7 @@
 #include <string>
 #include <cmath>
 
-#include "AUX.h"
+#include "include/AUX.h"
 using namespace std;
 
 
