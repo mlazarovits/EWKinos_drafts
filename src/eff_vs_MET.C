@@ -17,6 +17,8 @@
 #include "TVector.h"
 #include <string>
 #include <cmath>
+
+#include "AUX.h"
 using namespace std;
 
 
@@ -25,6 +27,7 @@ void eff_vs_MET(TString dataset){
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
+  AUX* aux = new AUX(chain);
   float Nentries = -999;
   float Npass = -999;
   float Nfail = -999;
@@ -109,21 +112,22 @@ void eff_vs_MET(TString dataset){
     // chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     // chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 
-    chain->SetBranchStatus("*",0);
-    chain->SetBranchStatus("met",1);
-    chain->SetBranchStatus("METFilters", 1);
-    chain->SetBranchStatus("CSCTightHaloFilter", 1);
-    chain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
-    chain->SetBranchStatus("goodVerticesFilter", 1);
-    chain->SetBranchStatus("ecalBadCalibFilter", 1);
-    chain->SetBranchStatus("HBHENoiseIsoFilter", 1);
-    chain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
-    chain->SetBranchStatus("BadPFMuonFilter", 1);
-    chain->SetBranchStatus("HBHENoiseFilter", 1);
-    chain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
-    chain->SetBranchStatus("BadChargedCandidateFilter", 1);
+    aux->fChain->SetBranchStatus("*",0);
+    aux->fChain->SetBranchStatus("met",1);
+    aux->fChain->SetBranchStatus("METFilters", 1);
+    aux->fChain->SetBranchStatus("CSCTightHaloFilter", 1);
+    aux->fChain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
+    aux->fChain->SetBranchStatus("goodVerticesFilter", 1);
+    aux->fChain->SetBranchStatus("ecalBadCalibFilter", 1);
+    aux->fChain->SetBranchStatus("HBHENoiseIsoFilter", 1);
+    aux->fChain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
+    aux->fChain->SetBranchStatus("BadPFMuonFilter", 1);
+    aux->fChain->SetBranchStatus("HBHENoiseFilter", 1);
+    aux->fChain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
+    aux->fChain->SetBranchStatus("BadChargedCandidateFilter", 1);
+    aux->fChain->SetBranchStatus("evtWeight",1);
 
-    chain->SetBranchStatus("met",1);
+    aux->fChain->SetBranchStatus("met",1);
 
 
 
@@ -185,9 +189,7 @@ void eff_vs_MET(TString dataset){
     // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
     // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
 
-    chain->SetBranchStatus("*",0);
-    chain->SetBranchStatus("*Filter*",1);
-    chain->SetBranchStatus("met",1);
+   
 
 
 
@@ -209,10 +211,69 @@ void eff_vs_MET(TString dataset){
     cout << "finished adding files to file list" << endl;
 
     chain->AddFileInfoList((TCollection*)TChiToWZ->GetList());
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
     sample = TChiToWZ->GetName();
     cout << "sample: " << sample << endl;
   }
 
+  
+
+  else if(dataset == "TChiWH_HToGG"){
+
+    TBranch *b_CSCTightHaloFilter;
+    TBranch        *b_METFilters;   //!
+    TBranch        *b_globalSuperTightHalo2016Filter;   //!
+    TBranch        *b_goodVerticesFilter;   //!
+    TBranch        *b_HBHENoiseIsoFilter;   //!
+    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
+    TBranch        *b_BadPFMuonFilter;   //!
+    TBranch        *b_met;   //!
+
+    Float_t         met_f;
+    Int_t           METFilters;
+    Int_t           CSCTightHaloFilter;
+    Int_t           globalSuperTightHalo2016Filter;
+    Int_t           goodVerticesFilter;
+    Int_t           HBHENoiseIsoFilter;
+    Int_t           EcalDeadCellTriggerPrimitiveFilter;
+    UInt_t          BadPFMuonFilter;
+
+
+
+    // chain->SetBranchAddress("met",&met_f,&b_met);
+    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+    
+    filter_names.push_back("BadChargedCandidateFilter");
+    filter_names.push_back("BadPFMuonFilter");
+    filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+    filter_names.push_back("HBHENoiseIsoFilter");
+    filter_names.push_back("ecalBadCalibFilter");
+    filter_names.push_back("goodVerticesFilter");
+    filter_names.push_back("globalSuperTightHalo2016Filter");
+    filter_names.push_back("CSCTightHaloFilter");
+    filter_names.push_back("METFilters");
+
+    //2016 dataset
+    TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
+    TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
+    cout << "finished adding files to file list" << endl;
+
+    chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
+    sample = TChiWH_HToGG->GetName();
+    cout << "sample: " << sample << endl;
+  }
   else if(dataset == "WJetsToLNu"){
 
     // TBranch *b_CSCTightHaloFilter;
@@ -276,40 +337,8 @@ void eff_vs_MET(TString dataset){
     cout << "sample: " << sample << endl;
   }
 
-  else if(dataset == "TChiWH_HToGG"){
+  else if(dataset == "TTJets"){
 
-    TBranch *b_CSCTightHaloFilter;
-    TBranch        *b_METFilters;   //!
-    TBranch        *b_globalSuperTightHalo2016Filter;   //!
-    TBranch        *b_goodVerticesFilter;   //!
-    TBranch        *b_HBHENoiseIsoFilter;   //!
-    TBranch        *b_EcalDeadCellTriggerPrimitiveFilter;   //!
-    TBranch        *b_BadPFMuonFilter;   //!
-    TBranch        *b_met;   //!
-
-    Float_t         met_f;
-    Int_t           METFilters;
-    Int_t           CSCTightHaloFilter;
-    Int_t           globalSuperTightHalo2016Filter;
-    Int_t           goodVerticesFilter;
-    Int_t           HBHENoiseIsoFilter;
-    Int_t           EcalDeadCellTriggerPrimitiveFilter;
-    UInt_t          BadPFMuonFilter;
-
-
-
-    // chain->SetBranchAddress("met",&met_f,&b_met);
-    // chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-    // chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-    // chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-    // chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-    // chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-    // chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-    // chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-
-    chain->SetBranchStatus("*",0);
-    chain->SetBranchStatus("*Filter*",1);
-    chain->SetBranchStatus("met",1);
     
     filter_names.push_back("BadChargedCandidateFilter");
     filter_names.push_back("BadPFMuonFilter");
@@ -322,12 +351,16 @@ void eff_vs_MET(TString dataset){
     filter_names.push_back("METFilters");
 
     //2016 dataset
-    TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
-    TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
+    TFileCollection *TTJets = new TFileCollection("TTJets","TTJets");
+    TTJets->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/crogan/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8RunIISummer16MiniAODv2/181220_212122/0000/stopFlatNtuples_*");    
     cout << "finished adding files to file list" << endl;
 
-    chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
-    sample = TChiWH_HToGG->GetName();
+    chain->AddFileInfoList((TCollection*)TTJets->GetList());
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+    chain->SetBranchStatus("evtWeight",1);
+    sample = TTJets->GetName();
     cout << "sample: " << sample << endl;
   }
 
@@ -338,16 +371,19 @@ void eff_vs_MET(TString dataset){
   }
   
 
-  Nentries = (float)chain->GetEntries();
+  
+
+
+  Nentries = (float)aux->fChain->GetEntries();
   cout << "Nentries " << Nentries << endl;
 
   TString pass_str = filter_names[0] + "== 1";
   TString fail_str = filter_names[0] + "== 0";
 
-  Npass = (float)chain->GetEntries(pass_str);
+  Npass = (float)aux->fChain->GetEntries(pass_str);
   cout << "Npass " << Npass << endl;
 
-  Nfail = (float)chain->GetEntries(fail_str);
+  Nfail = (float)aux->fChain->GetEntries(fail_str);
   cout << "Nfail " << Nfail << endl;
 
 
@@ -360,7 +396,7 @@ void eff_vs_MET(TString dataset){
   cout << "checked for correct number of entries" << endl;
 
   fail_eff = (Nfail/Nentries)*100;
-  fail_sigma = sqrt((fail_eff*(1-fail_eff))/Nentries)*100; //CHECK THIS FORMULA -- MAY BE WRONG
+  fail_sigma = sqrt((fail_eff*(1-fail_eff))/Nentries)*100;
   cout << "fail efficiency: " << fail_eff << " +/- " << fail_sigma << endl;
 
 
@@ -378,17 +414,89 @@ void eff_vs_MET(TString dataset){
 
   NPass[Nfilter][Nmet];
   NTot[Nmet];
-  for(...events...)
+  for(...events...) //loop thru events
     GetEntry()
-    for(...met...)
+    for(...met...) //loop thru met bins
       if(eventmet in bin)
         NTot[imet]+= 1.
-        for(...filter...) 
+        for(...filter...) //loop thru filters
           if(filterpass)
             NPadd[ifilter][imet]
 */
 
+  int Nmet = metNBins; //number of metbins
+  int Nfilter = filter_names.size(); //number of filters
 
+  float NPass[Nfilter][Nmet]; //number of passed events
+  float NTot[Nmet]; //number of events in met_bin
+  float Neff[Nfilter][Nmet];
+  float Neff_uncert[NFilter][Nmet];
+  float met_uncerts[Nmet];
+
+  //counter
+
+  for(int imet = 0; imet < Nmet; i++){
+    met_evt = aux->fChain->GetEntry(imet);
+    for(int j = 0; j < metNBins; j++){
+      if(aux->met < met_bins[j+1]){
+        NTot[j]+= 1.*aux->evtWeight
+        met_uncerts[j] = metInterval/2;
+        met_plot[j] = (met_bins[j+1] + met_bins[j])/2
+        continue;
+      }      
+      for(k = 0; k < Nfilter; k++){ 
+        if(aux->filter_names[k]==1){ //pass filter
+          NPass[k][j] += 1.
+        }
+      }
+    }
+  }            
+
+
+//efficiency
+for(int j = 0; j < metNBins; j++){
+  for(int k = 0; k < Nfilters; k++){
+    Neff[k][j] = NPass[k][j]/NTot[j]
+    Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
+  }
+}
+
+//make TGraph for each filter
+for(int i = 0; i < NFilters; k++){
+  gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
+  gr[i]->Print();
+
+  if(i/3 == 0){
+    gr[i]->SetMarkerStyle(24);
+  } 
+  else if(i/3 == 1){
+    gr[i]->SetMarkerStyle(25);
+  }
+  else{
+    gr[i]->SetMarkerStyle(26);
+  }
+  if(i%3 == 0){ 
+    gr[i]->SetMarkerColor(kRed-7);
+    gr[i]->SetLineColor(kRed-7);
+  }
+  if(i%3 == 1){ 
+    gr[i]->SetMarkerColor(kGreen-7);
+    gr[i]->SetLineColor(kGreen-7);
+  }
+  if(i%3 == 2){
+    gr[i]->SetMarkerColor(kBlue-7);
+    gr[i]->SetLineColor(kBlue-7);
+  }
+  gr[i]->SetMarkerSize(2);
+  gr[i]->SetLineWidth(2);
+  gr[i]->SetFillStyle(0);
+  gr[i]->SetFillColor(0);
+
+
+  mg->Add(gr[i]);
+  cout << "added TGraphErrors to vector" << endl;
+}
+// TGraph* gr = new TGraph(Nmetbin, met_bins, NPass[0])
 
 /*
 not necessary, just for overkill; doesn't add any new info into plot
@@ -397,6 +505,7 @@ avg(met) = sum(met)/Nbin
 for uniform distribution: (b-a)/sqrt(12)
 */
 
+/*
   for(int i = 0; i < filter_names.size(); i++){
     for(int j = 0; j < metNBins; j++){
       cout << "met loop#: " << j << endl;
@@ -440,7 +549,7 @@ for uniform distribution: (b-a)/sqrt(12)
     }
     gr.push_back(new TGraphErrors(metNBins,met_plot,met_effs,met_uncerts,eff_uncerts));
 
-    //remove points with no entries in met interval
+    remove points with no entries in met interval
     for(int j = metNBins; j > 0; j--){
       if(met_plot[j] == -999){
         // cout << "point #: " << j << endl;
@@ -484,8 +593,8 @@ for uniform distribution: (b-a)/sqrt(12)
 
     mg->Add(gr[i]);
     cout << "added TGraphErrors to vector" << endl;
-
   }
+*/
 
   TCanvas* cv = new TCanvas("cv","cv",1000,600);
   // cv->SetTopMargin(0.09);
