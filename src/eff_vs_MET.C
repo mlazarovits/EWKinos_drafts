@@ -73,7 +73,7 @@ void eff_vs_MET(TString dataset){
   if(dataset == "dyJetsToLL"){
 
 
-    Float_t         met_f;
+    Float_t         met;
     Int_t           METFilters;
     Int_t           CSCTightHaloFilter;
     Int_t           globalSuperTightHalo2016Filter;
@@ -431,9 +431,9 @@ void eff_vs_MET(TString dataset){
   int NFilter;
   NFilter = filter_names.size(); //number of filters
 
-  Float_t NPass[Nfilter][Nmet]; //number of passed events
+  Float_t NPass[NFilter][Nmet]; //number of passed events
   Float_t NTot[Nmet]; //number of events in met_bin
-  Float_t Neff[Nfilter][Nmet];
+  Float_t Neff[NFilter][Nmet];
   Float_t Neff_uncert[NFilter][Nmet];
   Float_t met_uncerts[Nmet];
 
