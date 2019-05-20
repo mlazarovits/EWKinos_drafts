@@ -101,7 +101,7 @@ void eff_vs_MET(TString dataset){
     TBranch        *b_met;   //!
     TBranch        *b_evtWeight;
 
-    aux->fChain->SetBranchAddress("met",&met_f,&b_met);
+    aux->fChain->SetBranchAddress("met",&met,&b_met);
     aux->fChain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
     aux->fChain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
     aux->fChain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
