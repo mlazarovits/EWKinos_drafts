@@ -425,7 +425,8 @@ void eff_vs_MET(TString dataset){
 */
 
   int Nmet = metNBins; //number of metbins
-  int Nfilter = filter_names.size(); //number of filters
+  int Nfilter;
+  NFilter = filter_names.size(); //number of filters
 
   Float_t NPass[Nfilter][Nmet]; //number of passed events
   Float_t NTot[Nmet]; //number of events in met_bin
@@ -435,18 +436,18 @@ void eff_vs_MET(TString dataset){
 
   //counter
 
-  for(int imet = 0; imet < Nmet; i++){
-    met_evt = aux->fChain->GetEntry(imet);
+  for(int imet = 0; imet < Nmet; imet++){
+    int met_evt = aux->fChain->GetEntry(imet);
     for(int j = 0; j < metNBins; j++){
       if(aux->met < met_bins[j+1]){
-        NTot[j]+= 1.*aux->evtWeight
+        NTot[j]+= 1.*aux->evtWeight;
         met_uncerts[j] = metInterval/2;
-        met_plot[j] = (met_bins[j+1] + met_bins[j])/2
+        met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
         continue;
       }      
-      for(k = 0; k < Nfilter; k++){ 
+      for(int k = 0; k < Nfilter; k++){ 
         if(aux->filter_names[k]==1){ //pass filter
-          NPass[k][j] += 1.
+          NPass[k][j] += 1.;
         }
       }
     }
@@ -456,13 +457,13 @@ void eff_vs_MET(TString dataset){
 //efficiency
 for(int j = 0; j < metNBins; j++){
   for(int k = 0; k < Nfilters; k++){
-    Neff[k][j] = NPass[k][j]/NTot[j]
+    Neff[k][j] = NPass[k][j]/NTot[j];
     Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
   }
 }
 
 //make TGraph for each filter
-for(int i = 0; i < NFilters; k++){
+for(int i = 0; i < NFilters; i++){
   gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
   gr[i]->Print();
 
