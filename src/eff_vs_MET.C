@@ -119,8 +119,8 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
     chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
-    cout << evtWeight << endl;
-    cout << met << endl;
+    // cout << evtWeight << endl;
+    // cout << met << endl;
 
 
     // aux->fChain->SetBranchStatus("*",0);
@@ -447,7 +447,7 @@ void eff_vs_MET(TString dataset){
   //counter
 
   for(int imet = 0; imet < Nmet; imet++){
-    int met_evt = aux->fChain->GetEntry(imet);
+    int met_evt = chain->GetEntry(imet);
     for(int j = 0; j < metNBins; j++){
       if(met < met_bins[j+1]){
         NTot[j]+= 1.*evtWeight;
