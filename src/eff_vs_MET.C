@@ -450,7 +450,7 @@ void eff_vs_MET(TString dataset){
     int met_evt = chain->GetEntry(imet);
     for(int j = 0; j < metNBins; j++){
       if(aux->met < met_bins[j+1]){
-        NTot[j]+= 1.*evtWeight;
+        NTot[j]+= 1.*aux->evtWeight;
         met_uncerts[j] = metInterval/2;
         met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
         continue;
