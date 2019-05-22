@@ -101,10 +101,10 @@ void eff_vs_MET(TString dataset){
     TBranch        *b_met;   //!
     TBranch        *b_evtWeight;
 
-    // chain->SetBranchStatus("*",0);
-    // chain->SetBranchStatus("*Filter*",1);
-    // chain->SetBranchStatus("met",1);
-    // chain->SetBranchStatus("evtWeight",1);
+    chain->SetBranchStatus("*",0);
+    chain->SetBranchStatus("*Filter*",1);
+    chain->SetBranchStatus("met",1);
+    chain->SetBranchStatus("evtWeight",1);
 
     aux->fChain->SetBranchAddress("met",&met,&b_met);
     chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
@@ -119,22 +119,23 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
     chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+    print evtWeight;
 
-    aux->fChain->SetBranchStatus("*",0);
-    aux->fChain->SetBranchStatus("met",1);
-    aux->fChain->SetBranchStatus("METFilters", 1);
-    aux->fChain->SetBranchStatus("CSCTightHaloFilter", 1);
-    aux->fChain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
-    aux->fChain->SetBranchStatus("goodVerticesFilter", 1);
-    aux->fChain->SetBranchStatus("ecalBadCalibFilter", 1);
-    aux->fChain->SetBranchStatus("HBHENoiseIsoFilter", 1);
-    aux->fChain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
-    aux->fChain->SetBranchStatus("BadPFMuonFilter", 1);
-    aux->fChain->SetBranchStatus("HBHENoiseFilter", 1);
-    aux->fChain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
-    aux->fChain->SetBranchStatus("BadChargedCandidateFilter", 1);
-    aux->fChain->SetBranchStatus("evtWeight",1);
-    aux->fChain->SetBranchStatus("met",1);
+    // aux->fChain->SetBranchStatus("*",0);
+    // aux->fChain->SetBranchStatus("met",1);
+    // aux->fChain->SetBranchStatus("METFilters", 1);
+    // aux->fChain->SetBranchStatus("CSCTightHaloFilter", 1);
+    // aux->fChain->SetBranchStatus("globalSuperTightHalo2016Filter",1);
+    // aux->fChain->SetBranchStatus("goodVerticesFilter", 1);
+    // aux->fChain->SetBranchStatus("ecalBadCalibFilter", 1);
+    // aux->fChain->SetBranchStatus("HBHENoiseIsoFilter", 1);
+    // aux->fChain->SetBranchStatus("EcalDeadCellTriggerPrimitiveFilter", 1);
+    // aux->fChain->SetBranchStatus("BadPFMuonFilter", 1);
+    // aux->fChain->SetBranchStatus("HBHENoiseFilter", 1);
+    // aux->fChain->SetBranchStatus("HBHEIsoNoiseFilter", 1);
+    // aux->fChain->SetBranchStatus("BadChargedCandidateFilter", 1);
+    // aux->fChain->SetBranchStatus("evtWeight",1);
+    // aux->fChain->SetBranchStatus("met",1);
 
 
 
