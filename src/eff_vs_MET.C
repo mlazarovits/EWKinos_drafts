@@ -66,12 +66,6 @@ void eff_vs_MET(TString dataset){
   //filter_names.push_back("noBadMuonsFilter");
   //filter_names.push_back("badMuonsFilter");
   //filter_names.push_back("duplicateMuonsFilter");
-
-  
-
-  //2017 dataset
-  if(dataset == "dyJetsToLL"){
-
     Float_t         met;
     Int_t           METFilters;
     Int_t           CSCTightHaloFilter;
@@ -99,6 +93,12 @@ void eff_vs_MET(TString dataset){
     TBranch        *b_HBHEIsoNoiseFilter; 
     TBranch        *b_met;   //!
     TBranch        *b_evtWeight;
+  
+
+  //2017 dataset
+  if(dataset == "dyJetsToLL"){
+
+
 
 
 
