@@ -18,7 +18,6 @@
 #include <string>
 #include <cmath>
 
-#include "AUX.h"
 using namespace std;
 
 
@@ -27,7 +26,7 @@ void eff_vs_MET(TString dataset){
   TString draw_string="";
   TString sample ="";
   TChain* chain = new TChain("stopTreeMaker/AUX");
-  AUX* aux = new AUX(chain);
+  // AUX* aux = new AUX(chain);
 
   float Nentries = -999;
   float Npass = -999;
@@ -382,16 +381,16 @@ void eff_vs_MET(TString dataset){
   
 
 
-  Nentries = (float)aux->fChain->GetEntries();
+  Nentries = (float)chain->GetEntries();
   cout << "Nentries " << Nentries << endl;
 
   TString pass_str = filter_names[0] + "== 1";
   TString fail_str = filter_names[0] + "== 0";
 
-  Npass = (float)aux->fChain->GetEntries(pass_str);
+  Npass = (float)chain->GetEntries(pass_str);
   cout << "Npass " << Npass << endl;
 
-  Nfail = (float)aux->fChain->GetEntries(fail_str);
+  Nfail = (float)chain->GetEntries(fail_str);
   cout << "Nfail " << Nfail << endl;
 
 
@@ -447,8 +446,8 @@ void eff_vs_MET(TString dataset){
   for(int imet = 0; imet < Nmet; imet++){
     int met_evt = chain->GetEntry(imet);
     for(int j = 0; j < metNBins; j++){
-      if(aux->met < met_bins[j+1]){
-        NTot[j]+= 1.*aux->evtWeight;
+      if(met < met_bins[j+1]){
+        NTot[j]+= 1.*evtWeight;
         met_uncerts[j] = metInterval/2;
         met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
         continue;
