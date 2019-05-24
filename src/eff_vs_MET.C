@@ -102,7 +102,7 @@ void eff_vs_MET(TString dataset){
 
 
 
-    chain->SetBranchAddress("met",met,&b_met);
+    chain->SetBranchAddress("met",&met,&b_met);
     chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
     chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
     chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
@@ -114,7 +114,7 @@ void eff_vs_MET(TString dataset){
     chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
     chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
     chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
-    chain->SetBranchAddress("evtWeight", evtWeight, &b_evtWeight);
+    chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
     
 
     chain->SetBranchStatus("*",0);
