@@ -477,6 +477,7 @@ for(int j = 0; j < metNBins; j++){
       cout << filter_names[k] << endl;
       cout << "met_bin: " << met_bins[j] << endl;
       cout << "total number of events in met bin: " << NTot[j] << endl;
+      cout << "failed events: " << NFail[k][j] << endl;
       cout << "fail efficiency: " << Neff[k][j] << endl;
       cout << "error: " << Neff_uncert[k][j] << endl;
       cout << "" << endl;
