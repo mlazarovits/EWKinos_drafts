@@ -438,6 +438,7 @@ void eff_vs_MET(TString dataset){
   NFilter = filter_names.size(); //number of filters
 
   Float_t NPass[NFilter][Nmet]; //number of passed events
+  Float_t NFail[NFilter][Nmet]; //number of failed events
   Float_t NTot[Nmet]; //number of events in met_bin
   Float_t Neff[NFilter][Nmet];
   Float_t Neff_uncert[NFilter][Nmet];
@@ -457,6 +458,9 @@ void eff_vs_MET(TString dataset){
       for(int k = 0; k < NFilter; k++){ 
         if(filter_names[k]==1){ //pass filter
           NPass[k][j] += 1.;
+        if(filter_name[k]==0){ //fail filter
+          NFail[k][j] += 1.;
+        }
         }
       }
     }
@@ -466,15 +470,24 @@ void eff_vs_MET(TString dataset){
 //efficiency
 for(int j = 0; j < metNBins; j++){
   for(int k = 0; k < NFilter; k++){
-    Neff[k][j] = NPass[k][j]/NTot[j];
+    Neff[k][j] = NFail[k][j]/NTot[j];
     Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
+
+    if(abs(Neff[k][j]) > 10){
+      cout << filter_names[k] << endl;
+      cout << "met_bin: " << met_bins[j] << endl;
+      cout << "total number of events in met bin: " << NTot[j] << endl;
+      cout << "fail efficiency: " << Neff[k][j] << endl;
+      cout << "error: " << Neff_uncert[k][j] << endl;
+      cout << "" << endl;
+    }
   }
 }
 
 //make TGraph for each filter
 for(int i = 0; i < NFilter; i++){
   gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
-  gr[i]->Print();
+  // gr[i]->Print();
 
   if(i/3 == 0){
     gr[i]->SetMarkerStyle(24);
@@ -619,7 +632,7 @@ for uniform distribution: (b-a)/sqrt(12)
   }
   // leg2->SetTextSize(0.033);
   leg2->SetFillColor(0);
-  // leg2->SetFillStyle(0); //transparent
+  leg2->SetFillStyle(0); //transparent
   leg2->Draw("same");
 
   cv->Update();
