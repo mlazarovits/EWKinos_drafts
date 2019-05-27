@@ -43,7 +43,11 @@ private:
 	float met_eff = -999;
 	float eff_uncert = -999;
 
-
+	int metNBins = 10; //10 met bins;
+	int NFilter = (int)filter_names.size(); //number of filters
+	
+	int metHigh = 1000;
+	int metLow = 0;
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -82,28 +86,20 @@ protected:
 
 
 public:
-	int metNBins;
-	int NFilter;
 
-	metNBins = 10; //10 met bins
-	NFilter = (int)filter_names.size(); //number of filters
 	
-	// int metInterval = 50; //10 bins of 50 GeV
-	int metHigh = 1000;
-	int metLow = 0;
-	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 
 	float met_bins[metNBins+1]; //values of high/low met for cuts
 	Float_t met_effs[metNBins]; //failed entries percentage
 	Float_t eff_uncerts[metNBins];
 	float met_plot[metNBins];
 
-	Float_t NPass[NFilter] metNBins]; //number of passed events
-	Float_t NFail[NFilter] metNBins]; //number of failed events
-	Float_t NTot metNBins]; //number of events in met_bin
-	Float_t Neff[NFilter] metNBins];
-	Float_t Neff_uncert[NFilter] metNBins];
-	Float_t met_uncerts metNBins];
+	Float_t NPass[NFilter][metNBins]; //number of passed events
+	Float_t NFail[NFilter][metNBins]; //number of failed events
+	Float_t NTot[metNBins]; //number of events in met_bin
+	Float_t Neff[NFilter][metNBins];
+	Float_t Neff_uncert[NFilter][metNBins];
+	Float_t met_uncerts[metNBins];
 	
 	TCanvas* cv = new TCanvas("cv","cv",1000,600);
 
@@ -324,6 +320,7 @@ void efficiency::Initialize(TString dataset){
 
 void efficiency::make_metbins(){
 	int metInterval = (metHigh - metLow)/metNBins;
+	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 	for(int i = 0; i < metNBins+1; i++){
 		met_bins[i] = (Float_t)i*metInterval;
