@@ -46,7 +46,7 @@ private:
 	// int metInterval = 50; //10 bins of 50 GeV
 	int metHigh = 1000;
 	int metLow = 0;
-	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << endl;
+	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -90,7 +90,7 @@ public:
 	int NFilter = (int)filter_names.size(); //number of filters
 
 	int metInterval = (metHigh - metLow)/metNBins;
-	std::cout << metNBins << " bins with " << metInterval << " GeV each" << endl;
+	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 
 	float met_bins[metNBins+1]; //values of high/low met for cuts
 	Float_t met_effs[metNBins]; //failed entries percentage
@@ -106,7 +106,7 @@ public:
 	
 	TCanvas* cv = new TCanvas("cv","cv",1000,600);
 
-	void efficiency();
+	efficiency();
 	virtual ~efficiency(){ };
 	void Initialize();
 	void make_metbins();
@@ -158,7 +158,7 @@ inline efficiency::Initialize(TString dataset){
 
 		chain->AddFileInfoList((TCollection*)dyJetsToLL->GetList());
 		sample = dyJetsToLL->GetName();
-		std::cout << "sample: " << sample << endl;
+		std::cout << "sample: " << sample << std::endl;
 	}
 
 
@@ -191,12 +191,12 @@ inline efficiency::Initialize(TString dataset){
 		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184342/0000/stopFlatNtuples_*");
 		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184216/0000/stopFlatNtuples_*");
 		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184151/0000/stopFlatNtuples_*");
-		std::cout << "finished adding files to file list" << endl;
+		std::cout << "finished adding files to file list" << std::endl;
 
 		chain->AddFileInfoList((TCollection*)TChiToWZ->GetList());
 
 		sample = TChiToWZ->GetName();
-		std::cout << "sample: " << sample << endl;
+		std::cout << "sample: " << sample << std::endl;
 	}
 	else if(dataset == "TChiWH_HToGG"){
 		chain->SetBranchAddress("met",&met,&b_met);
@@ -227,11 +227,11 @@ inline efficiency::Initialize(TString dataset){
 		//2016 dataset
 		TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
 		TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
-		std::cout << "finished adding files to file list" << endl;
+		std::cout << "finished adding files to file list" << std::endl;
 
 		chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
 		sample = TChiWH_HToGG->GetName();
-		std::cout << "sample: " << sample << endl;
+		std::cout << "sample: " << sample << std::endl;
 	}
 	else if(dataset == "WJetsToLNu"){
 		chain->SetBranchAddress("met",&met,&b_met);
@@ -270,11 +270,11 @@ inline efficiency::Initialize(TString dataset){
 		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181116_210752/0000/stopFlatNtuples_*");
 		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_extWJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181219_234206/0000/stopFlatNtuples_*");
 
-		std::cout << "finished adding files to file list" << endl;
+		std::cout << "finished adding files to file list" << std::endl;
 
 		chain->AddFileInfoList((TCollection*)WJetsToLNu->GetList());
 		sample = WJetsToLNu->GetName();
-		std::cout << "sample: " << sample << endl;
+		std::cout << "sample: " << sample << std::endl;
 	}
 	else if(dataset == "TTJets"){
 		chain->SetBranchAddress("met",&met,&b_met);
@@ -305,7 +305,7 @@ inline efficiency::Initialize(TString dataset){
 		//2016 dataset
 		TFileCollection *TTJets = new TFileCollection("TTJets","TTJets");
 		TTJets->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/crogan/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8RunIISummer16MiniAODv2/181220_212122/0000/stopFlatNtuples_*");    
-		std::cout << "finished adding files to file list" << endl;
+		std::cout << "finished adding files to file list" << std::endl;
 
 		chain->AddFileInfoList((TCollection*)TTJets->GetList());
 		chain->SetBranchStatus("*",0);
@@ -313,10 +313,10 @@ inline efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("met",1);
 		chain->SetBranchStatus("evtWeight",1);
 		sample = TTJets->GetName();
-		std::cout << "sample: " << sample << endl;
+		std::cout << "sample: " << sample << std::endl;
 	}
 	else{
-		std::cout << "error: not a valid dataset" << endl;
+		std::cout << "error: not a valid dataset" << std::endl;
 		return;
 	}
 }
@@ -324,7 +324,7 @@ inline efficiency::Initialize(TString dataset){
 inline efficiency::make_metbins(){
 	for(int i = 0; i < metNBins+1; i++){
 		met_bins[i] = (Float_t)i*metInterval;
-		std::cout << "met bins: " << met_bins[i] << endl;
+		std::cout << "met bins: " << met_bins[i] << std::endl;
 	}
 }
 
@@ -354,13 +354,13 @@ inline efficiency::counter(){
 		Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
 
 			if(abs(Neff[k][j]) > 10){
-				std::cout << filter_names[k] << endl;
-				std::cout << "met_bin: " << met_bins[j] << endl;
-				std::cout << "total number of events in met bin: " << NTot[j] << endl;
-				std::cout << "failed events: " << NFail[k][j] << endl;
-				std::cout << "fail efficiency: " << Neff[k][j] << endl;
-				std::cout << "error: " << Neff_uncert[k][j] << endl;
-				std::cout << "" << endl;
+				std::cout << filter_names[k] << std::endl;
+				std::cout << "met_bin: " << met_bins[j] << std::endl;
+				std::cout << "total number of events in met bin: " << NTot[j] << std::endl;
+				std::cout << "failed events: " << NFail[k][j] << std::endl;
+				std::cout << "fail efficiency: " << Neff[k][j] << std::endl;
+				std::cout << "error: " << Neff_uncert[k][j] << std::endl;
+				std::cout << "" << std::endl;
 			}
 		}
 	}
@@ -396,7 +396,7 @@ inline efficiency::make_plot(){
 		gr[i]->SetFillStyle(0);
 		gr[i]->SetFillColor(0);
 		mg->Add(gr[i]);
-		std::cout << "added TGraphErrors to vector" << endl;
+		std::cout << "added TGraphErrors to vector" << std::endl;
 	}	
 	// cv->SetTopMargin(0.09);
 	cv->SetGrid();
