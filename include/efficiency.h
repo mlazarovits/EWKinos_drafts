@@ -50,6 +50,18 @@ private:
 	int metLow = 0;
 	int metInterval = (metHigh - metLow)/metNBins;
 
+	float met_bins[metNBins+1]; //values of high/low met for cuts
+	Float_t met_effs[metNBins]; //failed entries percentage
+	Float_t eff_uncerts[metNBins];
+	float met_plot[metNBins];
+
+	Float_t NPass[NFilter][metNBins]; //number of passed events
+	Float_t NFail[NFilter][metNBins]; //number of failed events
+	Float_t NTot[metNBins]; //number of events in met_bin
+	Float_t Neff[NFilter][metNBins];
+	Float_t Neff_uncert[NFilter][metNBins];
+	Float_t met_uncerts[metNBins];
+
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
 
@@ -90,17 +102,7 @@ public:
 
 	
 
-	float met_bins[metNBins+1]; //values of high/low met for cuts
-	Float_t met_effs[metNBins]; //failed entries percentage
-	Float_t eff_uncerts[metNBins];
-	float met_plot[metNBins];
 
-	Float_t NPass[NFilter][metNBins]; //number of passed events
-	Float_t NFail[NFilter][metNBins]; //number of failed events
-	Float_t NTot[metNBins]; //number of events in met_bin
-	Float_t Neff[NFilter][metNBins];
-	Float_t Neff_uncert[NFilter][metNBins];
-	Float_t met_uncerts[metNBins];
 	
 	TCanvas* cv = new TCanvas("cv","cv",1000,600);
 
