@@ -1,11 +1,11 @@
 #include "include/efficiency.h"
 
 void eff_vs_met(TString dataset){
-	efficiency* eff = efficiency();
+	efficiency eff;
 
-	eff->Initialize(dataset);
-	eff->make_metbins();
-	eff->counter();
-	eff->make_plot();
+	eff.Initialize(dataset);
+	eff.make_metbins();
+	eff.counter();
+	eff.make_plot();
 
 }
