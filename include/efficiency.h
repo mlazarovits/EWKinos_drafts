@@ -48,6 +48,7 @@ private:
 	
 	int metHigh = 1000;
 	int metLow = 0;
+	int metInterval = (metHigh - metLow)/metNBins;
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -105,7 +106,7 @@ public:
 
 	efficiency();
 	virtual ~efficiency(){ };
-	void Initialize();
+	void Initialize(TString dataset);
 	void make_metbins();
 	void counter();
   	void make_plot();
@@ -319,7 +320,6 @@ void efficiency::Initialize(TString dataset){
 }
 
 void efficiency::make_metbins(){
-	int metInterval = (metHigh - metLow)/metNBins;
 	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 	for(int i = 0; i < metNBins+1; i++){
