@@ -21,7 +21,7 @@
 #include <string>
 #include <cmath>
 
-using namespace std;
+//using namespace std;
 
 class efficiency
 {
@@ -43,10 +43,7 @@ private:
 	float met_eff = -999;
 	float eff_uncert = -999;
 
-	// int metInterval = 50; //10 bins of 50 GeV
-	int metHigh = 1000;
-	int metLow = 0;
-	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
+
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -85,24 +82,28 @@ protected:
 
 
 public:
-	int metNBins = 10; //10 met bins
-	int Nmet = metNBins; //number of metbins
-	int NFilter = (int)filter_names.size(); //number of filters
+	int metNBins;
+	int NFilter;
 
-	int metInterval = (metHigh - metLow)/metNBins;
-	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
+	metNBins = 10; //10 met bins
+	NFilter = (int)filter_names.size(); //number of filters
+	
+	// int metInterval = 50; //10 bins of 50 GeV
+	int metHigh = 1000;
+	int metLow = 0;
+	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 
 	float met_bins[metNBins+1]; //values of high/low met for cuts
 	Float_t met_effs[metNBins]; //failed entries percentage
 	Float_t eff_uncerts[metNBins];
 	float met_plot[metNBins];
 
-	Float_t NPass[NFilter][Nmet]; //number of passed events
-	Float_t NFail[NFilter][Nmet]; //number of failed events
-	Float_t NTot[Nmet]; //number of events in met_bin
-	Float_t Neff[NFilter][Nmet];
-	Float_t Neff_uncert[NFilter][Nmet];
-	Float_t met_uncerts[Nmet];
+	Float_t NPass[NFilter] metNBins]; //number of passed events
+	Float_t NFail[NFilter] metNBins]; //number of failed events
+	Float_t NTot metNBins]; //number of events in met_bin
+	Float_t Neff[NFilter] metNBins];
+	Float_t Neff_uncert[NFilter] metNBins];
+	Float_t met_uncerts metNBins];
 	
 	TCanvas* cv = new TCanvas("cv","cv",1000,600);
 
@@ -118,7 +119,7 @@ public:
 
 
 
-inline efficiency::Initialize(TString dataset){
+void efficiency::Initialize(TString dataset){
 	if(dataset == "dyJetsToLL"){
 		chain->SetBranchAddress("met",&met,&b_met);
 		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
@@ -321,15 +322,17 @@ inline efficiency::Initialize(TString dataset){
 	}
 }
 
-inline efficiency::make_metbins(){
+void efficiency::make_metbins(){
+	int metInterval = (metHigh - metLow)/metNBins;
+	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 	for(int i = 0; i < metNBins+1; i++){
 		met_bins[i] = (Float_t)i*metInterval;
 		std::cout << "met bins: " << met_bins[i] << std::endl;
 	}
 }
 
-inline efficiency::counter(){
-	for(int imet = 0; imet < Nmet; imet++){
+void efficiency::counter(){
+	for(int imet = 0; imet < metNBins; imet++){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
@@ -366,7 +369,7 @@ inline efficiency::counter(){
 	}
 }
 
-inline efficiency::make_plot(){
+void efficiency::make_plot(){
 	for(int i = 0; i < NFilter; i++){
 		gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
 		// gr[i]->Print();
