@@ -43,8 +43,8 @@ private:
 	float met_eff = -999;
 	float eff_uncert = -999;
 
-	int metNBins = 10; //10 met bins;
-	int NFilter = (int)filter_names.size(); //number of filters
+	static int metNBins = 10; //10 met bins;
+	static int NFilter = (int)filter_names.size(); //number of filters
 	
 	int metHigh = 1000;
 	int metLow = 0;
