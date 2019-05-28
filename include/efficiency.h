@@ -140,6 +140,8 @@ void efficiency::make_metbins(){
 }
 
 void efficiency::counter(){
+	int NFilter = (int)filter_names.size();
+	NPass.resize(NFilter);
 	int tot_entries = (int)chain->GetEntries();
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
@@ -154,7 +156,7 @@ void efficiency::counter(){
 	    		continue;
 	  		}
 	  	}	      
-  		for(int k = 0; k < (int)filter_names.size(); k++){
+  		for(int k = 0; k < NFilter; k++){
   			NPass.push_back(std::vector<float>(metNBins, 0));
   			NFail.push_back(std::vector<float>(metNBins,0)); 
   			Neff.push_back(std::vector<float>(metNBins,0));
@@ -173,13 +175,12 @@ void efficiency::counter(){
 	    	}	
     	}
 	}
-	for(int k = 0; k < (int)filter_names.size(); k++){
+	for(int k = 0; k < NFilter; k++){
 		for(int j = 0; j < metNBins; j++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
 		// Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
 		// Neff[k].push_back( (float)NFail[k][j]/NTot[j] );
 		// Neff_uncert[k].push_back( (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100) ); 
-
 			Neff[k][j] = (float)NFail[k][j]/NTot[j];
 			Neff_uncert[k][j] = (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100);
 
