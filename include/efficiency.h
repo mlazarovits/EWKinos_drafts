@@ -211,7 +211,8 @@ void efficiency::make_plot(){
 		TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
 		TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
 		TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
-		gr.push_back(new TGraphErrors(met_plot,tNeff[i],met_uncerts,tNeff_uncert[i]));
+		TVectorF tmet_uncerts(met_uncerts.size(), &met_uncerts[0]);
+		gr.push_back(new TGraphErrors(tmet_plot,tNeff[i],tmet_uncerts,tNeff_uncert[i]));
 		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
