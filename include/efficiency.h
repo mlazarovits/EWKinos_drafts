@@ -44,7 +44,7 @@ private:
 	float eff_uncert = -999;
 
 	static const int metNBins = 10; //10 met bins;
-	static const int NFilter = (static const int)filter_names.size(); //number of filters
+	int NFilter; //number of filters
 	
 	int metHigh = 1000;
 	int metLow = 0;
@@ -55,7 +55,12 @@ private:
 	Float_t eff_uncerts[metNBins];
 	float met_plot[metNBins];
 
-
+	Float_t NPass[NFilter][metNBins]; //number of passed events
+	Float_t NFail[NFilter][metNBins]; //number of failed events
+	Float_t NTot[metNBins]; //number of events in met_bin
+	Float_t Neff[NFilter][metNBins];
+	Float_t Neff_uncert[NFilter][metNBins];
+	Float_t met_uncerts[metNBins];
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -150,6 +155,7 @@ void efficiency::Initialize(TString dataset){
 		chain->AddFileInfoList((TCollection*)dyJetsToLL->GetList());
 		sample = dyJetsToLL->GetName();
 		std::cout << "sample: " << sample << std::endl;
+		NFilter = (int)filter_names.size();
 	}
 
 
@@ -176,7 +182,7 @@ void efficiency::Initialize(TString dataset){
 		filter_names.push_back("HBHENoiseIsoFilter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
-
+		NFilter = (int)filter_names.size();
 		//2016 dataset
 		TFileCollection *TChiToWZ = new TFileCollection("TChiToWZ","TChiToWZ");
 		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184342/0000/stopFlatNtuples_*");
@@ -203,7 +209,7 @@ void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("*",0);
 		chain->SetBranchStatus("*Filter*",1);
 		chain->SetBranchStatus("met",1);
-			chain->SetBranchStatus("evtWeight",1);
+		chain->SetBranchStatus("evtWeight",1);
 
 		filter_names.push_back("BadChargedCandidateFilter");
 		filter_names.push_back("BadPFMuonFilter");
@@ -214,7 +220,7 @@ void efficiency::Initialize(TString dataset){
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
-
+		NFilter = (int)filter_names.size();
 		//2016 dataset
 		TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
 		TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
@@ -238,7 +244,7 @@ void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("*",0);
 		chain->SetBranchStatus("*Filter*",1);
 		chain->SetBranchStatus("met",1);
-			chain->SetBranchStatus("evtWeight",1);
+		chain->SetBranchStatus("evtWeight",1);
 
 		filter_names.push_back("BadChargedCandidateFilter");
 		filter_names.push_back("BadPFMuonFilter");
@@ -249,7 +255,7 @@ void efficiency::Initialize(TString dataset){
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
-
+		NFilter = (int)filter_names.size();
 		//2016 dataset
 		TFileCollection *WJetsToLNu = new TFileCollection("WJetsToLNu","WJetsToLNu");
 		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020824/0000/stopFlatNtuples_*");
@@ -281,7 +287,7 @@ void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("*",0);
 		chain->SetBranchStatus("*Filter*",1);
 		chain->SetBranchStatus("met",1);
-			chain->SetBranchStatus("evtWeight",1);
+		chain->SetBranchStatus("evtWeight",1);
 
 		filter_names.push_back("BadChargedCandidateFilter");
 		filter_names.push_back("BadPFMuonFilter");
@@ -292,7 +298,7 @@ void efficiency::Initialize(TString dataset){
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
-
+		NFilter = (int)filter_names.size();
 		//2016 dataset
 		TFileCollection *TTJets = new TFileCollection("TTJets","TTJets");
 		TTJets->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/crogan/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8RunIISummer16MiniAODv2/181220_212122/0000/stopFlatNtuples_*");    
@@ -322,12 +328,6 @@ void efficiency::make_metbins(){
 }
 
 void efficiency::counter(){
-	Float_t NPass[NFilter][metNBins]; //number of passed events
-	Float_t NFail[NFilter][metNBins]; //number of failed events
-	Float_t NTot[metNBins]; //number of events in met_bin
-	Float_t Neff[NFilter][metNBins];
-	Float_t Neff_uncert[NFilter][metNBins];
-	Float_t met_uncerts[metNBins];
 	for(int imet = 0; imet < metNBins; imet++){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
