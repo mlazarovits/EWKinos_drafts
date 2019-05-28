@@ -206,7 +206,9 @@ void efficiency::counter(){
 }
 
 void efficiency::make_plot(){
+
 	for(int i = 0; i < (int)filter_names.size(); i++){
+		TVector<float> tNeff(Neff[i].size(), &Neff[i][0]);
 		gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
 		// gr[i]->Print();
 		if(i/3 == 0){
