@@ -65,9 +65,9 @@ private:
 	// Float_t Neff_uncert[NFilter][metNBins];
 
 	std::vector<std::vector<float>> NPass;
-	std::vector<float> NFail;
-	std::vector<float> Neff;
-	std::vector<float> Neff_uncert;
+	std::vector<std::vector<float>> NFail;
+	std::vector<std::vector<float>> Neff;
+	std::vector<std::vector<float>> Neff_uncert;
 
 	// Float_t NTot[metNBins]; //number of events in met_bin
 	// Float_t met_uncerts[metNBins];
@@ -142,6 +142,9 @@ void efficiency::make_metbins(){
 void efficiency::counter(){
 	int NFilter = (int)filter_names.size();
 	NPass.resize(NFilter);
+	NFail.resize(NFilter);
+	Neff.resize(NFilter);
+	Neff_uncert.resize(NFilter);
 	int tot_entries = (int)chain->GetEntries();
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
@@ -159,9 +162,12 @@ void efficiency::counter(){
   		for(int k = 0; k < NFilter; k++){
   			// NPass.push_back(std::vector<float>(metNBins, 0));
   			NPass[k].resize(metNBins);
-  			NFail.push_back(std::vector<float>(metNBins,0)); 
-  			Neff.push_back(std::vector<float>(metNBins,0));
-			Neff_uncert.push_back(std::vector<float>(metNBins,0));
+  			NFail[k].resize(metNBins);
+  			Neff.resize(metNBins);
+  			Neff_uncert.resize(metNBins);
+  			// NFail.push_back(std::vector<float>(metNBins,0)); 
+  			// Neff.push_back(std::vector<float>(metNBins,0));
+			// Neff_uncert.push_back(std::vector<float>(metNBins,0));
 
   			for(int j = 0; j < metNBins; j++){
 	    		if(filter_names[k]==1){ //pass filter
