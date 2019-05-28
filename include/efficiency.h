@@ -44,23 +44,36 @@ private:
 	float eff_uncert = -999;
 
 	static const int metNBins = 10; //10 met bins;
-	int NFilter; //number of filters
 	
 	int metHigh = 1000;
 	int metLow = 0;
 	int metInterval = (metHigh - metLow)/metNBins;
 
-	float met_bins[metNBins+1]; //values of high/low met for cuts
-	Float_t met_effs[metNBins]; //failed entries percentage
-	Float_t eff_uncerts[metNBins];
-	float met_plot[metNBins];
+	// float met_bins[metNBins+1]; //values of high/low met for cuts
+	// Float_t met_effs[metNBins]; //failed entries percentage
+	// Float_t eff_uncerts[metNBins];
+	// float met_plot[metNBins];
 
-	Float_t NPass[NFilter][metNBins]; //number of passed events
-	Float_t NFail[NFilter][metNBins]; //number of failed events
-	Float_t NTot[metNBins]; //number of events in met_bin
-	Float_t Neff[NFilter][metNBins];
-	Float_t Neff_uncert[NFilter][metNBins];
-	Float_t met_uncerts[metNBins];
+	std::vector<float> met_bins;
+	std::vector<float> met_effs;
+	std::vector<float> eff_uncerts;
+	std::vector<float> met_plot;
+	
+	// Float_t NPass[NFilter][metNBins]; //number of passed events
+	// Float_t NFail[NFilter][metNBins]; //number of failed events
+	// Float_t Neff[NFilter][metNBins];
+	// Float_t Neff_uncert[NFilter][metNBins];
+
+	std::vector<float> NPass;
+	std::vector<float> NFail;
+	std::vector<float> Neff;
+	std::vector<float> Neff_uncert;
+
+	// Float_t NTot[metNBins]; //number of events in met_bin
+	// Float_t met_uncerts[metNBins];
+
+	std::vector<float> NTot;
+	std::vector<float> met_uncerts;
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -114,243 +127,56 @@ public:
 
 
 
-void efficiency::Initialize(TString dataset){
-	if(dataset == "dyJetsToLL"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
-		chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
-		chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
-
-
-		filter_names.push_back("globalSuperTightHalo2016Filter");
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("HBHENoiseFilter");
-		filter_names.push_back("HBHEIsoNoiseFilter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
-
-		TFileCollection *dyJetsToLL= new TFileCollection("dyJetsToLL","dyJetsToLL");
-		dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220245/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220311/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220337/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220403/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220428/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220454/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220520/0000/stopFlatNtuples_*");
-		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220546/0000/stopFlatNtuples_*");
-
-		chain->AddFileInfoList((TCollection*)dyJetsToLL->GetList());
-		sample = dyJetsToLL->GetName();
-		std::cout << "sample: " << sample << std::endl;
-		NFilter = (int)filter_names.size();
-	}
-
-
-
-	else if(dataset == "TChiToWZ"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
-
-		chain->SetBranchStatus("*",0);
-		chain->SetBranchStatus("*Filter*",1);
-		chain->SetBranchStatus("met",1);
-
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
-		NFilter = (int)filter_names.size();
-		//2016 dataset
-		TFileCollection *TChiToWZ = new TFileCollection("TChiToWZ","TChiToWZ");
-		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184342/0000/stopFlatNtuples_*");
-		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184216/0000/stopFlatNtuples_*");
-		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184151/0000/stopFlatNtuples_*");
-		std::cout << "finished adding files to file list" << std::endl;
-
-		chain->AddFileInfoList((TCollection*)TChiToWZ->GetList());
-
-		sample = TChiToWZ->GetName();
-		std::cout << "sample: " << sample << std::endl;
-	}
-	else if(dataset == "TChiWH_HToGG"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
-
-		chain->SetBranchStatus("*",0);
-		chain->SetBranchStatus("*Filter*",1);
-		chain->SetBranchStatus("met",1);
-		chain->SetBranchStatus("evtWeight",1);
-
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("ecalBadCalibFilter");
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("globalSuperTightHalo2016Filter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
-		NFilter = (int)filter_names.size();
-		//2016 dataset
-		TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
-		TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
-		std::cout << "finished adding files to file list" << std::endl;
-
-		chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
-		sample = TChiWH_HToGG->GetName();
-		std::cout << "sample: " << sample << std::endl;
-	}
-	else if(dataset == "WJetsToLNu"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
-
-		chain->SetBranchStatus("*",0);
-		chain->SetBranchStatus("*Filter*",1);
-		chain->SetBranchStatus("met",1);
-		chain->SetBranchStatus("evtWeight",1);
-
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("ecalBadCalibFilter");
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("globalSuperTightHalo2016Filter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
-		NFilter = (int)filter_names.size();
-		//2016 dataset
-		TFileCollection *WJetsToLNu = new TFileCollection("WJetsToLNu","WJetsToLNu");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020824/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020702/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020845/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020721/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020740/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020800/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181116_210752/0000/stopFlatNtuples_*");
-		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_extWJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181219_234206/0000/stopFlatNtuples_*");
-
-		std::cout << "finished adding files to file list" << std::endl;
-
-		chain->AddFileInfoList((TCollection*)WJetsToLNu->GetList());
-		sample = WJetsToLNu->GetName();
-		std::cout << "sample: " << sample << std::endl;
-	}
-	else if(dataset == "TTJets"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
-
-		chain->SetBranchStatus("*",0);
-		chain->SetBranchStatus("*Filter*",1);
-		chain->SetBranchStatus("met",1);
-		chain->SetBranchStatus("evtWeight",1);
-
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("ecalBadCalibFilter");
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("globalSuperTightHalo2016Filter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
-		NFilter = (int)filter_names.size();
-		//2016 dataset
-		TFileCollection *TTJets = new TFileCollection("TTJets","TTJets");
-		TTJets->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/crogan/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8RunIISummer16MiniAODv2/181220_212122/0000/stopFlatNtuples_*");    
-		std::cout << "finished adding files to file list" << std::endl;
-
-		chain->AddFileInfoList((TCollection*)TTJets->GetList());
-		chain->SetBranchStatus("*",0);
-		chain->SetBranchStatus("*Filter*",1);
-		chain->SetBranchStatus("met",1);
-		chain->SetBranchStatus("evtWeight",1);
-		sample = TTJets->GetName();
-		std::cout << "sample: " << sample << std::endl;
-	}
-	else{
-		std::cout << "error: not a valid dataset" << std::endl;
-		return;
-	}
-}
 
 void efficiency::make_metbins(){
 	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 	for(int i = 0; i < metNBins+1; i++){
-		met_bins[i] = (Float_t)i*metInterval;
+		// met_bins[i] = (Float_t)i*metInterval;
+		met_bins.push_back( (float)i*metInterval );
 		std::cout << "met bins: " << met_bins[i] << std::endl;
 	}
 }
 
 void efficiency::counter(){
+
 	for(int imet = 0; imet < metNBins; imet++){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
-	    		NTot[j]+= 1.*evtWeight;
-	    		met_uncerts[j] = metInterval/2;
-	    		met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
+	    		// NTot[j]+= 1.*evtWeight;
+	    		// met_uncerts[j] = metInterval/2;
+	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
+
+	    		NTot.push_back( (float)1.*evtWeight ); //total number of events in this met bin
+	    		met_uncerts.push_back( (float)metInterval/2 );
+	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	    		continue;
 	  		}      
-	  		for(int k = 0; k < NFilter; k++){ 
+	  		for(int k = 0; k < (int)filter_names.size(); k++){ 
 	    		if(filter_names[k]==1){ //pass filter
-	      			NPass[k][j] += 1.;
+	      			// NPass[k][j] += 1.;
+	      			NPass.push_back(std::vector<float>);
+	      			NPass[k][j] += (float)1.*evtWeight;
 	      		}	
 	    		if(filter_names[k]==0){ //fail filter
-	      			NFail[k][j] += 1.;
+	      			// NFail[k][j] += 1.;
+	      			NFail.push_back(std::vector<float>);
+	      			NFail[k][j] += (float)1.*evtWeight;
 	    		}
 	    	}
 	  	}
 	}
 	for(int j = 0; j < metNBins; j++){
-		for(int k = 0; k < NFilter; k++){
-		Neff[k][j] = NFail[k][j]/NTot[j];
-		Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
+		for(int k = 0; k < (int)filter_names.size(); k++){
+		// Neff[k][j] = NFail[k][j]/NTot[j];
+		// Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
+		Neff.push_back(std::vector<float>);
+		Neff_uncert.push_back(std::vector<float>);
+
+		Neff[k][j] = (float)( NFail[k][j]/NTot[j] );
+		Neff_uncert[k][j] = (float)( sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100 ); 
 
 			if(abs(Neff[k][j]) > 10){
 				std::cout << filter_names[k] << std::endl;
@@ -359,14 +185,14 @@ void efficiency::counter(){
 				std::cout << "failed events: " << NFail[k][j] << std::endl;
 				std::cout << "fail efficiency: " << Neff[k][j] << std::endl;
 				std::cout << "error: " << Neff_uncert[k][j] << std::endl;
-				std::cout << "" << std::endl;
+				std::cout << "\n" << std::endl;
 			}
 		}
 	}
 }
 
 void efficiency::make_plot(){
-	for(int i = 0; i < NFilter; i++){
+	for(int i = 0; i < (int)filter_names.size(); i++){
 		gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
 		// gr[i]->Print();
 		if(i/3 == 0){
@@ -430,5 +256,206 @@ void efficiency::make_plot(){
 	cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
 }	
 
+void efficiency::Initialize(TString dataset){
+	if(dataset == "dyJetsToLL"){
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
+		chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
+		chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
+		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseFilter");
+		filter_names.push_back("HBHEIsoNoiseFilter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
+
+		TFileCollection *dyJetsToLL= new TFileCollection("dyJetsToLL","dyJetsToLL");
+		dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220245/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220311/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220337/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220403/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220428/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220454/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220520/0000/stopFlatNtuples_*");
+		// dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220546/0000/stopFlatNtuples_*");
+
+		chain->AddFileInfoList((TCollection*)dyJetsToLL->GetList());
+		sample = dyJetsToLL->GetName();
+		std::cout << "sample: " << sample << std::endl;
+		// NFilter = (int)filter_names.size();
+	}
+
+
+
+	else if(dataset == "TChiToWZ"){
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+
+		chain->SetBranchStatus("*",0);
+		chain->SetBranchStatus("*Filter*",1);
+		chain->SetBranchStatus("met",1);
+
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
+		// NFilter = (int)filter_names.size();
+		//2016 dataset
+		TFileCollection *TChiToWZ = new TFileCollection("TChiToWZ","TChiToWZ");
+		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184342/0000/stopFlatNtuples_*");
+		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184216/0000/stopFlatNtuples_*");
+		TChiToWZ->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWZ_ZToLL_mZMin-0p1_mLSP300to350_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv2/181220_184151/0000/stopFlatNtuples_*");
+		std::cout << "finished adding files to file list" << std::endl;
+
+		chain->AddFileInfoList((TCollection*)TChiToWZ->GetList());
+
+		sample = TChiToWZ->GetName();
+		std::cout << "sample: " << sample << std::endl;
+	}
+	else if(dataset == "TChiWH_HToGG"){
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+
+		chain->SetBranchStatus("*",0);
+		chain->SetBranchStatus("*Filter*",1);
+		chain->SetBranchStatus("met",1);
+		chain->SetBranchStatus("evtWeight",1);
+
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
+		filter_names.push_back("ecalBadCalibFilter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
+		// NFilter = (int)filter_names.size();
+
+		//2016 dataset
+		TFileCollection *TChiWH_HToGG = new TFileCollection("TChiWH_HToGG","TChiWH_HToGG");
+		TChiWH_HToGG->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/Signal/SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_SMS-TChiWH_HToGG_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISpring16MiniAODv2/181220_184408/0000/stopFlatNtuples_*");    
+		std::cout << "finished adding files to file list" << std::endl;
+
+		chain->AddFileInfoList((TCollection*)TChiWH_HToGG->GetList());
+		sample = TChiWH_HToGG->GetName();
+		std::cout << "sample: " << sample << std::endl;
+	}
+	else if(dataset == "WJetsToLNu"){
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+
+		chain->SetBranchStatus("*",0);
+		chain->SetBranchStatus("*Filter*",1);
+		chain->SetBranchStatus("met",1);
+		chain->SetBranchStatus("evtWeight",1);
+
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
+		filter_names.push_back("ecalBadCalibFilter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
+		// NFilter = (int)filter_names.size();
+		//2016 dataset
+		TFileCollection *WJetsToLNu = new TFileCollection("WJetsToLNu","WJetsToLNu");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020824/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020702/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020845/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020721/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020740/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8RunIISummer16MiniAODv3/190222_020800/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181116_210752/0000/stopFlatNtuples_*");
+		WJetsToLNu->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/zflowers/Ewkinos/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/crab_extWJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/181219_234206/0000/stopFlatNtuples_*");
+
+		std::cout << "finished adding files to file list" << std::endl;
+
+		chain->AddFileInfoList((TCollection*)WJetsToLNu->GetList());
+		sample = WJetsToLNu->GetName();
+		std::cout << "sample: " << sample << std::endl;
+	}
+	else if(dataset == "TTJets"){
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+
+		chain->SetBranchStatus("*",0);
+		chain->SetBranchStatus("*Filter*",1);
+		chain->SetBranchStatus("met",1);
+		chain->SetBranchStatus("evtWeight",1);
+
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
+		filter_names.push_back("ecalBadCalibFilter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
+		// NFilter = (int)filter_names.size();
+		//2016 dataset
+		TFileCollection *TTJets = new TFileCollection("TTJets","TTJets");
+		TTJets->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/crogan/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8RunIISummer16MiniAODv2/181220_212122/0000/stopFlatNtuples_*");    
+		std::cout << "finished adding files to file list" << std::endl;
+
+		chain->AddFileInfoList((TCollection*)TTJets->GetList());
+		chain->SetBranchStatus("*",0);
+		chain->SetBranchStatus("*Filter*",1);
+		chain->SetBranchStatus("met",1);
+		chain->SetBranchStatus("evtWeight",1);
+		sample = TTJets->GetName();
+		std::cout << "sample: " << sample << std::endl;
+	}
+	else{
+		std::cout << "error: not a valid dataset" << std::endl;
+		return;
+	}
+}
 
