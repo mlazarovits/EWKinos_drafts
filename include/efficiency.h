@@ -149,7 +149,7 @@ void efficiency::counter(){
 	    		// met_uncerts[j] = metInterval/2;
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
 
-	    		NTot.push_back( (float)1.*evtWeight ); //total number of events in this met bin
+	    		NTot.push_back( (float)(NTot[j-1] + 1.*evtWeight) ); //total number of events in this met bin
 	    		met_uncerts.push_back( (float)metInterval/2 );
 	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	    		continue;
@@ -157,12 +157,14 @@ void efficiency::counter(){
 	  		for(int k = 0; k < (int)filter_names.size(); k++){ 
 	    		if(filter_names[k]==1){ //pass filter
 	      			// NPass[k][j] += 1.;
-	      			NPass.push_back(std::vector<float>);
+	      			NPass.push_back(std::vector<float>(metNBins, 0));
+	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			NPass[k][j] += (float)1.*evtWeight;
 	      		}	
 	    		if(filter_names[k]==0){ //fail filter
 	      			// NFail[k][j] += 1.;
-	      			NFail.push_back(std::vector<float>);
+	      			NFail.push_back(std::vector<float>(metNBins,0));
+	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
 	      			NFail[k][j] += (float)1.*evtWeight;
 	    		}
 	    	}
@@ -172,11 +174,11 @@ void efficiency::counter(){
 		for(int k = 0; k < (int)filter_names.size(); k++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
 		// Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
-		Neff.push_back(std::vector<float>);
-		Neff_uncert.push_back(std::vector<float>);
+		Neff.push_back(std::vector<float>(0));
+		Neff_uncert.push_back(std::vector<float>(0));
 
-		Neff[k][j] = (float)( NFail[k][j]/NTot[j] );
-		Neff_uncert[k][j] = (float)( sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100 ); 
+		Neff[k].push_back( (float)NFail[k][j]/NTot[j] );
+		Neff_uncert[k].push_back( (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100) ); 
 
 			if(abs(Neff[k][j]) > 10){
 				std::cout << filter_names[k] << std::endl;
