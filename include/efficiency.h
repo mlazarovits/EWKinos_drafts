@@ -142,6 +142,7 @@ void efficiency::make_metbins(){
 void efficiency::counter(){
 	int NFilter = (int)filter_names.size();
 	NPass.resize(NFilter);
+	cout << NPass[4] << endl;
 	int tot_entries = (int)chain->GetEntries();
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
