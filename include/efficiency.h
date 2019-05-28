@@ -17,7 +17,7 @@
 #include "TLegend.h"
 #include "TFileCollection.h"
 #include "TLatex.h"
-#include "TVector.h"
+#include "TVectorF.h"
 #include <string>
 #include <cmath>
 
@@ -208,8 +208,9 @@ void efficiency::counter(){
 void efficiency::make_plot(){
 
 	for(int i = 0; i < (int)filter_names.size(); i++){
-		TVector<float> tNeff(Neff[i].size(), &Neff[i][0]);
-		gr.push_back(new TGraphErrors(metNBins,met_plot,Neff[i],met_uncerts,Neff_uncert[i]));
+		TVectorF<float> tNeff(Neff[i].size(), &Neff[i][0]);
+		TVector<float> tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
+		gr.push_back(new TGraphErrors(metNBins,met_plot,tNeff[i],met_uncerts,tNeff_uncert[i]));
 		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
