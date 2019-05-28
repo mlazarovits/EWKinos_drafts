@@ -44,7 +44,7 @@ private:
 	float eff_uncert = -999;
 
 	static const int metNBins = 10; //10 met bins;
-	static const int NFilter = (int)filter_names.size(); //number of filters
+	static const int NFilter = (static const int)filter_names.size(); //number of filters
 	
 	int metHigh = 1000;
 	int metLow = 0;
@@ -55,12 +55,7 @@ private:
 	Float_t eff_uncerts[metNBins];
 	float met_plot[metNBins];
 
-	Float_t NPass[NFilter][metNBins]; //number of passed events
-	Float_t NFail[NFilter][metNBins]; //number of failed events
-	Float_t NTot[metNBins]; //number of events in met_bin
-	Float_t Neff[NFilter][metNBins];
-	Float_t Neff_uncert[NFilter][metNBins];
-	Float_t met_uncerts[metNBins];
+
 
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();
@@ -99,10 +94,6 @@ protected:
 
 
 public:
-
-	
-
-
 	
 	TCanvas* cv = new TCanvas("cv","cv",1000,600);
 
@@ -331,6 +322,12 @@ void efficiency::make_metbins(){
 }
 
 void efficiency::counter(){
+	Float_t NPass[NFilter][metNBins]; //number of passed events
+	Float_t NFail[NFilter][metNBins]; //number of failed events
+	Float_t NTot[metNBins]; //number of events in met_bin
+	Float_t Neff[NFilter][metNBins];
+	Float_t Neff_uncert[NFilter][metNBins];
+	Float_t met_uncerts[metNBins];
 	for(int imet = 0; imet < metNBins; imet++){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
