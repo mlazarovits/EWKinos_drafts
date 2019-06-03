@@ -1,10 +1,10 @@
 #ifndef EFFICIENCY_H
 #define EFFICIENCY_H
 
-#include </* /\* `/\\* iostream> *\\/ *\/ */
-/* /\* /\\* //#include "AUX.h" //makeclass for stopntuple *\\/ *\/ */
-/* /\* /\\* //#include "TLorentzVector.h" *\\/ *\/ */
-/* /\* /\\* #include */ */ */ "TTree.h"
+#include <iostream> 
+//#include "AUX.h" //makeclass for stopntuple
+#include "TLorentzVector.h" 
+#include "TTree.h"
 #include "TFile.h"
 #include "TH1D.h"
 #include "TChain.h"
@@ -28,8 +28,8 @@ class efficiency
 private:
 	vector<TString> filter_names;
 	TString draw_string="";
-	TString sample ="";
-	TChain* chain = new TChain("stopTreeMaker/AUX");
+	TString sample = "";
+	TChain* chain;
 
 	float Nentries = -999;
 	float Npass = -999;
@@ -108,12 +108,12 @@ private:
     TBranch        *b_evtWeight;
 
 
-Protected:
+protected:
 
 
-Public:
+public:
 	
-    TCanvas* cv;// = new TCanvas("cv","cv",1000,600);
+    TCanvas* cv;
 
 	efficiency();
 	virtual ~efficiency(){ };
@@ -127,7 +127,10 @@ Public:
 
 
 
-
+efficiency::efficiency(){
+	chain = new TChain("stopTreeMaker/AUX");
+	cv = = new TCanvas("cv","cv",1000,600);
+}
 
 void efficiency::make_metbins(){
 	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
