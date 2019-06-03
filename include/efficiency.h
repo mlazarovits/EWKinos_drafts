@@ -1,10 +1,10 @@
 #ifndef EFFICIENCY_H
 #define EFFICIENCY_H
 
-#include <iostream>
-//#include "AUX.h" //makeclass for stopntuple
-//#include "TLorentzVector.h"
-#include "TTree.h"
+#include </* /\* `/\\* iostream> *\\/ *\/ */
+/* /\* /\\* //#include "AUX.h" //makeclass for stopntuple *\\/ *\/ */
+/* /\* /\\* //#include "TLorentzVector.h" *\\/ *\/ */
+/* /\* /\\* #include */ */ */ "TTree.h"
 #include "TFile.h"
 #include "TH1D.h"
 #include "TChain.h"
@@ -106,14 +106,14 @@ private:
     TBranch        *b_HBHEIsoNoiseFilter; 
     TBranch        *b_met;   //!
     TBranch        *b_evtWeight;
-  
-
-protected:
 
 
-public:
+Protected:
+
+
+Public:
 	
-	TCanvas* cv = new TCanvas("cv","cv",1000,600);
+    TCanvas* cv;// = new TCanvas("cv","cv",1000,600);
 
 	efficiency();
 	virtual ~efficiency(){ };
