@@ -148,6 +148,7 @@ inline efficiency::efficiency(){
 	// float met_eff = -999;
 	// float eff_uncert = -999;
 
+
 	TMultiGraph* mg = new TMultiGraph();
 }
 
@@ -180,9 +181,11 @@ inline void efficiency::counter(){
 	    		// NTot[j]+= 1.*evtWeight;
 	    		// met_uncerts[j] = metInterval/2;
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
-	    		float tmp = (float)(NTot[j] + 1.*evtWeight);
-	    		cout << "point 0" << endl;
-	    		NTot.push_back( tmp ); //total number of events in this met bin
+	    		// float tmp = (float)(NTot[j] + 1.*evtWeight);
+	    		// cout << "point 0" << endl;
+	    		NTot.push_back( 0.0 );
+	    		cout << "point 1" << endl;
+	    		NTot[j] += (float)1.*evtWeight; //total number of events in this met bin
 	    		cout << "point a" << endl;
 	    		met_uncerts.push_back( (float)metInterval/2 );
 	    		cout << "point b" << endl;
