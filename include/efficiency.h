@@ -184,21 +184,21 @@ inline void efficiency::counter(){
 	    		// float tmp = (float)(NTot[j] + 1.*evtWeight);
 	    		// cout << "point 0" << endl;
 	    		NTot.push_back( 0.0 );
-	    		cout << "point 1" << endl;
+	    		// cout << "point 1" << endl;
 	    		NTot[j] += (float)1.*evtWeight; //total number of events in this met bin
-	    		cout << "point a" << endl;
+	    		// cout << "point a" << endl;
 	    		met_uncerts.push_back( (float)metInterval/2 );
-	    		cout << "point b" << endl;
+	    		// cout << "point b" << endl;
 	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
-	    		cout << "point c" << endl;
+	    		// cout << "point c" << endl;
 	    		continue;
-	    		cout << "point d" << endl;
+	    		// cout << "point d" << endl;
 	  		}
 	  	}
 	  	cout << "filter loop" << endl;	      
   		for(int k = 0; k < NFilter; k++){
   			// NPass.push_back(std::vector<float>(metNBins, 0));
-  			cout << "filter: " << filter_names[k] << endl;
+  			// cout << "filter: " << filter_names[k] << endl;
   			NPass[k].resize(metNBins);
   			NFail[k].resize(metNBins);
   			Neff.resize(metNBins);
@@ -206,7 +206,8 @@ inline void efficiency::counter(){
   			// NFail.push_back(std::vector<float>(metNBins,0)); 
   			// Neff.push_back(std::vector<float>(metNBins,0));
 			// Neff_uncert.push_back(std::vector<float>(metNBins,0));
-  			cout << "resized arrays" << endl;
+  			
+  			// cout << "resized arrays" << endl;
   			for(int j = 0; j < metNBins; j++){
 	    		if(filter_names[k]==1){ //pass filter
 	      			// NPass[k][j] += 1.;
