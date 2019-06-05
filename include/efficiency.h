@@ -177,7 +177,7 @@ inline void efficiency::counter(){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
-	  			cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
+	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		// NTot[j]+= 1.*evtWeight;
 	    		// met_uncerts[j] = metInterval/2;
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
