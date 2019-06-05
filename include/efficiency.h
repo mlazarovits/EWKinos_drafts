@@ -181,9 +181,13 @@ inline void efficiency::counter(){
 	    		// met_uncerts[j] = metInterval/2;
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
 	    		NTot.push_back( (float)(NTot[j-1] + 1.*evtWeight) ); //total number of events in this met bin
+	    		cout << "point a" << endl;
 	    		met_uncerts.push_back( (float)metInterval/2 );
+	    		cout << "point b" << endl;
 	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
+	    		cout << "point c" << endl;
 	    		continue;
+	    		cout << "point d" << endl;
 	  		}
 	  	}
 	  	cout << "filter loop" << endl;	      
