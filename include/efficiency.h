@@ -31,23 +31,23 @@ private:
 	TString sample = "";
 	TChain* chain;
 
-	float Nentries = -999;
-	float Npass = -999;
-	float Nfail = -999;
-	float fail_eff = -999;
-	float fail_sigma = -999;
+	float Nentries;
+	float Npass;
+	float Nfail;
+	float fail_eff;
+	float fail_sigma;
 
-	double Npass_met = -999;
-	double Nfail_met = -999;
-	double Nentries_met = -999;
-	float met_eff = -999;
-	float eff_uncert = -999;
+	double Npass_met;
+	double Nfail_met;
+	double Nentries_met;
+	float met_eff;
+	float eff_uncert;
 
-	static const int metNBins = 10; //10 met bins;
+	static const int metNBins; //10 met bins;
 	
-	int metHigh = 1000;
-	int metLow = 0;
-	int metInterval = (metHigh - metLow)/metNBins;
+	int metHigh;
+	int metLow;
+	int metInterval;
 
 	// float met_bins[metNBins+1]; //values of high/low met for cuts
 	// Float_t met_effs[metNBins]; //failed entries percentage
@@ -76,7 +76,7 @@ private:
 	std::vector<float> met_uncerts;
 
 	vector<TGraphErrors*> gr;
-	TMultiGraph* mg = new TMultiGraph();
+	TMultiGraph* mg;
 
 
   	Float_t         met;
@@ -130,6 +130,25 @@ public:
 efficiency::efficiency(){
 	chain = new TChain("stopTreeMaker/AUX");
 	cv = = new TCanvas("cv","cv",1000,600);
+	static const int metNBins = 10; //10 met bins;
+	
+	int metHigh = 1000;
+	int metLow = 0;
+	int metInterval = (metHigh - metLow)/metNBins;
+
+	float Nentries = -999;
+	float Npass = -999;
+	float Nfail = -999;
+	float fail_eff = -999;
+	float fail_sigma = -999;
+
+	double Npass_met = -999;
+	double Nfail_met = -999;
+	double Nentries_met = -999;
+	float met_eff = -999;
+	float eff_uncert = -999;
+
+	TMultiGraph* mg = new TMultiGraph();
 }
 
 void efficiency::make_metbins(){
