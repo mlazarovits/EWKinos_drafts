@@ -43,7 +43,7 @@ private:
 	float met_eff;
 	float eff_uncert;
 
-	static int metNBins; //10 met bins;
+	int metNBins; //10 met bins;
 	
 	int metHigh;
 	int metLow;
