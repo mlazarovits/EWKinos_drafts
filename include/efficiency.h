@@ -162,6 +162,7 @@ inline void efficiency::make_metbins(){
 }
 
 inline void efficiency::counter(){
+	cout << "counter" << endl;
 	int NFilter = (int)filter_names.size();
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
@@ -228,7 +229,7 @@ inline void efficiency::counter(){
 }
 
 inline void efficiency::make_plot(){
-
+	cout << "make_plot" << endl;
 	for(int i = 0; i < (int)filter_names.size(); i++){
 		TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
 		TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
@@ -299,6 +300,7 @@ inline void efficiency::make_plot(){
 }	
 
 inline void efficiency::Initialize(TString dataset){
+	cout << "Initialize" << endl;
 	if(dataset == "dyJetsToLL"){
 		chain->SetBranchAddress("met",&met,&b_met);
 		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
