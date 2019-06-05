@@ -170,8 +170,7 @@ inline void efficiency::counter(){
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
 	int tot_entries = (int)chain->GetEntries();
-
-	cout << "set local variables" << endl;
+	cout << "total entries: " << tot_entries << endl;
 
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
