@@ -127,31 +127,31 @@ public:
 
 
 
-efficiency::efficiency(){
+inline efficiency::efficiency(){
 	chain = new TChain("stopTreeMaker/AUX");
 	cv = new TCanvas("cv","cv",1000,600);
-	static const int metNBins = 10; //10 met bins;
+	metNBins = 10; //10 met bins;
 	
-	int metHigh = 1000;
-	int metLow = 0;
-	int metInterval = (metHigh - metLow)/metNBins;
+	metHigh = 1000;
+	metLow = 0;
+	metInterval = (metHigh - metLow)/metNBins;
 
-	float Nentries = -999;
-	float Npass = -999;
-	float Nfail = -999;
-	float fail_eff = -999;
-	float fail_sigma = -999;
+	// Nentries = -999;
+	// float Npass = -999;
+	// float Nfail = -999;
+	// float fail_eff = -999;
+	// float fail_sigma = -999;
 
-	double Npass_met = -999;
-	double Nfail_met = -999;
-	double Nentries_met = -999;
-	float met_eff = -999;
-	float eff_uncert = -999;
+	// double Npass_met = -999;
+	// double Nfail_met = -999;
+	// double Nentries_met = -999;
+	// float met_eff = -999;
+	// float eff_uncert = -999;
 
 	TMultiGraph* mg = new TMultiGraph();
 }
 
-void efficiency::make_metbins(){
+inline void efficiency::make_metbins(){
 	std::cout << "met: " << metLow << " GeV to " << metHigh << " GeV" << std::endl;
 	std::cout << metNBins << " bins with " << metInterval << " GeV each" << std::endl;
 	for(int i = 0; i < metNBins+1; i++){
@@ -161,7 +161,7 @@ void efficiency::make_metbins(){
 	}
 }
 
-void efficiency::counter(){
+inline void efficiency::counter(){
 	int NFilter = (int)filter_names.size();
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
@@ -227,7 +227,7 @@ void efficiency::counter(){
 	}
 }
 
-void efficiency::make_plot(){
+inline void efficiency::make_plot(){
 
 	for(int i = 0; i < (int)filter_names.size(); i++){
 		TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
@@ -271,7 +271,7 @@ void efficiency::make_plot(){
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
 	TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
-	for(int i = 0; i < filter_names.size(); i++){
+	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 	leg2->AddEntry(gr[i],filter_names[i].Data());
 	}
@@ -298,7 +298,7 @@ void efficiency::make_plot(){
 	cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
 }	
 
-void efficiency::Initialize(TString dataset){
+inline void efficiency::Initialize(TString dataset){
 	if(dataset == "dyJetsToLL"){
 		chain->SetBranchAddress("met",&met,&b_met);
 		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
