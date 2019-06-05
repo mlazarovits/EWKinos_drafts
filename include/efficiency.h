@@ -169,10 +169,14 @@ inline void efficiency::counter(){
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
 	int tot_entries = (int)chain->GetEntries();
+
+	cout << "set local variables" << endl;
+
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
+	  			cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		// NTot[j]+= 1.*evtWeight;
 	    		// met_uncerts[j] = metInterval/2;
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
@@ -181,9 +185,11 @@ inline void efficiency::counter(){
 	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	    		continue;
 	  		}
-	  	}	      
+	  	}
+	  	cout << "filter loop" << endl;	      
   		for(int k = 0; k < NFilter; k++){
   			// NPass.push_back(std::vector<float>(metNBins, 0));
+  			cout << "filter: " << filter_names[k] << endl;
   			NPass[k].resize(metNBins);
   			NFail[k].resize(metNBins);
   			Neff.resize(metNBins);
@@ -191,7 +197,7 @@ inline void efficiency::counter(){
   			// NFail.push_back(std::vector<float>(metNBins,0)); 
   			// Neff.push_back(std::vector<float>(metNBins,0));
 			// Neff_uncert.push_back(std::vector<float>(metNBins,0));
-
+  			cout << "resized arrays" << endl;
   			for(int j = 0; j < metNBins; j++){
 	    		if(filter_names[k]==1){ //pass filter
 	      			// NPass[k][j] += 1.;
@@ -206,6 +212,7 @@ inline void efficiency::counter(){
 	    	}	
     	}
 	}
+	cout << "efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
 		for(int j = 0; j < metNBins; j++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
