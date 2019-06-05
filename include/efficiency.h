@@ -175,7 +175,7 @@ inline void efficiency::counter(){
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
 		if(imet % 10000 == 0){
-			fprintf(stdout, "/r Processed events: %8d of %8d ",imet, tot_entries);
+			fprintf(stdout, "\r Processed events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
