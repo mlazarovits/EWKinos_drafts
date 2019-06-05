@@ -174,6 +174,11 @@ inline void efficiency::counter(){
 
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
+		cout << "Event # " << i << "out of " << tot_entries << endl;
+		if(imet % 10000 == 0){
+			fprintf(stdout, "/r Processed events: %8d of %8d, "imet, tot_entries);
+		}
+		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
 	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
