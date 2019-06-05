@@ -129,7 +129,7 @@ public:
 
 efficiency::efficiency(){
 	chain = new TChain("stopTreeMaker/AUX");
-	cv = = new TCanvas("cv","cv",1000,600);
+	cv = new TCanvas("cv","cv",1000,600);
 	static const int metNBins = 10; //10 met bins;
 	
 	int metHigh = 1000;
