@@ -195,7 +195,7 @@ inline void efficiency::counter(){
 	    		// cout << "point d" << endl;
 	  		}
 	  	}
-	  	// cout << "filter loop" << endl;	      
+	  	cout << "filter loop" << endl;	      
   		for(int k = 0; k < NFilter; k++){
   			// NPass.push_back(std::vector<float>(metNBins, 0));
   			// cout << "filter: " << filter_names[k] << endl;
@@ -222,7 +222,7 @@ inline void efficiency::counter(){
 	    	}	
     	}
 	}
-	// cout << "efficiency calculation loop" << endl;
+	cout << "efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
 		for(int j = 0; j < metNBins; j++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
