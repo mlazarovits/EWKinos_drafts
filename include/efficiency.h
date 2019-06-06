@@ -246,16 +246,16 @@ inline void efficiency::counter(){
 		// Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
 		// Neff[k].push_back( (float)NFail[k][j]/NTot[j] );
 		// Neff_uncert[k].push_back( (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100) ); 
-			cout << "point 0" << endl;
+			// cout << "point 0" << endl;
 			// Neff.push_back(0.0);
 			// Neff_uncert.push_back(0.0);
 			Neff[k][j] = (float)NFail[k][j]/NTot[j];
-			cout << "point a" << endl;
+			// cout << "point a" << endl;
 			Neff_uncert[k][j] = (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100);
-			cout << "point b" << endl;
+			// cout << "point b" << endl;
 
 			if(abs(Neff[k][j]) > 10){
-			cout << "point c" << endl;
+			// cout << "point c" << endl;
 
 				std::cout << filter_names[k] << std::endl;
 				std::cout << "met_bin: " << met_bins[j] << std::endl;
@@ -277,7 +277,11 @@ inline void efficiency::make_plot(){
 		TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
 		TVectorF tmet_uncerts(met_uncerts.size(), &met_uncerts[0]);
 
+		cout << "made tvectors" << endl;
+
 		gr.push_back(new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert));
+
+		cout << "pushback tgraph" << endl;
 		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
@@ -304,8 +308,9 @@ inline void efficiency::make_plot(){
 		gr[i]->SetLineWidth(2);
 		gr[i]->SetFillStyle(0);
 		gr[i]->SetFillColor(0);
+		cout << "formatting" << endl;
 		mg->Add(gr[i]);
-		std::cout << "added TGraphErrors to vector" << std::endl;
+		std::cout << "added TGraphErrors to multigraph" << std::endl;
 	}	
 	// cv->SetTopMargin(0.09);
 	cv->SetGrid();
