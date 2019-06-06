@@ -216,8 +216,8 @@ inline void efficiency::counter(){
   			// cout << "filter: " << filter_names[k] << endl;
   			NPass[k].resize(metNBins);
   			NFail[k].resize(metNBins);
-  			Neff.resize(metNBins);
-  			Neff_uncert.resize(metNBins);
+  			Neff[k].resize(metNBins);
+  			Neff_uncert[k].resize(metNBins);
   			// NFail.push_back(std::vector<float>(metNBins,0)); 
   			// Neff.push_back(std::vector<float>(metNBins,0));
 			// Neff_uncert.push_back(std::vector<float>(metNBins,0));
@@ -227,11 +227,13 @@ inline void efficiency::counter(){
 	    		if(filter_names[k]==1){ //pass filter
 	      			// NPass[k][j] += 1.;
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
+	      			// NPass[k].push_back(0.0);
 	      			NPass[k][j] += (float)1.*evtWeight;
 	      		}	
 	    		if(filter_names[k]==0){ //fail filter
 	      			// NFail[k][j] += 1.;
 	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
+	      			// NFail[k].push_back(0.0);
 	      			NFail[k][j] += (float)1.*evtWeight;
 	    		}
 	    	}	
@@ -245,7 +247,8 @@ inline void efficiency::counter(){
 		// Neff[k].push_back( (float)NFail[k][j]/NTot[j] );
 		// Neff_uncert[k].push_back( (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100) ); 
 			cout << "point 0" << endl;
-			
+			// Neff.push_back(0.0);
+			// Neff_uncert.push_back(0.0);
 			Neff[k][j] = (float)NFail[k][j]/NTot[j];
 			cout << "point a" << endl;
 			Neff_uncert[k][j] = (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100);
