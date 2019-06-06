@@ -173,12 +173,13 @@ inline void efficiency::counter(){
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
+	int tot_entries;
 
 	if(debug == true){
-		int tot_entries = 10;
+		tot_entries = 10;
 	}
 	else{
-		int tot_entries = (int)chain->GetEntries();
+		tot_entries = (int)chain->GetEntries();
 	}
 	
 	cout << "total entries: " << tot_entries << endl;
