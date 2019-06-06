@@ -243,10 +243,16 @@ inline void efficiency::counter(){
 		// Neff_uncert[k][j] = sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100;
 		// Neff[k].push_back( (float)NFail[k][j]/NTot[j] );
 		// Neff_uncert[k].push_back( (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100) ); 
+			cout << "point 0" << endl;
+			
 			Neff[k][j] = (float)NFail[k][j]/NTot[j];
+			cout << "point a" << endl;
 			Neff_uncert[k][j] = (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100);
+			cout << "point b" << endl;
 
 			if(abs(Neff[k][j]) > 10){
+			cout << "point c" << endl;
+
 				std::cout << filter_names[k] << std::endl;
 				std::cout << "met_bin: " << met_bins[j] << std::endl;
 				std::cout << "total number of events in met bin: " << NTot[j] << std::endl;
