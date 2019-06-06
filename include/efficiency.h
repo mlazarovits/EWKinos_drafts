@@ -31,6 +31,8 @@ private:
 	TString sample = "";
 	TChain* chain;
 
+	bool debug;
+
 	float Nentries;
 	float Npass;
 	float Nfail;
@@ -136,6 +138,8 @@ inline efficiency::efficiency(){
 	metLow = 0;
 	metInterval = (metHigh - metLow)/metNBins;
 
+	debug = TRUE;
+
 	// Nentries = -999;
 	// float Npass = -999;
 	// float Nfail = -999;
@@ -169,7 +173,14 @@ inline void efficiency::counter(){
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
-	int tot_entries = (int)chain->GetEntries();
+
+	if(debug == TRUE){
+		int tot_entries = 10;
+	}
+	else{
+		int tot_entries = (int)chain->GetEntries();
+	}
+	
 	cout << "total entries: " << tot_entries << endl;
 
 	for(int imet = 0; imet < tot_entries; imet++){
