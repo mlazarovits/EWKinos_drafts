@@ -138,7 +138,7 @@ inline efficiency::efficiency(){
 	metLow = 0;
 	metInterval = (metHigh - metLow)/metNBins;
 
-	debug = TRUE;
+	debug = true;
 
 	// Nentries = -999;
 	// float Npass = -999;
@@ -174,7 +174,7 @@ inline void efficiency::counter(){
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
 
-	if(debug == TRUE){
+	if(debug == true){
 		int tot_entries = 10;
 	}
 	else{
