@@ -191,6 +191,9 @@ inline void efficiency::counter(){
 		}
 		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
+			met_uncerts.push_back( (float)metInterval/2 );
+	    	// cout << "point b" << endl;
+	    	met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	  		if(met < met_bins[j+1]){
 	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		// NTot[j]+= 1.*evtWeight;
@@ -202,10 +205,6 @@ inline void efficiency::counter(){
 	    		// cout << "point 1" << endl;
 	    		NTot[j] += (float)1.*evtWeight; //total number of events in this met bin
 	    		// cout << "point a" << endl;
-	    		met_uncerts.push_back( (float)metInterval/2 );
-	    		// cout << "point b" << endl;
-	    		met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
-	    		// cout << "point c" << endl;
 	    		continue;
 	    		// cout << "point d" << endl;
 	  		}
