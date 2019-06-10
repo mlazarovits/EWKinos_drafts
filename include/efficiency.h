@@ -239,7 +239,7 @@ inline void efficiency::counter(){
 	    	}	
     	}
 	}
-	cout << "efficiency calculation loop" << endl;
+	cout << "\n efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
 		for(int j = 0; j < metNBins; j++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
@@ -309,9 +309,8 @@ inline void efficiency::make_plot(){
 		gr[i]->SetFillStyle(0);
 		gr[i]->SetFillColor(0);
 		cout << "formatting" << endl;
-		// mg->Add(gr[i]);
-		mg->Add( new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert) );
-		std::cout << "added TGraphErrors to multigraph" << std::endl;
+		mg->Add(gr[i]);
+		cout << "added TGraphErrors to multigraph" << endl;
 	}	
 	// cv->SetTopMargin(0.09);
 	cv->SetGrid();
