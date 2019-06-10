@@ -27,8 +27,8 @@ class efficiency
 {
 private:
 	vector<TString> filter_names;
-	TString draw_string="";
-	TString sample = "";
+	TString draw_string;
+	TString sample;
 	TChain* chain;
 
 	bool debug;
@@ -189,7 +189,7 @@ inline void efficiency::counter(){
 	    // cout << "point b" << endl;
 	    met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	}
-	
+
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
 		if(imet % 100000 == 0){
@@ -197,9 +197,6 @@ inline void efficiency::counter(){
 		}
 		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
-			// met_uncerts.push_back( (float)metInterval/2 );
-	  //   	// cout << "point b" << endl;
-	  //   	met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	  		if(met < met_bins[j+1]){
 	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		// NTot[j]+= 1.*evtWeight;
@@ -276,15 +273,35 @@ inline void efficiency::counter(){
 
 inline void efficiency::make_plot(){
 	cout << "make_plot" << endl;
-	for(int i = 0; i < (int)filter_names.size(); i++){
-		TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
-		TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
-		TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
-		TVectorF tmet_uncert(met_uncerts.size(), &met_uncerts[0]);
 
+	float gr_eff[gr_nfilter][metNBins];
+	float gr_effuncert[gr_nfilter][metNBins];
+	float gr_met[metNBins];
+	float gr_metuncert[metNBins];
+
+	for(int j = 0; j < gr_nfilter; j++){
+			for(int i = 0; i < metNBins; i++){
+				gr_eff[j][i] = Neff[j][i];
+				gr_effuncert[j][i] = Neff_uncert[j][i];
+			}
+		}
+
+		for(int i = 0; i < metNBins; i++){
+			gr_met[i] = met_plot[i];
+			gr_metuncert[i] = met_uncerts[i];
+		}
+	for(int i = 0; i < (int)filter_names.size(); i++){
+		// TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
+		// TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
+		// TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
+		// TVectorF tmet_uncert(met_uncerts.size(), &met_uncerts[0]);
+
+		gr_nfilter = (int)filter_names.size();
+
+	
 		cout << "made tvectors" << endl;
 
-		gr.push_back(new TGraphErrors(tmet_plot,tNeff,tmet_uncert,tNeff_uncert));
+		gr.push_back(new TGraphErrors(gr_met,gr_eff[i],tmet_uncert,tNeff_uncert[i]));
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
@@ -334,7 +351,7 @@ inline void efficiency::make_plot(){
 	TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
 	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
-	leg2->AddEntry(gr[i],filter_names[i].Data());
+		leg2->AddEntry(gr[i],filter_names[i].Data());
 	}
 	// leg2->SetTextSize(0.033);
 	leg2->SetFillColor(0);
