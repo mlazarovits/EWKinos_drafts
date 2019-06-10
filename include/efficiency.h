@@ -275,7 +275,7 @@ inline void efficiency::make_plot(){
 		TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
 		TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
 		TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
-		TVectorF tmet_uncerts(met_uncerts.size(), &met_uncerts[0]);
+		TVectorF tmet_uncert(met_uncerts.size(), &met_uncerts[0]);
 
 		cout << "made tvectors" << endl;
 
@@ -283,11 +283,13 @@ inline void efficiency::make_plot(){
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
-		for(int j = 0; j < (int)met_plot.size();j++){
-			cout << "tmet_plot # " << j << " " << tmet_plot[j] << endl;
-			cout << "tmet_uncerts # " << j << " " << tmet_uncerts[j] << endl;
-			cout << "tNeff # " << j << " " << tNeff[j] << endl;
-			cout << "tNeff_uncert # " << j << " " << tNeff_uncert[j] << endl;
+		cout << "met_plot size " << met_plot.size() << endl;
+		cout << "tmet_plot size " << tmet_plot.size() << endl;
+		for(int j = 0; j < (int)tmet_plot.size();j++){
+			cout << "tmet_plot #" << j << " " << tmet_plot[j] << endl;
+			cout << "tmet_uncert #" << j << " " << tmet_uncerts[j] << endl;
+			cout << "tNeff #" << j << " " << tNeff[j] << endl;
+			cout << "tNeff_uncert #" << j << " " << tNeff_uncert[j] << endl;
 
 		}
 		// gr[i]->Print();
