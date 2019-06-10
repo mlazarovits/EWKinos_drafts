@@ -273,7 +273,7 @@ inline void efficiency::counter(){
 
 inline void efficiency::make_plot(){
 	cout << "make_plot" << endl;
-
+	gr_nfilter = (int)filter_names.size();
 	float gr_eff[gr_nfilter][metNBins];
 	float gr_effuncert[gr_nfilter][metNBins];
 	float gr_met[metNBins];
@@ -296,12 +296,12 @@ inline void efficiency::make_plot(){
 		// TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
 		// TVectorF tmet_uncert(met_uncerts.size(), &met_uncerts[0]);
 
-		gr_nfilter = (int)filter_names.size();
+		
 
 	
 		cout << "made tvectors" << endl;
 
-		gr.push_back(new TGraphErrors(gr_met,gr_eff[i],tmet_uncert,tNeff_uncert[i]));
+		gr.push_back(new TGraphErrors(gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
