@@ -458,9 +458,9 @@ void eff_vs_MET(TString dataset){
       for(int k = 0; k < NFilter; k++){ 
         if(filter_names[k]==1){ //pass filter
           NPass[k][j] += 1.;
+        } 
         if(filter_names[k]==0){ //fail filter
           NFail[k][j] += 1.;
-        }
         }
       }
     }
