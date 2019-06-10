@@ -274,10 +274,10 @@ inline void efficiency::counter(){
 inline void efficiency::make_plot(){
 	cout << "make_plot" << endl;
 	int gr_nfilter = (int)filter_names.size();
-	float gr_eff[gr_nfilter][metNBins];
-	float gr_effuncert[gr_nfilter][metNBins];
-	float gr_met[metNBins];
-	float gr_metuncert[metNBins];
+	Float_t gr_eff[gr_nfilter][metNBins];
+	Float_t gr_effuncert[gr_nfilter][metNBins];
+	Float_t gr_met[metNBins];
+	Float_t gr_metuncert[metNBins];
 
 	for(int j = 0; j < gr_nfilter; j++){
 			for(int i = 0; i < metNBins; i++){
