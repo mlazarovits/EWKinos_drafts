@@ -136,7 +136,7 @@ inline efficiency::efficiency(){
 	metLow = 0;
 	metInterval = (metHigh - metLow)/metNBins;
 
-	debug = true;
+	debug = false;
 
 	// Nentries = -999;
 	// float Npass = -999;
@@ -278,34 +278,24 @@ inline void efficiency::make_plot(){
 	Float_t gr_metuncert[metNBins];
 
 	for(int j = 0; j < gr_nfilter; j++){
-			for(int i = 0; i < metNBins; i++){
-				gr_eff[j][i] = Neff[j][i];
-				gr_effuncert[j][i] = Neff_uncert[j][i];
-			}
-		}
-
 		for(int i = 0; i < metNBins; i++){
-			gr_met[i] = met_plot[i];
-			gr_metuncert[i] = met_uncerts[i];
+			gr_eff[j][i] = Neff[j][i];
+			gr_effuncert[j][i] = Neff_uncert[j][i];
 		}
+	}
+
+	for(int i = 0; i < metNBins; i++){
+		gr_met[i] = met_plot[i];
+		gr_metuncert[i] = met_uncerts[i];
+	}
 	for(int i = 0; i < (int)filter_names.size(); i++){
-		// TVectorF tNeff(Neff[i].size(), &Neff[i][0]);
-		// TVectorF tNeff_uncert(Neff_uncert[i].size(), &Neff_uncert[i][0]);
-		// TVectorF tmet_plot(met_plot.size(), &met_plot[0]);
-		// TVectorF tmet_uncert(met_uncerts.size(), &met_uncerts[0]);
-
-		
-
-	
-		cout << "made tvectors" << endl;
-
 		gr.push_back(new TGraphErrors(metNBins,gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
 
 
-		gr[i]->Print();
+		// gr[i]->Print();
 		
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
