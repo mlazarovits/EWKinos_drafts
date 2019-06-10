@@ -301,7 +301,7 @@ inline void efficiency::make_plot(){
 	
 		cout << "made tvectors" << endl;
 
-		gr.push_back(new TGraphErrors(gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
+		gr.push_back(new TGraphErrors(metNBins,gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
