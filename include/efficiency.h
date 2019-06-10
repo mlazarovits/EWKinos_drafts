@@ -282,12 +282,12 @@ inline void efficiency::make_plot(){
 		gr.push_back(new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert));
 
 		cout << "pushback tgraph" << endl;
-
+		cout << filter_names[i] << endl;
 		for(int j = 0; j < (int)met_plot.size();j++){
 			cout << "tmet_plot # " << j << " " << tmet_plot[j] << endl;
-			cout << "tmet_uncerts # " << i << " " << tmet_uncerts[i] << endl;
-			cout << "tNeff # " << i << " " << tNeff[i] << endl;
-			cout << "tNeff_uncert # " << i << " " << tNeff_uncert[i] << endl;
+			cout << "tmet_uncerts # " << j << " " << tmet_uncerts[j] << endl;
+			cout << "tNeff # " << j << " " << tNeff[j] << endl;
+			cout << "tNeff_uncert # " << j << " " << tNeff_uncert[j] << endl;
 
 		}
 		// gr[i]->Print();
