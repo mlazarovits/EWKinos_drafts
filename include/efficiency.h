@@ -77,8 +77,6 @@ private:
 	std::vector<float> NTot;
 	std::vector<float> met_uncerts;
 
-	vector<TGraphErrors*> gr;
-	TMultiGraph* mg;
 
 
   	Float_t         met;
@@ -152,8 +150,6 @@ inline efficiency::efficiency(){
 	// float met_eff = -999;
 	// float eff_uncert = -999;
 
-
-	TMultiGraph* mg = new TMultiGraph();
 }
 
 inline void efficiency::make_metbins(){
@@ -272,6 +268,8 @@ inline void efficiency::counter(){
 }
 
 inline void efficiency::make_plot(){
+	vector<TGraphErrors*> gr;
+	TMultiGraph* mg = new TMultiGraph();	
 	cout << "make_plot" << endl;
 	int gr_nfilter = (int)filter_names.size();
 	Float_t gr_eff[gr_nfilter][metNBins];
@@ -308,9 +306,7 @@ inline void efficiency::make_plot(){
 
 
 		gr[i]->Print();
-
 		
-		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
 		} 
