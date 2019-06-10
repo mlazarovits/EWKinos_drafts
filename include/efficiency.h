@@ -311,7 +311,7 @@ inline void efficiency::make_plot(){
 		gr[i]->SetFillStyle(0);
 		gr[i]->SetFillColor(0);
 		cout << "formatting" << endl;
-		mg->Add(gr[i]);
+		mg->Add(tmp_gr);
 		cout << "added TGraphErrors to multigraph" << endl;
 	}	
 	// cv->SetTopMargin(0.09);
