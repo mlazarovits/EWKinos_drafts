@@ -279,7 +279,7 @@ inline void efficiency::make_plot(){
 
 		cout << "made tvectors" << endl;
 
-		TGraphErrors* tmp_gr = new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert)
+		TGraphErrors* tmp_gr = new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert);
 
 		gr.push_back(tmp_gr);
 
