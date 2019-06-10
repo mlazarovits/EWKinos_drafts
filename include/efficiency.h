@@ -279,11 +279,17 @@ inline void efficiency::make_plot(){
 
 		cout << "made tvectors" << endl;
 
-		TGraphErrors* tmp_gr = new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert);
-
-		gr.push_back(tmp_gr);
+		gr.push_back(new TGraphErrors(tmet_plot,tNeff,tmet_uncerts,tNeff_uncert));
 
 		cout << "pushback tgraph" << endl;
+
+		for(int j = 0; j < (int)met_plot.size();j++){
+			cout << "tmet_plot # " << j << " " << tmet_plot[j] << endl;
+			cout << "tmet_uncerts # " << i << " " << tmet_uncerts[i] << endl;
+			cout << "tNeff # " << i << " " << tNeff[i] << endl;
+			cout << "tNeff_uncert # " << i << " " << tNeff_uncert[i] << endl;
+
+		}
 		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
