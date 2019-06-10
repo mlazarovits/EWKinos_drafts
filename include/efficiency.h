@@ -184,6 +184,12 @@ inline void efficiency::counter(){
 	
 	cout << "total entries: " << tot_entries << endl;
 
+	for(int j = 0; j < metNBins; j++){
+		met_uncerts.push_back( (float)metInterval/2 );
+	    // cout << "point b" << endl;
+	    met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
+	}
+	
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
 		if(imet % 100000 == 0){
@@ -191,9 +197,9 @@ inline void efficiency::counter(){
 		}
 		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
-			met_uncerts.push_back( (float)metInterval/2 );
-	    	// cout << "point b" << endl;
-	    	met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
+			// met_uncerts.push_back( (float)metInterval/2 );
+	  //   	// cout << "point b" << endl;
+	  //   	met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
 	  		if(met < met_bins[j+1]){
 	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		// NTot[j]+= 1.*evtWeight;
