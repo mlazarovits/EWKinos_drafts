@@ -305,16 +305,11 @@ inline void efficiency::make_plot(){
 
 		cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
-		// cout << "met_plot size " << met_plot.size() << endl;
-		// for(int j = 0; j < (int)met_plot.size();j++){
-		// 	cout << "tmet_plot #" << j << " " << tmet_plot[j] << endl;
-		// 	cout << "tmet_uncert #" << j << " " << tmet_uncert[j] << endl;
-		// 	cout << "tNeff #" << j << " " << tNeff[j] << endl;
-		// 	cout << "tNeff_uncert #" << j << " " << tNeff_uncert[j] << endl;
+
 
 		gr[i]->Print();
 
-		}
+		
 		// gr[i]->Print();
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
