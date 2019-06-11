@@ -158,12 +158,12 @@ inline void efficiency::make_metbins(){
 	for(int i = 0; i < metNBins+1; i++){
 		// met_bins[i] = (Float_t)i*metInterval;
 		met_bins.push_back( (float)i*metInterval );
-		std::cout << "met bins: " << met_bins[i] << std::endl;
+		// std::cout << "met bins: " << met_bins[i] << std::endl;
 	}
 }
 
 inline void efficiency::counter(){
-	cout << "counter" << endl;
+	// cout << "counter" << endl;
 	int NFilter = (int)filter_names.size();
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
@@ -188,8 +188,8 @@ inline void efficiency::counter(){
 
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
-		if(imet % 100000 == 0){
-			fprintf(stdout, "\r Processed events: %8d of %8d ",imet, tot_entries);
+		if(imet % 10000 == 0){
+			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
 		for(int j = 0; j < metNBins; j++){
@@ -227,6 +227,7 @@ inline void efficiency::counter(){
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			// NPass[k].push_back(0.0);
 	      			NPass[k][j] += (float)1.*evtWeight;
+	      			if(imet == 40) cout << "evtWeight: " << evtWeight << endl;
 	      		}	
 	    		if(filter_names[k]==0){ //fail filter
 	      			// NFail[k][j] += 1.;
@@ -237,7 +238,7 @@ inline void efficiency::counter(){
 	    	}	
     	}
 	}
-	cout << "\n efficiency calculation loop" << endl;
+	// cout << "\n efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
 		for(int j = 0; j < metNBins; j++){
 		// Neff[k][j] = NFail[k][j]/NTot[j];
@@ -270,7 +271,7 @@ inline void efficiency::counter(){
 inline void efficiency::make_plot(){
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();	
-	cout << "make_plot" << endl;
+	// cout << "make_plot" << endl;
 	int gr_nfilter = (int)filter_names.size();
 	Float_t gr_eff[gr_nfilter][metNBins];
 	Float_t gr_effuncert[gr_nfilter][metNBins];
@@ -291,11 +292,12 @@ inline void efficiency::make_plot(){
 	for(int i = 0; i < (int)filter_names.size(); i++){
 		gr.push_back(new TGraphErrors(metNBins,gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
-		cout << "pushback tgraph" << endl;
+		// cout << "pushback tgraph" << endl;
 		cout << filter_names[i] << endl;
 
 
-		// gr[i]->Print();
+		gr[i]->Print();
+		cout << "\n" << endl;
 		
 		if(i/3 == 0){
 			gr[i]->SetMarkerStyle(24);
@@ -322,23 +324,23 @@ inline void efficiency::make_plot(){
 		gr[i]->SetLineWidth(2);
 		gr[i]->SetFillStyle(0);
 		gr[i]->SetFillColor(0);
-		cout << "formatting" << endl;
+		// cout << "formatting" << endl;
 		mg->Add(gr[i]);
-		cout << "added TGraphErrors to multigraph" << endl;
+		// cout << "added TGraphErrors to multigraph" << endl;
 	}	
 	// cv->SetTopMargin(0.09);
 	cv->SetGrid();
 	mg->Draw("ap");
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-	TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
+	TLegend* leg2 = new TLegend(); //0.1,0.4,0.43,0.7);
 	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 		leg2->AddEntry(gr[i],filter_names[i].Data());
 	}
 	// leg2->SetTextSize(0.033);
 	leg2->SetFillColor(0);
-	leg2->SetFillStyle(0); //transparent
+	// leg2->SetFillStyle(0); //transparent
 	leg2->Draw("same");
 
 	cv->Update();
@@ -357,6 +359,9 @@ inline void efficiency::make_plot(){
 	cv->Update();
 
 	cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
+
+	TFile* file = new TFile("eff_plot.root","RECREATE");
+	cv->Write();
 }	
 
 inline void efficiency::Initialize(TString dataset){
