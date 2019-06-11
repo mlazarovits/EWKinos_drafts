@@ -369,7 +369,7 @@ inline void efficiency::make_plot(){
 }	
 
 inline void efficiency::Initialize(TString dataset){
-	cout << "Initialize" << endl;
+	// cout << "Initialize" << endl;
 	if(dataset == "dyJetsToLL"){
 		chain->SetBranchAddress("met",&met,&b_met);
 		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
