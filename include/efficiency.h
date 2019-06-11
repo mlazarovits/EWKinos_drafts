@@ -284,7 +284,7 @@ inline void efficiency::make_plot(){
 			gr_eff[j][i] = Neff[j][i];
 			gr_effuncert[j][i] = Neff_uncert[j][i];
 
-			cout << filter_names[j] << " # passed: " << NPass[j][i] << " # failed: " << Nfail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] endl;
+			cout << filter_names[j] << " # passed: " << NPass[j][i] << " # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] endl;
 
 		}
 	}
