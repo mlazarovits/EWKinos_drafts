@@ -116,7 +116,7 @@ class histMaker{
 	vector< parentHistClass * > hist_vector_loader( string treeSubDir );
 	bool global_cuts( ReducedBase * base );
 	void make_hists( string g_Path, vector<string> g_FileVec, string treeName,  TFile * outfile, string treeSubDir );
-        void make_hists( string g_Path, string g_FileName, string treeName,  TFile * outfile, string treeSubDir );
+  void make_hists( string g_Path, string g_FileName,        string treeName,  TFile * outfile, string treeSubDir );
 
 };
 

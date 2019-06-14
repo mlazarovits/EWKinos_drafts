@@ -114,7 +114,7 @@ void metHist::fill_hist( ReducedBase* base ){
 
 }
 //----------------------------------------------------------------------------
-class mlllHist : public parentHistClass{
+class mlHist : public parentHistClass{
 
   public:
   void init_hist( string treeSubDir );
@@ -122,150 +122,23 @@ class mlllHist : public parentHistClass{
 
 };
 
-void mlllHist::init_hist( string treeSubDir ){
+void mlHist::init_hist( string treeSubDir ){
 
   set_subdir(treeSubDir);
-  hist1d = new TH1D("mlllHist","Tri Lepton Pair Mass", 200, 0, 200 );
-  hist1d->GetXaxis()->SetTitle("Tri Lepton Pair Mass [GeV]");
+  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
+  hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
  // std::cout << "In Init from mlllHist !!" << std::endl;
 
 }
 
-void mlllHist::fill_hist( ReducedBase* base ){
+void mlHist::fill_hist( ReducedBase* base ){
 
-  TLorentzVector * lll = add4vecs( *(base->PT_lep), *(base->Eta_lep), *(base->Phi_lep), *(base->M_lep) );
-  hist1d->Fill( lll->M(), base->weight);
-
-}
-//----------------------------------------------------------------------------
-class ml0l1Hist : public parentHistClass{
-
-  public:
-  void init_hist( string treeSubDir );
-  void fill_hist( ReducedBase* base );
-
-};
-
-void ml0l1Hist::init_hist( string treeSubDir ){
-
-  set_subdir(treeSubDir);
-  hist1d = new TH1D("ml0l1Hist","l_{0}l_{1} Lepton Pair Mass", 200, 0, 200 );
-  hist1d->GetXaxis()->SetTitle("l_{0}l_{1} Lepton Pair Mass [GeV]");
-  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
- // std::cout << "In Init from ml0l1Hist !!" << std::endl;
- // if( (base->ID_lep[0] == base->ID_lep[1] ) && (base->Charge_lep[0] != base->Charge_lep[1] )) cut_sfos = false;
+  TLorentzVector * l = add4vecs( *(base->PT_lep), *(base->Eta_lep), *(base->Phi_lep), *(base->M_lep) );
+  hist1d->Fill( l->M(), base->weight);
 
 }
 
-void ml0l1Hist::fill_hist( ReducedBase* base ){
-
-
-  vector<double> lepVecPt;
-  lepVecPt.push_back( base->PT_lep->at(0) );
-  lepVecPt.push_back( base->PT_lep->at(1) );
-  vector<double> lepVecEta;
-  lepVecEta.push_back( base->Eta_lep->at(0) );
-  lepVecEta.push_back( base->Eta_lep->at(1) );
-  vector<double> lepVecPhi;
-  lepVecPhi.push_back( base->Phi_lep->at(0) );
-  lepVecPhi.push_back( base->Phi_lep->at(1) );
-  vector<double> lepVecM;
-  lepVecM.push_back( base->M_lep->at(0) );
-  lepVecM.push_back( base->M_lep->at(1) );
-
-  if( (base->ID_lep->at(0) == base->ID_lep->at(1) ) && (base->Charge_lep->at(0) != base->Charge_lep->at(1) )){ 
-	hist1d->SetTitle("l_{0}l_{1} OSSF Lepton Pair Mass [GeV]");
-  }
-
-  TLorentzVector * ll = add4vecs( lepVecPt, lepVecEta, lepVecPhi, lepVecM );
-  hist1d->Fill( ll->M(), base->weight);
-
-}
-//----------------------------------------------------------------------------
-class ml0l2Hist : public parentHistClass{
-
-  public:
-  void init_hist( string treeSubDir );
-  void fill_hist( ReducedBase* base );
-
-};
-
-void ml0l2Hist::init_hist( string treeSubDir ){
-
-  set_subdir(treeSubDir);
-  hist1d = new TH1D("ml0l2Hist","l_{0}l_{2} Lepton Pair Mass", 200, 0, 200 );
-  hist1d->GetXaxis()->SetTitle("l_{0}l_{2} Lepton Pair Mass [GeV]");
-  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
- // std::cout << "In Init from ml0l2Hist !!" << std::endl;
-
-}
-
-void ml0l2Hist::fill_hist( ReducedBase* base ){
-
-  vector<double> lepVecPt;
-  lepVecPt.push_back( base->PT_lep->at(0) );
-  lepVecPt.push_back( base->PT_lep->at(2) );
-  vector<double> lepVecEta;
-  lepVecEta.push_back( base->Eta_lep->at(0) );
-  lepVecEta.push_back( base->Eta_lep->at(2) );
-  vector<double> lepVecPhi;
-  lepVecPhi.push_back( base->Phi_lep->at(0) );
-  lepVecPhi.push_back( base->Phi_lep->at(2) );
-  vector<double> lepVecM;
-  lepVecM.push_back( base->M_lep->at(0) );
-  lepVecM.push_back( base->M_lep->at(2) );
-
-  if( (base->ID_lep->at(0) == base->ID_lep->at(2) ) && (base->Charge_lep->at(0) != base->Charge_lep->at(2) )){
-        hist1d->SetTitle("l_{0}l_{2} OSSF Lepton Pair Mass [GeV]");
-  }
-
-  TLorentzVector * ll = add4vecs( lepVecPt, lepVecEta, lepVecPhi, lepVecM );
-  hist1d->Fill( ll->M(), base->weight);
-
-}
-//----------------------------------------------------------------------------
-class ml1l2Hist : public parentHistClass{
-
-  public:
-  void init_hist( string treeSubDir );
-  void fill_hist( ReducedBase* base );
-
-};
-
-void ml1l2Hist::init_hist( string treeSubDir ){
-
-  set_subdir(treeSubDir);
-  hist1d = new TH1D("ml1l2Hist","l_{1}l_{2} Lepton Pair Mass", 200, 0, 200 );
-  hist1d->GetXaxis()->SetTitle("l_{1}l_{2} Lepton Pair Mass [GeV]");
-  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
- // std::cout << "In Init from ml1l2Hist !!" << std::endl;
-
-}
-
-void ml1l2Hist::fill_hist( ReducedBase* base ){
-
-  vector<double> lepVecPt;
-  lepVecPt.push_back( base->PT_lep->at(1) );
-  lepVecPt.push_back( base->PT_lep->at(2) );
-  vector<double> lepVecEta;
-  lepVecEta.push_back( base->Eta_lep->at(1) );
-  lepVecEta.push_back( base->Eta_lep->at(2) );
-  vector<double> lepVecPhi;
-  lepVecPhi.push_back( base->Phi_lep->at(1) );
-  lepVecPhi.push_back( base->Phi_lep->at(2) );
-  vector<double> lepVecM;
-  lepVecM.push_back( base->M_lep->at(1) );
-  lepVecM.push_back( base->M_lep->at(2) );
-
-  if( (base->ID_lep->at(1) == base->ID_lep->at(2) ) && (base->Charge_lep->at(1) != base->Charge_lep->at(2) )){
-        hist1d->SetTitle("l_{1}l_{2} OSSF Lepton Pair Mass [GeV]");
-  }
-
-  TLorentzVector * ll = add4vecs( lepVecPt, lepVecEta, lepVecPhi, lepVecM );
-  hist1d->Fill( ll->M(), base->weight);
-
-}
 //----------------------------------------------------------------------------
 class njetsHist : public parentHistClass{
 
@@ -691,18 +564,12 @@ void RISR_v_PTISR_Cat1_hist::fill_hist( ReducedBase * base ){
 bool histMaker::global_cuts( ReducedBase * base ){
 
   bool cut_nlep = true;
-  bool cut_sfos = true;
 
   if( base->Nlep == 3 ) cut_nlep = false;
-  if( base->Nlep > 2 ){
-	if( (base->ID_lep->at(0) == base->ID_lep->at(1) ) && (base->Charge_lep->at(0) != base->Charge_lep->at(1) )) cut_sfos = false;
-        if( (base->ID_lep->at(0) == base->ID_lep->at(2) ) && (base->Charge_lep->at(0) != base->Charge_lep->at(2) )) cut_sfos = false;
-        if( (base->ID_lep->at(1) == base->ID_lep->at(2) ) && (base->Charge_lep->at(1) != base->Charge_lep->at(2) )) cut_sfos = false;
-  } 
   
   //std::cout << " nlept " << base->Nlep << std::endl;
   //std::cout << " nlep cut " << cut_nlep << " sfos cut " << cut_sfos << std::endl;
-  return cut_nlep && cut_sfos;
+  return cut_nlep;
  
 }
 //---------------------------------------------------------------------------------------------------------

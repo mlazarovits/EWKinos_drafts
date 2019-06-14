@@ -6,48 +6,51 @@
 
 ///-------------- String declarations-------------------------------------------------------------------------
 
-const string fall17_WZ = "All_Bkg_2017/WZ_TuneCP5_13TeV-pythia8_Fall17.root";
-const string fall17_DYJetsToLL_M50 = "All_Bkg_2017/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8_Fall17.root";
-const string fall17_DYJetsToLL_M5to50 = "All_Bkg_2017/DYJetsToLL_M-5to50_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root"; 
-const string fall17_TTJets = "All_Bkg_2017/TTJets_TuneCP5_13TeV-madgraphMLM-pythia8_TuneCP5.root";
-const string fall17_WJetsToLNu = "All_Bkg_2017/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
-const string fall17_WW = "All_Bkg_2017/WW_TuneCP5_13TeV-pythia8_Fall17.root";
-const string fall17_ZZ = "All_Bkg_2017/ZZ_TuneCP5_13TeV-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_100to200 = "All_Bkg_2017/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_200to400 = "All_Bkg_2017/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_400to600 = "All_Bkg_2017/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_600to800 = "All_Bkg_2017/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_800to1200 = "All_Bkg_2017/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_WJetsToLNu_1200to2500 = "All_Bkg_2017/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_TTWJetsToLNu = "All_Bkg_2017/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8_Fall17.root";
+const string fall17_TTJets_SingleLept_T = "All_Bkg_2017/TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_TTJets_SingleLept_Tbar = "All_Bkg_2017/TTJets_SingleLeptFromTbar_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
+
 
 const string BkgTree_KUAnalysis = "KUAnalysis";
 
-const string fall17_WZ_SubDir = "WZ_fall2017";
-const string fall17_DYJetsToLL_M50_SubDir = "DYJetsToLL_M50_fall2017";
-const string fall17_DYJetsToLL_M5to50_SubDir = "DYJetsToLL_M5to50_fall2017";
-const string fall17_TTJets_SubDir = "TTJets_fall2017";
 const string fall17_WJetsToLNu_SubDir = "WJetsToLNu_fall2017";
-const string fall17_WW_SubDir = "WW_fall2017";
-const string fall17_ZZ_SubDir = "ZZ_fall2017";
+const string fall17_TTJetsToLNu_SubDir = "TTJetsToLNu_fall2017";
+const string fall17_TTJetsSingLepT_SubDir = "TTJetsSingLepT_fall2017";
+const string fall17_TTJetsSingLepTbar_SubDir = "TTJetsSingLepTbar_fall2017";
+
 
 const string fall17_TChiWZ_Bkg_SubDir = "TChiWZ_Bkg_fall2017";
 vector<string> load_gFileVec_TChiWZ_Bkg(){
   vector<string> g_FileVec;
-  g_FileVec.push_back(fall17_WZ);
-  g_FileVec.push_back(fall17_DYJetsToLL_M50);
-  g_FileVec.push_back(fall17_DYJetsToLL_M5to50);
-  g_FileVec.push_back(fall17_TTJets);
-  g_FileVec.push_back(fall17_WJetsToLNu);
-  g_FileVec.push_back(fall17_WW);
-  g_FileVec.push_back(fall17_ZZ);
+  g_FileVec.push_back(fall17_WJetsToLNu_100to200);
+  g_FileVec.push_back(fall17_WJetsToLNu_200to400);
+  g_FileVec.push_back(fall17_WJetsToLNu_400to600);
+  g_FileVec.push_back(fall17_WJetsToLNu_600to800);
+  g_FileVec.push_back(fall17_WJetsToLNu_800to1200);
+  g_FileVec.push_back(fall17_WJetsToLNu_1200to2500);
+  g_FileVec.push_back(fall17_TTWJetsToLNu);
+  g_FileVec.push_back(fall17_TTJets_SingleLept_T);
+  g_FileVec.push_back(fall17_TTJets_SingleLept_Tbar);  
   return g_FileVec;
 }
 
-const string fall17_TChiWZ = "All_Sig/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCP2_13TeV-madgraphMLM-pythia8_Fall17.root";
+const string fall17_TChiWH = "All_Sig/SMS_TChiWH_WToLNu_HToBB_mChargino850_mLSP1_TuneCP5_13TeV-madgraphMLM-pythia8_Fall17.root";
 
-const string SigTree_SMS_175_145 = "SMS_175_145";
-const string SigTree_SMS_300_25 = "SMS_300_25";
-const string SigTree_SMS_325_175 = "SMS_325_175";
+// const string SigTree_SMS_175_145 = "SMS_175_145";
+// const string SigTree_SMS_300_25 = "SMS_300_25";
+// const string SigTree_SMS_325_175 = "SMS_325_175";
 
-const string fall17_TChiWZ_SMS_175_145_SubDir =  "TChiWZ_SMS_175_145_fall2017";
-const string fall17_TChiWZ_SMS_300_25_SubDir =  "TChiWZ_SMS_300_25_fall2017";
-const string fall17_TChiWZ_SMS_325_175_SubDir =  "TChiWZ_SMS_325_175_fall2017";
+// const string fall17_TChiWZ_SMS_175_145_SubDir =  "TChiWZ_SMS_175_145_fall2017";
+// const string fall17_TChiWZ_SMS_300_25_SubDir =  "TChiWZ_SMS_300_25_fall2017";
+// const string fall17_TChiWZ_SMS_325_175_SubDir =  "TChiWZ_SMS_325_175_fall2017";
 
-const string TriLeptonTFile = "KUEwkino_2017_lll_hists.root";
+const string SingLeptonTFile = "KUEwkino_2017_l_hists.root";
 const string g_Path = "/home/t3-ku/crogan/NTUPLES/StopNtuple/";
 
 //----------------------------------------------------------
@@ -99,21 +102,24 @@ void run_hist_maker( string treename, string g_FileName, string outfile_name, st
 //--------------------------------------------------------------------------------------------------------
 
 void jwk_ewkino_make_hists(){
+  bkg_vec = load_gFileVec_TChiWZ_Bkg();
 
 //--------BackGrounds
-  run_hist_maker( BkgTree_KUAnalysis, load_gFileVec_TChiWZ_Bkg(), TriLeptonTFile, fall17_TChiWZ_Bkg_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_WZ, 		  TriLeptonTFile, fall17_WZ_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_DYJetsToLL_M50,      TriLeptonTFile, fall17_DYJetsToLL_M50_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_DYJetsToLL_M5to50,   TriLeptonTFile, fall17_DYJetsToLL_M5to50_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_TTJets, 		  TriLeptonTFile, fall17_TTJets_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_WJetsToLNu,          TriLeptonTFile, fall17_WJetsToLNu_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_WW, 		  TriLeptonTFile, fall17_WW_SubDir );
-  run_hist_maker( BkgTree_KUAnalysis, fall17_ZZ, 		  TriLeptonTFile, fall17_ZZ_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[0], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[1], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[2], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[3], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[4], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[5], SingLeptonTFile, fall17_WJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[6], SingLeptonTFile, fall17_TTJetsToLNu_SubDir );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[7], SingLeptonTFile, fall17_TTJets_SingleLept_T );
+  run_hist_maker( BkgTree_KUAnalysis, bkg_vec[8], SingLeptonTFile, fall17_TTJets_SingleLept_Tbar );
 
 //--------Signals
-  run_hist_maker( SigTree_SMS_175_145, fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_175_145_SubDir );
-  run_hist_maker( SigTree_SMS_300_25,  fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_300_25_SubDir );
-  run_hist_maker( SigTree_SMS_325_175, fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_325_175_SubDir );
+  // run_hist_maker( SigTree_SMS_175_145, fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_175_145_SubDir );
+  // run_hist_maker( SigTree_SMS_300_25,  fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_300_25_SubDir );
+  // run_hist_maker( SigTree_SMS_325_175, fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_325_175_SubDir );
 
 }
 
