@@ -26,7 +26,7 @@ const string fall17_TTJetsSingLepTbar_SubDir = "TTJetsSingLepTbar_fall2017";
 
 
 const string fall17_TChiWZ_Bkg_SubDir = "TChiWZ_Bkg_fall2017";
-vector<string> load_gFileVec_TChiWZ_Bkg(){
+inline vector<string> load_gFileVec_TChiWZ_Bkg(){
   vector<string> g_FileVec;
   g_FileVec.push_back(fall17_WJetsToLNu_100to200);
   g_FileVec.push_back(fall17_WJetsToLNu_200to400);
@@ -56,7 +56,7 @@ const string g_Path = "/home/t3-ku/crogan/NTUPLES/StopNtuple/";
 //----------------------------------------------------------
 //  Create TFile and TFile SubDirectories
 //---------------------------------------------------------
-TFile * makeTFile( string outfile_name ){
+inline TFile * makeTFile( string outfile_name ){
 
   auto outfile = new TFile( outfile_name.c_str(), "update" );
   outfile->cd();

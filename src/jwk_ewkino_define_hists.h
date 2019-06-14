@@ -585,10 +585,7 @@ vector< parentHistClass * > histMaker::hist_vector_loader( string treeSubDir ){
   vhistclasses.push_back( new RISR_v_PTISR_Cat2_hist );
   vhistclasses.push_back( new RISR_v_PTISR_Cat1_hist );
   vhistclasses.push_back( new metHist );
-  vhistclasses.push_back( new mlllHist );
-  vhistclasses.push_back( new ml0l1Hist );
-  vhistclasses.push_back( new ml0l2Hist );
-  vhistclasses.push_back( new ml1l2Hist );
+  vhistclasses.push_back( new mlHist );
   vhistclasses.push_back( new njetsHist );
   vhistclasses.push_back( new ptcmHist_Cat1 );
   vhistclasses.push_back( new ptisrHist_Cat1 );
