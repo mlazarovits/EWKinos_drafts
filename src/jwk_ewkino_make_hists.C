@@ -60,16 +60,10 @@ inline TFile * makeTFile( string outfile_name ){
 
   auto outfile = new TFile( outfile_name.c_str(), "update" );
   outfile->cd();
-  make_subdir( outfile, fall17_WZ_SubDir.c_str() );
-  make_subdir( outfile, fall17_DYJetsToLL_M50_SubDir.c_str() );
-  make_subdir( outfile, fall17_DYJetsToLL_M5to50_SubDir.c_str() );
-  make_subdir( outfile, fall17_TTJets_SubDir.c_str() );
-  make_subdir( outfile, fall17_WW_SubDir.c_str() );
-  make_subdir( outfile, fall17_ZZ_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWZ_Bkg_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWZ_SMS_175_145_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWZ_SMS_300_25_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWZ_SMS_325_175_SubDir.c_str() );
+  make_subdir( outfile, fall17_WJetsToLNu_SubDir.c_str() );
+  make_subdir( outfile, fall17_TTJetsToLNu_SubDir.c_str() );
+  make_subdir( outfile, fall17_TTJetsSingLepT_SubDir.c_str() );
+  make_subdir( outfile, fall17_TTJetsSingLepTbar_SubDir.c_str() );
   return outfile;
 }
 //-------------------------------------------------------------------------------------------------------
@@ -102,7 +96,7 @@ void run_hist_maker( string treename, string g_FileName, string outfile_name, st
 //--------------------------------------------------------------------------------------------------------
 
 void jwk_ewkino_make_hists(){
-  bkg_vec = load_gFileVec_TChiWZ_Bkg();
+  vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
 
 //--------BackGrounds
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_WJetsToLNu_SubDir );
