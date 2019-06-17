@@ -338,7 +338,7 @@ inline void efficiency::make_plot(){
 	mg->Draw("ap");
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-	TLegend* leg2 = new TLegend(0.01,0.31,0.43,0.7);
+	TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
 	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 		leg2->AddEntry(gr[i],filter_names[i].Data());
