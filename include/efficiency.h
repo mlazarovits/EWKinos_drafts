@@ -178,7 +178,7 @@ inline void efficiency::counter(){
 		tot_entries = 10;
 	}
 	else{
-		tot_entries = (int)aux->fchain->GetEntries();
+		tot_entries = (int)aux->fChain->GetEntries();
 	}
 	
 	cout << "total entries: " << tot_entries << endl;
@@ -376,15 +376,15 @@ inline void efficiency::Initialize(TString dataset){
 		// chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		// filters.push_back(globalSuperTightHalo2016Filter);
-		// filters.push_back(goodVerticesFilter);
-		// filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
-		// filters.push_back(BadChargedCandidateFilter);
-		// filters.push_back(BadPFMuonFilter);
-		// filters.push_back(HBHENoiseFilter);
-		// filters.push_back(HBHEIsoNoiseFilter);
-		// filters.push_back(CSCTightHaloFilter);
-		// filters.push_back(METFilters);
+		filters.push_back(globalSuperTightHalo2016Filter);
+		filters.push_back(goodVerticesFilter);
+		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		filters.push_back(BadChargedCandidateFilter);
+		filters.push_back(BadPFMuonFilter);
+		filters.push_back(HBHENoiseFilter);
+		filters.push_back(HBHEIsoNoiseFilter);
+		filters.push_back(CSCTightHaloFilter);
+		filters.push_back(METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
