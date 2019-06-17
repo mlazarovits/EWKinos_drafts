@@ -178,7 +178,7 @@ inline void efficiency::counter(){
 		tot_entries = 10;
 	}
 	else{
-		tot_entries = (int)aux->fChain->GetEntries();
+		tot_entries = (int)chain->GetEntries();
 	}
 	
 	cout << "total entries: " << tot_entries << endl;
@@ -200,7 +200,7 @@ inline void efficiency::counter(){
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
-		int met_evt = aux->GetEntry(imet);		
+		int met_evt = chain->GetEntry(imet);		
 		if(imet % 10000 == 0){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
