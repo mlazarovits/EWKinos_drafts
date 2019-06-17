@@ -27,7 +27,7 @@ class efficiency
 {
 private:
 	vector<TString> filter_names;
-	vector<Int_t*> filters;
+	vector<Int_t> filters;
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -379,15 +379,15 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		filters.push_back(&globalSuperTightHalo2016Filter);
-		filters.push_back(&goodVerticesFilter);
-		filters.push_back(&EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back(&(Int_t)BadChargedCandidateFilter);
-		filters.push_back(&(Int_t)BadPFMuonFilter);
-		filters.push_back(&(Int_t)HBHENoiseFilter);
-		filters.push_back(&(Int_t)HBHEIsoNoiseFilter);
-		filters.push_back(&CSCTightHaloFilter);
-		filters.push_back(&METFilters);
+		filters.push_back(globalSuperTightHalo2016Filter);
+		filters.push_back(goodVerticesFilter);
+		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		filters.push_back(BadChargedCandidateFilter);
+		filters.push_back(BadPFMuonFilter);
+		filters.push_back(HBHENoiseFilter);
+		filters.push_back(HBHEIsoNoiseFilter);
+		filters.push_back(CSCTightHaloFilter);
+		filters.push_back(METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
