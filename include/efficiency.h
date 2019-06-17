@@ -164,7 +164,7 @@ inline void efficiency::make_metbins(){
 
 inline void efficiency::counter(){
 	// cout << "counter" << endl;
-	int NFilter = (int)filter_names.size();
+	int NFilter = 1 //(int)filter_names.size();
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
@@ -228,7 +228,8 @@ inline void efficiency::counter(){
 	      			// NPass[k][j] += 1.;
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			// NPass[k].push_back(0.0);
-	      			NPass[k][j] += (float)1.*evtWeight;
+	      			NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
+	      			cout << "evt # " << imet << "passed filter " << filter_names[k] << endl;
 	      			
 	      		}	
 	    		if(filter_names[k]==0){ //fail filter
@@ -236,6 +237,7 @@ inline void efficiency::counter(){
 	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
 	      			// NFail[k].push_back(0.0);
 	      			NFail[k][j] += (float)1.*evtWeight;
+	      			cout << "evt # " << imet << "failed filter " << filter_names[k] << endl;
 	    		}
 	    	}	
     	}
@@ -281,11 +283,12 @@ inline void efficiency::make_plot(){
 	Float_t gr_metuncert[metNBins];
 
 	for(int j = 0; j < gr_nfilter; j++){
+		cout << filter_names[j] << endl;
 		for(int i = 0; i < metNBins; i++){
 			gr_eff[j][i] = Neff[j][i];
 			gr_effuncert[j][i] = Neff_uncert[j][i];
 			cout << "total number of events: " << NTot[j] << endl;
-			cout << filter_names[j] << " # passed: " << NPass[j][i] << "; # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] << endl;
+			cout << "# passed: " << NPass[j][i] << "; # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] << endl;
 
 		}
 	}
@@ -338,7 +341,7 @@ inline void efficiency::make_plot(){
 	mg->Draw("ap");
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
-	TLegend* leg2 = new TLegend(0.1,0.4,0.43,0.7);
+	TLegend* leg2 = new TLegend(0.1,0.6,0.43,0.9);
 	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 		leg2->AddEntry(gr[i],filter_names[i].Data());
