@@ -27,7 +27,7 @@ class efficiency
 {
 private:
 	vector<TString> filter_names;
-	vector<Int_t> filters;
+	
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -200,7 +200,19 @@ inline void efficiency::counter(){
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
-		int met_evt = chain->GetEntry(imet);		
+		int met_evt = chain->GetEntry(imet);
+		vector<Int_t> filters;
+		filters.push_back(globalSuperTightHalo2016Filter);
+		filters.push_back(goodVerticesFilter);
+		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		filters.push_back(BadChargedCandidateFilter);
+		filters.push_back(BadPFMuonFilter);
+		filters.push_back(HBHENoiseFilter);
+		filters.push_back(HBHEIsoNoiseFilter);
+		filters.push_back(CSCTightHaloFilter);
+		filters.push_back(METFilters);
+
+
 		if(imet % 10000 == 0){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
@@ -229,6 +241,7 @@ inline void efficiency::counter(){
 	    		continue;
 	  		}
 	  	}
+	  	delete filters;
 	}
 	// cout << "\n efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
@@ -379,15 +392,7 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		filters.push_back(globalSuperTightHalo2016Filter);
-		filters.push_back(goodVerticesFilter);
-		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back(BadChargedCandidateFilter);
-		filters.push_back(BadPFMuonFilter);
-		filters.push_back(HBHENoiseFilter);
-		filters.push_back(HBHEIsoNoiseFilter);
-		filters.push_back(CSCTightHaloFilter);
-		filters.push_back(METFilters);
+
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
