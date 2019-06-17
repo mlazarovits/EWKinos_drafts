@@ -205,7 +205,6 @@ inline void efficiency::counter(){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
-		cout << "\n" << endl;
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
 	    
@@ -216,6 +215,8 @@ inline void efficiency::counter(){
   					// NFail[k].resize(metNBins);
   					// Neff[k].resize(metNBins);
   					// Neff_uncert[k].resize(metNBins);
+
+  					cout << "k: " << k << endl;
 	    			
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
