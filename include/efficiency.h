@@ -27,7 +27,7 @@ class efficiency
 {
 private:
 	vector<TString> filter_names;
-	vector<int> filters;
+	vector<Int_t> filters;
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -166,7 +166,7 @@ inline void efficiency::make_metbins(){
 inline void efficiency::counter(){
 	// cout << "counter" << endl;
 	int NFilter = (int)filters.size();
-	cout << "NFilter " << NFilter << endl;
+	// cout << "NFilter " << NFilter << endl;
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
@@ -424,15 +424,15 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		filters.push_back((int)globalSuperTightHalo2016Filter);
-		filters.push_back((int)goodVerticesFilter);
-		filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back((int)BadChargedCandidateFilter);
-		filters.push_back((int)BadPFMuonFilter);
-		filters.push_back((int)HBHENoiseFilter);
-		filters.push_back((int)HBHEIsoNoiseFilter);
-		filters.push_back((int)CSCTightHaloFilter);
-		filters.push_back((int)METFilters);
+		filters.push_back(globalSuperTightHalo2016Filter);
+		filters.push_back(goodVerticesFilter);
+		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		filters.push_back(BadChargedCandidateFilter);
+		filters.push_back(BadPFMuonFilter);
+		filters.push_back(HBHENoiseFilter);
+		filters.push_back(HBHEIsoNoiseFilter);
+		filters.push_back(CSCTightHaloFilter);
+		filters.push_back(METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
