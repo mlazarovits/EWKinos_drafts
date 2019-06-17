@@ -184,6 +184,7 @@ inline void efficiency::counter(){
 		met_uncerts.push_back( (float)metInterval/2 );
 	    // cout << "point b" << endl;
 	    met_plot.push_back( (float)((met_bins[j+1] + met_bins[j])/2) );
+	    NTot.push_back( 0.0 );
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
@@ -201,9 +202,8 @@ inline void efficiency::counter(){
 	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
 	    		// float tmp = (float)(NTot[j] + 1.*evtWeight);
 	    		// cout << "point 0" << endl;
-	    		NTot.push_back( 0.0 );
 	    		// cout << "point 1" << endl;
-	    		NTot[j] = NTot[j-1] + (float)1.*evtWeight; //total number of events in this met bin
+	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		if(debug) cout << "NTot: " << NTot[j] << endl;
 	    		// cout << "point a" << endl;
 	    		continue;
