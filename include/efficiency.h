@@ -166,7 +166,7 @@ inline void efficiency::make_metbins(){
 inline void efficiency::counter(){
 	// AUX* aux = new AUX(chain);
 	// cout << "counter" << endl;
-	int NFilter = (int)filters.size();
+	int NFilter = (int)filter_names.size();
 	// cout << "NFilter " << NFilter << endl;
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
@@ -277,7 +277,7 @@ inline void efficiency::make_plot(){
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();	
 	// cout << "make_plot" << endl;
-	int gr_nfilter = (int)filters.size();
+	int gr_nfilter = (int)filter_names.size();
 	Float_t gr_eff[gr_nfilter][metNBins];
 	Float_t gr_effuncert[gr_nfilter][metNBins];
 	Float_t gr_met[metNBins];
@@ -299,7 +299,7 @@ inline void efficiency::make_plot(){
 		gr_met[i] = met_plot[i];
 		gr_metuncert[i] = met_uncerts[i];
 	}
-	for(int i = 0; i < (int)filters.size(); i++){
+	for(int i = 0; i < (int)filter_names.size(); i++){
 		gr.push_back(new TGraphErrors(metNBins,gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
 		// cout << "pushback tgraph" << endl;
@@ -344,7 +344,7 @@ inline void efficiency::make_plot(){
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
 	TLegend* leg2 = new TLegend(0.1,0.6,0.43,0.9);
-	for(int i = 0; i < (int)filters.size(); i++){
+	for(int i = 0; i < (int)filter_names.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 		leg2->AddEntry(gr[i],filter_names[i].Data());
 	}
