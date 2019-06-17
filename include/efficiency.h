@@ -210,13 +210,12 @@ inline void efficiency::counter(){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		
-	    		for(int k = 0; k < NFilter; k++){
+	    		for(int k = 1; k < NFilter; k++){
 	    		// 	NPass[k].resize(metNBins);
   					// NFail[k].resize(metNBins);
   					// Neff[k].resize(metNBins);
   					// Neff_uncert[k].resize(metNBins);
 
-  					cout << "filter " << filters[k] << endl;
 	    			
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
