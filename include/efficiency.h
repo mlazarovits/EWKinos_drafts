@@ -217,9 +217,11 @@ inline void efficiency::counter(){
   					// Neff_uncert[k].resize(metNBins);
 
 	    			cout << "k: " << k << endl;
+	    			cout << "filter value: " << filters[k] << endl;
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
 	    				cout << "pass" << endl;
+
 	    			}
 	    			else if(filters[k] == 0){
 	    				NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
