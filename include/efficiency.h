@@ -216,7 +216,7 @@ inline void efficiency::counter(){
   					// Neff[k].resize(metNBins);
   					// Neff_uncert[k].resize(metNBins);
 
-	    			cout << "k: " << k << endl;
+	    			cout << "filter: " << filter_names[k] << endl;
 	    			cout << "filter value: " << filters[k] << endl;
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
@@ -484,7 +484,6 @@ inline void efficiency::Initialize(TString dataset){
 		filters.push_back((int)BadPFMuonFilter);
 		
 		
-		
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
@@ -572,12 +571,11 @@ inline void efficiency::Initialize(TString dataset){
 		filters.push_back((int)CSCTightHaloFilter);
 		filters.push_back((int)METFilters);
 
-
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("goodVerticesFilter");
 		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
 
@@ -622,11 +620,11 @@ inline void efficiency::Initialize(TString dataset){
 		filters.push_back((int)CSCTightHaloFilter);
 		filters.push_back((int)METFilters);
 		
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("HBHENoiseIsoFilter");
-		filter_names.push_back("goodVerticesFilter");
 		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
 		filter_names.push_back("CSCTightHaloFilter");
 		filter_names.push_back("METFilters");
 
