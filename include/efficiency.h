@@ -136,7 +136,7 @@ inline efficiency::efficiency(){
 	metLow = 0;
 	metInterval = (metHigh - metLow)/metNBins;
 
-	debug = false;
+	debug = true;
 
 	// Nentries = -999;
 	// float Npass = -999;
@@ -203,7 +203,8 @@ inline void efficiency::counter(){
 	    		// cout << "point 0" << endl;
 	    		NTot.push_back( 0.0 );
 	    		// cout << "point 1" << endl;
-	    		NTot[j] += (float)1.*evtWeight; //total number of events in this met bin
+	    		NTot[j] = NTot[j-1] + (float)1.*evtWeight; //total number of events in this met bin
+	    		if(debug) cout << "NTot: " << NTot[j] << endl;
 	    		// cout << "point a" << endl;
 	    		continue;
 	    		// cout << "point d" << endl;
@@ -283,8 +284,8 @@ inline void efficiency::make_plot(){
 		for(int i = 0; i < metNBins; i++){
 			gr_eff[j][i] = Neff[j][i];
 			gr_effuncert[j][i] = Neff_uncert[j][i];
-
-			cout << filter_names[j] << " # passed: " << NPass[j][i] << " # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] << endl;
+			cout << "total number of events: " << NTot[j] << endl;
+			cout << filter_names[j] << " # passed: " << NPass[j][i] << "; # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] << endl;
 
 		}
 	}
