@@ -164,7 +164,7 @@ inline void efficiency::make_metbins(){
 }
 
 inline void efficiency::counter(){
-	AUX* aux = new AUX(chain);
+	// AUX* aux = new AUX(chain);
 	// cout << "counter" << endl;
 	int NFilter = (int)filters.size();
 	// cout << "NFilter " << NFilter << endl;
@@ -207,19 +207,19 @@ inline void efficiency::counter(){
 		fflush(stdout);
 		cout << "entry #: " << imet << endl;
 		for(int j = 0; j < metNBins; j++){
-	  		if(aux->met < met_bins[j+1]){
+	  		if(met < met_bins[j+1]){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
-	    			if(aux->filters[k].Data() == 1){
+	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
 	    			}
-	    			else if(aux->filters[k].Data() == 0){
+	    			else if(filters[k] == 0){
 	    				NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
 	    			}
 	    			else{
-	    				cout << filter_names[k] << ": " << aux->filters[k].Data() << endl;
+	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
 	    		}
 	    		cout << "\n" << endl;
@@ -361,19 +361,19 @@ inline void efficiency::make_plot(){
 inline void efficiency::Initialize(TString dataset){
 	// cout << "Initialize" << endl;
 	if(dataset == "dyJetsToLL"){
-		// chain->SetBranchAddress("met",&met,&b_met);
-		// chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		// chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		// chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		// chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		// chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
-		// chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		// chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		// chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		// chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
-		// chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
-		// chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
-		// chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+		chain->SetBranchAddress("met",&met,&b_met);
+		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
+		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
+		chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
+		chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
 		filters.push_back(globalSuperTightHalo2016Filter);
