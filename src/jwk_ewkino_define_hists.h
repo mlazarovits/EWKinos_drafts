@@ -99,11 +99,13 @@ class metHist : public parentHistClass{
 };
 
 void metHist::init_hist( string treeSubDir ){
-
+  setTDRStyle();
   set_subdir(treeSubDir);
   hist1d = new TH1D("metHist","MET", 90, 100, 1000 );
   hist1d->GetXaxis()->SetTitle("MET [GeV]");
   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
+
+
  // std::cout << "In Init from metHist !!" << std::endl;
 
 }
