@@ -220,6 +220,7 @@ inline void efficiency::counter(){
 	    			else{
 	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
+	    			cout << "\n" << endl;
 	    		}
 	    		continue;
 	  		}
