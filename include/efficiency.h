@@ -223,6 +223,8 @@ inline void efficiency::counter(){
 	    			}
 	    		}
 	    		cout << "BadPFMuonFilter " << BadPFMuonFilter << endl;
+	    		cout << "METFilters " << METFilters << endl;
+	    		cout << "globalSuperTightHalo2016Filter " << globalSuperTightHalo2016Filter << endl;
 	    		cout << "\n" << endl;
 	    		continue;
 	  		}
