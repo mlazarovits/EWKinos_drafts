@@ -212,14 +212,14 @@ inline void efficiency::counter(){
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
-	    			if(aux->filters[k] == 1){
+	    			if(aux->filters[k].Data() == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
 	    			}
-	    			else if(aux->filters[k] == 0){
+	    			else if(aux->filters[k].Data() == 0){
 	    				NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
 	    			}
 	    			else{
-	    				cout << filter_names[k] << ": " << aux->filters[k] << endl;
+	    				cout << filter_names[k] << ": " << aux->filters[k].Data() << endl;
 	    			}
 	    		}
 	    		cout << "\n" << endl;
