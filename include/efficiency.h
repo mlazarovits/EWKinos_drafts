@@ -166,6 +166,7 @@ inline void efficiency::make_metbins(){
 inline void efficiency::counter(){
 	// cout << "counter" << endl;
 	int NFilter = (int)filters.size();
+	cout << "NFilter " << NFilter << endl;
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
@@ -173,7 +174,7 @@ inline void efficiency::counter(){
 	int tot_entries;
 
 	if(debug == true){
-		tot_entries = 100;
+		tot_entries = 10;
 	}
 	else{
 		tot_entries = (int)chain->GetEntries();
