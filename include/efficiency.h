@@ -26,7 +26,8 @@ using namespace std;
 class efficiency
 {
 private:
-	vector<TString> filter_names;
+	// vector<TString> filter_names;
+	vector<int> filter_names;
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -224,7 +225,7 @@ inline void efficiency::counter(){
   			
   			// cout << "resized arrays" << endl;
   			for(int j = 0; j < metNBins; j++){
-	    		if(filter_names[k]==1){ //pass filter
+	    		if(filter_names[k] == 1){ //pass filter
 	      			// NPass[k][j] += 1.;
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			// NPass[k].push_back(0.0);
@@ -232,7 +233,7 @@ inline void efficiency::counter(){
 	      			cout << "evt # " << imet << "passed filter " << filter_names[k] << endl;
 	      			
 	      		}	
-	    		if(filter_names[k]==0){ //fail filter
+	    		if(filter_names[k] = =0){ //fail filter
 	      			// NFail[k][j] += 1.;
 	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
 	      			// NFail[k].push_back(0.0);
@@ -284,10 +285,11 @@ inline void efficiency::make_plot(){
 
 	for(int j = 0; j < gr_nfilter; j++){
 		cout << filter_names[j] << endl;
+		cout << "total number of events: " << NTot[j] << endl;
 		for(int i = 0; i < metNBins; i++){
 			gr_eff[j][i] = Neff[j][i];
 			gr_effuncert[j][i] = Neff_uncert[j][i];
-			cout << "total number of events: " << NTot[j] << endl;
+			
 			cout << "# passed: " << NPass[j][i] << "; # failed: " << NFail[j][i] << " in met bin " << met_bins[i] << " to " << met_bins[i+1] << endl;
 
 		}
@@ -389,15 +391,17 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
 		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
-		filter_names.push_back("globalSuperTightHalo2016Filter");
-		filter_names.push_back("goodVerticesFilter");
-		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		filter_names.push_back("BadChargedCandidateFilter");
-		filter_names.push_back("BadPFMuonFilter");
-		filter_names.push_back("HBHENoiseFilter");
-		filter_names.push_back("HBHEIsoNoiseFilter");
-		filter_names.push_back("CSCTightHaloFilter");
-		filter_names.push_back("METFilters");
+		
+		filter_names.push_back((int)globalSuperTightHalo2016Filter);
+		// filter_names.push_back("globalSuperTightHalo2016Filter");
+		// filter_names.push_back("goodVerticesFilter");
+		// filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		// filter_names.push_back("BadChargedCandidateFilter");
+		// filter_names.push_back("BadPFMuonFilter");
+		// filter_names.push_back("HBHENoiseFilter");
+		// filter_names.push_back("HBHEIsoNoiseFilter");
+		// filter_names.push_back("CSCTightHaloFilter");
+		// filter_names.push_back("METFilters");
 
 		TFileCollection *dyJetsToLL= new TFileCollection("dyJetsToLL","dyJetsToLL");
 		dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220245/0000/stopFlatNtuples_*");
