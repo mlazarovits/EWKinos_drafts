@@ -199,18 +199,17 @@ inline void efficiency::counter(){
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
-		int met_evt = chain->GetEntry(imet);
-		// if(imet > 0 && imet < 100) cout << "evtWeight: " << evtWeight << endl;
-		cout << "entry #: " << imet << endl;
+		int met_evt = chain->GetEntry(imet);		
 		if(imet % 10000 == 0){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
+		cout << "entry #: " << imet << endl;
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
-	    		
+	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
 	    		// 	NPass[k].resize(metNBins);
   					// NFail[k].resize(metNBins);
