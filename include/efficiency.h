@@ -211,9 +211,6 @@ inline void efficiency::counter(){
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
-
-	    			cout << "filter: " << filter_names[k] << endl;
-	    			cout << "filter value: " << filters[k] << endl;
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
 	    			}
@@ -224,7 +221,6 @@ inline void efficiency::counter(){
 	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
 	    		}
-
 	    		continue;
 	  		}
 	  	}
@@ -244,17 +240,17 @@ inline void efficiency::counter(){
 			Neff_uncert[k][j] = (float)(sqrt((Neff[k][j]*(1-Neff[k][j]))/NTot[j])*100);
 			// cout << "point b" << endl;
 
-			if(abs(Neff[k][j]) > 10){
-			// cout << "point c" << endl;
+			// if(abs(Neff[k][j]) > 10){
+			// // cout << "point c" << endl;
 
-				std::cout << filter_names[k] << std::endl;
-				std::cout << "met_bin: " << met_bins[j] << std::endl;
-				std::cout << "total number of events in met bin: " << NTot[j] << std::endl;
-				std::cout << "failed events: " << NFail[k][j] << std::endl;
-				std::cout << "fail efficiency: " << Neff[k][j] << std::endl;
-				std::cout << "error: " << Neff_uncert[k][j] << std::endl;
-				std::cout << "\n" << std::endl;
-			}
+			// 	std::cout << filter_names[k] << std::endl;
+			// 	std::cout << "met_bin: " << met_bins[j] << std::endl;
+			// 	std::cout << "total number of events in met bin: " << NTot[j] << std::endl;
+			// 	std::cout << "failed events: " << NFail[k][j] << std::endl;
+			// 	std::cout << "fail efficiency: " << Neff[k][j] << std::endl;
+			// 	std::cout << "error: " << Neff_uncert[k][j] << std::endl;
+			// 	std::cout << "\n" << std::endl;
+			// }
 		}
 	}
 }
