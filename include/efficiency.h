@@ -174,7 +174,7 @@ inline void efficiency::counter(){
 	Neff_uncert.resize(NFilter);
 	int tot_entries;
 
-	if(debug == true){
+	if(debug == false){
 		tot_entries = 10;
 	}
 	else{
@@ -201,7 +201,6 @@ inline void efficiency::counter(){
 
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
-		
 		filters.push_back(globalSuperTightHalo2016Filter);
 		filters.push_back(goodVerticesFilter);
 		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
@@ -217,12 +216,12 @@ inline void efficiency::counter(){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
-		cout << "entry #: " << imet << endl;
+		// cout << "entry #: " << imet << endl;
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
-	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
+	    		// cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
 	    			if(filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
@@ -234,10 +233,10 @@ inline void efficiency::counter(){
 	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
 	    		}
-	    		cout << "BadPFMuonFilter " << BadPFMuonFilter << endl;
-	    		cout << "METFilters " << METFilters << endl;
-	    		cout << "globalSuperTightHalo2016Filter " << globalSuperTightHalo2016Filter << endl;
-	    		cout << "\n" << endl;
+	    		// cout << "BadPFMuonFilter " << BadPFMuonFilter << endl;
+	    		// cout << "METFilters " << METFilters << endl;
+	    		// cout << "globalSuperTightHalo2016Filter " << globalSuperTightHalo2016Filter << endl;
+	    		// cout << "\n" << endl;
 	    		continue;
 	  		}
 	  	}
@@ -284,7 +283,7 @@ inline void efficiency::make_plot(){
 	Float_t gr_metuncert[metNBins];
 
 	for(int j = 0; j < gr_nfilter; j++){
-		cout << filter_names[j] << endl;
+		// cout << filter_names[j] << endl;
 		// cout << "total number of events: " << NTot[j] << endl;
 		for(int i = 0; i < metNBins; i++){
 			gr_eff[j][i] = Neff[j][i];
