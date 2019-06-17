@@ -195,6 +195,7 @@ inline void efficiency::counter(){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
+		cout << "\n" << endl;
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
 	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
@@ -230,15 +231,14 @@ inline void efficiency::counter(){
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			// NPass[k].push_back(0.0);
 	      			NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
-	      			// cout << "evt # " << imet << "passed filter " << filter_names[k] << endl;
-	      			
+	      			cout << "evt # " << imet << " passed filter " << filter_names[k] << endl;
 	      		}	
-	    		if(filters[k] == 0){ //fail filter
+	    		else if(filters[k] == 0){ //fail filter
 	      			// NFail[k][j] += 1.;
 	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
 	      			// NFail[k].push_back(0.0);
-	      			NFail[k][j] += (float)1.*evtWeight;
-	      			// cout << "evt # " << imet << " failed filter " << filter_names[k] << endl;
+	      			NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
+	      			cout << "evt # " << imet << " failed filter " << filter_names[k] << endl;
 	    		}
 	    	}	
     	}
