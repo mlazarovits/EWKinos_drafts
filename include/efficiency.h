@@ -27,7 +27,7 @@ class efficiency
 {
 private:
 	vector<TString> filter_names;
-	
+	vector<Int_t> filters;
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -201,7 +201,7 @@ inline void efficiency::counter(){
 
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
-		vector<Int_t> filters;
+		
 		filters.push_back(globalSuperTightHalo2016Filter);
 		filters.push_back(goodVerticesFilter);
 		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
@@ -241,7 +241,7 @@ inline void efficiency::counter(){
 	    		continue;
 	  		}
 	  	}
-	  	delete filters;
+	  	filters.clear();
 	}
 	// cout << "\n efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
