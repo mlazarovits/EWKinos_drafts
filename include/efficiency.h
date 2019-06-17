@@ -165,7 +165,7 @@ inline void efficiency::make_metbins(){
 
 inline void efficiency::counter(){
 	// cout << "counter" << endl;
-	int NFilter = 3;//(int)filters.size();
+	int NFilter = (int)filters.size();
 	cout << "NFilter " << NFilter << endl;
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
