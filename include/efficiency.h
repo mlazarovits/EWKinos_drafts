@@ -431,12 +431,12 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("*Filter*",1);
 		chain->SetBranchStatus("met",1);
 
-		filters.push_back((int)CSCTightHaloFilter);
-		filters.push_back((int)globalSuperTightHalo2016Filter);
-		filters.push_back((int)goodVerticesFilter);
-		filters.push_back((int)HBHENoiseIsoFilter);
-		filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back((int)BadPFMuonFilter);
+		// filters.push_back((int)CSCTightHaloFilter);
+		// filters.push_back((int)globalSuperTightHalo2016Filter);
+		// filters.push_back((int)goodVerticesFilter);
+		// filters.push_back((int)HBHENoiseIsoFilter);
+		// filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
+		// filters.push_back((int)BadPFMuonFilter);
 		
 		
 		filter_names.push_back("CSCTightHaloFilter");
@@ -476,13 +476,13 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("evtWeight",1);
 
 		
-		filters.push_back((int)globalSuperTightHalo2016Filter);
-		filters.push_back((int)goodVerticesFilter);
-		filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back((int)BadPFMuonFilter);
-		filters.push_back((int)HBHENoiseIsoFilter);
-		filters.push_back((int)CSCTightHaloFilter);
-		filters.push_back((int)METFilters);
+		// filters.push_back((int)globalSuperTightHalo2016Filter);
+		// filters.push_back((int)goodVerticesFilter);
+		// filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
+		// filters.push_back((int)BadPFMuonFilter);
+		// filters.push_back((int)HBHENoiseIsoFilter);
+		// filters.push_back((int)CSCTightHaloFilter);
+		// filters.push_back((int)METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
@@ -518,13 +518,13 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("evtWeight",1);
 
 
-		filters.push_back((int)globalSuperTightHalo2016Filter);
-		filters.push_back((int)goodVerticesFilter);
-		filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back((int)BadPFMuonFilter);
-		filters.push_back((int)HBHENoiseIsoFilter);
-		filters.push_back((int)CSCTightHaloFilter);
-		filters.push_back((int)METFilters);
+		// filters.push_back((int)globalSuperTightHalo2016Filter);
+		// filters.push_back((int)goodVerticesFilter);
+		// filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
+		// filters.push_back((int)BadPFMuonFilter);
+		// filters.push_back((int)HBHENoiseIsoFilter);
+		// filters.push_back((int)CSCTightHaloFilter);
+		// filters.push_back((int)METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
@@ -567,13 +567,13 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("met",1);
 		chain->SetBranchStatus("evtWeight",1);
 		
-		filters.push_back((int)globalSuperTightHalo2016Filter);
-		filters.push_back((int)goodVerticesFilter);
-		filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back((int)BadPFMuonFilter);
-		filters.push_back((int)HBHENoiseIsoFilter);
-		filters.push_back((int)CSCTightHaloFilter);
-		filters.push_back((int)METFilters);
+		// filters.push_back((int)globalSuperTightHalo2016Filter);
+		// filters.push_back((int)goodVerticesFilter);
+		// filters.push_back((int)EcalDeadCellTriggerPrimitiveFilter);
+		// filters.push_back((int)BadPFMuonFilter);
+		// filters.push_back((int)HBHENoiseIsoFilter);
+		// filters.push_back((int)CSCTightHaloFilter);
+		// filters.push_back((int)METFilters);
 		
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
