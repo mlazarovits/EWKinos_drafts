@@ -2,7 +2,7 @@
 #define EFFICIENCY_H
 
 #include <iostream> 
-//#include "AUX.h" //makeclass for stopntuple
+#include "AUX.h" //makeclass for stopntuple
 #include "TLorentzVector.h" 
 #include "TTree.h"
 #include "TFile.h"
@@ -164,6 +164,7 @@ inline void efficiency::make_metbins(){
 }
 
 inline void efficiency::counter(){
+	AUX* aux = new AUX(chain);
 	// cout << "counter" << endl;
 	int NFilter = (int)filters.size();
 	// cout << "NFilter " << NFilter << endl;
@@ -177,7 +178,7 @@ inline void efficiency::counter(){
 		tot_entries = 10;
 	}
 	else{
-		tot_entries = (int)chain->GetEntries();
+		tot_entries = (int)aux->fchain->GetEntries();
 	}
 	
 	cout << "total entries: " << tot_entries << endl;
@@ -199,28 +200,27 @@ inline void efficiency::counter(){
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
-		int met_evt = chain->GetEntry(imet);		
+		int met_evt = aux->GetEntry(imet);		
 		if(imet % 10000 == 0){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
 		fflush(stdout);
 		cout << "entry #: " << imet << endl;
 		for(int j = 0; j < metNBins; j++){
-	  		if(met < met_bins[j+1]){
+	  		if(aux->met < met_bins[j+1]){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
 	    		for(int k = 0; k < NFilter; k++){
-	    			if(filters[k] == 1){
+	    			if(aux->filters[k] == 1){
 	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
 	    			}
-	    			else if(filters[k] == 0){
+	    			else if(aux->filters[k] == 0){
 	    				NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
 	    			}
 	    			else{
-	    				cout << filter_names[k] << ": " << filters[k] << endl;
+	    				cout << filter_names[k] << ": " << aux->filters[k] << endl;
 	    			}
-
 	    		}
 	    		cout << "\n" << endl;
 	    		continue;
@@ -361,30 +361,30 @@ inline void efficiency::make_plot(){
 inline void efficiency::Initialize(TString dataset){
 	// cout << "Initialize" << endl;
 	if(dataset == "dyJetsToLL"){
-		chain->SetBranchAddress("met",&met,&b_met);
-		chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
-		chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
-		chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
-		chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
-		chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
-		chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
-		chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
-		chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
-		chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
-		chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
-		chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
-		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
+		// chain->SetBranchAddress("met",&met,&b_met);
+		// chain->SetBranchAddress("METFilters", &METFilters, &b_METFilters);
+		// chain->SetBranchAddress("CSCTightHaloFilter", &CSCTightHaloFilter, &b_CSCTightHaloFilter);
+		// chain->SetBranchAddress("globalSuperTightHalo2016Filter", &globalSuperTightHalo2016Filter, &b_globalSuperTightHalo2016Filter);
+		// chain->SetBranchAddress("goodVerticesFilter", &goodVerticesFilter, &b_goodVerticesFilter);
+		// chain->SetBranchAddress("ecalBadCalibFilter", &ecalBadCalibFilter, &b_ecalBadCalibFilter);
+		// chain->SetBranchAddress("HBHENoiseIsoFilter", &HBHENoiseIsoFilter, &b_HBHENoiseIsoFilter);
+		// chain->SetBranchAddress("EcalDeadCellTriggerPrimitiveFilter", &EcalDeadCellTriggerPrimitiveFilter, &b_EcalDeadCellTriggerPrimitiveFilter);
+		// chain->SetBranchAddress("BadPFMuonFilter", &BadPFMuonFilter, &b_BadPFMuonFilter);
+		// chain->SetBranchAddress("HBHENoiseFilter", &HBHENoiseFilter, &b_HBHENoiseFilter);
+		// chain->SetBranchAddress("HBHEIsoNoiseFilter", &HBHEIsoNoiseFilter, &b_HBHEIsoNoiseFilter);
+		// chain->SetBranchAddress("BadChargedCandidateFilter", &BadChargedCandidateFilter, &b_BadChargedCandidateFilter);
+		// chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		filters.push_back(globalSuperTightHalo2016Filter);
-		filters.push_back(goodVerticesFilter);
-		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
-		filters.push_back(BadChargedCandidateFilter);
-		filters.push_back(BadPFMuonFilter);
-		filters.push_back(HBHENoiseFilter);
-		filters.push_back(HBHEIsoNoiseFilter);
-		filters.push_back(CSCTightHaloFilter);
-		filters.push_back(METFilters);
+		// filters.push_back(globalSuperTightHalo2016Filter);
+		// filters.push_back(goodVerticesFilter);
+		// filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		// filters.push_back(BadChargedCandidateFilter);
+		// filters.push_back(BadPFMuonFilter);
+		// filters.push_back(HBHENoiseFilter);
+		// filters.push_back(HBHEIsoNoiseFilter);
+		// filters.push_back(CSCTightHaloFilter);
+		// filters.push_back(METFilters);
 
 		filter_names.push_back("globalSuperTightHalo2016Filter");
 		filter_names.push_back("goodVerticesFilter");
