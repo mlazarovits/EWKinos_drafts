@@ -222,6 +222,7 @@ inline void efficiency::counter(){
 	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
 	    		}
+	    		cout << "BadPFMuonFilter " << BadPFMuonFilter << endl;
 	    		cout << "\n" << endl;
 	    		continue;
 	  		}
