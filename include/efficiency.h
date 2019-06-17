@@ -384,7 +384,7 @@ inline void efficiency::Initialize(TString dataset){
 		filters.push_back(&EcalDeadCellTriggerPrimitiveFilter);
 		filters.push_back(&(Int_t)BadChargedCandidateFilter);
 		filters.push_back(&(Int_t)BadPFMuonFilter);
-		filters.push_back(&(Int_t_HBHENoiseFilter);
+		filters.push_back(&(Int_t)HBHENoiseFilter);
 		filters.push_back(&(Int_t)HBHEIsoNoiseFilter);
 		filters.push_back(&CSCTightHaloFilter);
 		filters.push_back(&METFilters);
