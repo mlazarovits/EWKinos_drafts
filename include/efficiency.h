@@ -189,6 +189,15 @@ inline void efficiency::counter(){
 	    NTot.push_back( 0.0 );
 	}
 
+	for(int k = 0; k < NFilter; k++){
+		for(int j = 0; j < metNBins; j++){
+			NPass[k].push_back(0.0);
+			NFail[k].push_back(0.0);
+			Neff[k].push_back(0.0);
+			Neff_uncert[k].push_back(0.0);
+		}
+	}
+
 	for(int imet = 0; imet < tot_entries; imet++){
 		int met_evt = chain->GetEntry(imet);
 		// if(imet > 0 && imet < 100) cout << "evtWeight: " << evtWeight << endl;
@@ -199,50 +208,68 @@ inline void efficiency::counter(){
 		cout << "\n" << endl;
 		for(int j = 0; j < metNBins; j++){
 	  		if(met < met_bins[j+1]){
-	  			// cout << "add to counter if met is in bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
-	    		// NTot[j]+= 1.*evtWeight;
-	    		// met_uncerts[j] = metInterval/2;
-	    		// met_plot[j] = (met_bins[j+1] + met_bins[j])/2;
-	    		// float tmp = (float)(NTot[j] + 1.*evtWeight);
-	    		// cout << "point 0" << endl;
-	    		// cout << "point 1" << endl;
+	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
-	    		// if(debug) cout << "NTot: " << NTot[j] << endl;
-	    		// cout << "point a" << endl;
+	    		
+	    		for(int k = 0; k < NFilter; k++){
+	    		// 	NPass[k].resize(metNBins);
+  					// NFail[k].resize(metNBins);
+  					// Neff[k].resize(metNBins);
+  					// Neff_uncert[k].resize(metNBins);
+	    			
+	    			if(filters[k] == 1){
+	    				NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
+	    			}
+	    			else if(filters[k] == 0){
+	    				NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
+	    			}
+	    		}
+
 	    		continue;
-	    		// cout << "point d" << endl;
 	  		}
 	  	}
-	  	// cout << "filter loop" << endl;	      
-  		for(int k = 0; k < NFilter; k++){
-  			// NPass.push_back(std::vector<float>(metNBins, 0));
-  			// cout << "filter: " << filter_names[k] << endl;
-  			NPass[k].resize(metNBins);
-  			NFail[k].resize(metNBins);
-  			Neff[k].resize(metNBins);
-  			Neff_uncert[k].resize(metNBins);
-  			// NFail.push_back(std::vector<float>(metNBins,0)); 
-  			// Neff.push_back(std::vector<float>(metNBins,0));
-			// Neff_uncert.push_back(std::vector<float>(metNBins,0));
+	  	// cout << "filter loop" << endl;
+
+
+
+
+
+  	// 	for(int k = 0; k < NFilter; k++){
+  	// 		// NPass.push_back(std::vector<float>(metNBins, 0));
+  	// 		// cout << "filter: " << filter_names[k] << endl;
+  	// 		NPass[k].resize(metNBins);
+  	// 		NFail[k].resize(metNBins);
+  	// 		Neff[k].resize(metNBins);
+  	// 		Neff_uncert[k].resize(metNBins);
+
+  	// 		cout << "k: " << k << endl;
+  	// 		// NFail.push_back(std::vector<float>(metNBins,0)); 
+  	// 		// Neff.push_back(std::vector<float>(metNBins,0));
+			// // Neff_uncert.push_back(std::vector<float>(metNBins,0));
   			
-  			// cout << "resized arrays" << endl;
-  			for(int j = 0; j < metNBins; j++){
-	    		if(filters[k] == 1){ //pass filter
-	      			// NPass[k][j] += 1.;
-	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
-	      			// NPass[k].push_back(0.0);
-	      			NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
-	      			cout << "evt # " << imet << " passed filter " << filter_names[k] << endl;
-	      		}	
-	    		else if(filters[k] == 0){ //fail filter
-	      			// NFail[k][j] += 1.;
-	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
-	      			// NFail[k].push_back(0.0);
-	      			NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
-	      			cout << "evt # " << imet << " failed filter " << filter_names[k] << endl;
-	    		}
-	    	}	
-    	}
+  	// 		// cout << "resized arrays" << endl;
+  	// 		for(int j = 0; j < metNBins; j++){
+	  //   		if(filters[k] == 1){ //pass filter
+	  //     			// NPass[k][j] += 1.;
+	  //     			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
+	  //     			// NPass[k].push_back(0.0);
+	  //     			NPass[k][j] = NPass[k][j] + (float)1.*evtWeight;
+	  //     			cout << "evt # " << imet << " passed filter " << filter_names[k] << endl;
+	  //     		}	
+	  //   		else if(filters[k] == 0){ //fail filter
+	  //     			// NFail[k][j] += 1.;
+	  //     			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
+	  //     			// NFail[k].push_back(0.0);
+	  //     			NFail[k][j] = NFail[k][j] + (float)1.*evtWeight;
+	  //     			cout << "evt # " << imet << " failed filter " << filter_names[k] << endl;
+	  //   		}
+	  //   	}	
+   //  	}
+	
+
+
+
+
 	}
 	// cout << "\n efficiency calculation loop" << endl;
 	for(int k = 0; k < NFilter; k++){
