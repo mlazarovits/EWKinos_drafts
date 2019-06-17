@@ -26,8 +26,8 @@ using namespace std;
 class efficiency
 {
 private:
-	// vector<TString> filter_names;
-	vector<int> filter_names;
+	vector<TString> filter_names;
+	vector<int> filters;
 	TString draw_string;
 	TString sample;
 	TChain* chain;
@@ -165,7 +165,7 @@ inline void efficiency::make_metbins(){
 
 inline void efficiency::counter(){
 	// cout << "counter" << endl;
-	int NFilter = (int)filter_names.size();
+	int NFilter = (int)filters.size();
 	NPass.resize(NFilter);
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
@@ -225,7 +225,7 @@ inline void efficiency::counter(){
   			
   			// cout << "resized arrays" << endl;
   			for(int j = 0; j < metNBins; j++){
-	    		if(filter_names[k] == 1){ //pass filter
+	    		if(filters[k] == 1){ //pass filter
 	      			// NPass[k][j] += 1.;
 	      			// NPass[k].push_back( (float)(NPass[j-1] + 1.*evtWeight) );
 	      			// NPass[k].push_back(0.0);
@@ -233,7 +233,7 @@ inline void efficiency::counter(){
 	      			cout << "evt # " << imet << "passed filter " << filter_names[k] << endl;
 	      			
 	      		}	
-	    		if(filter_names[k] = =0){ //fail filter
+	    		if(filters[k] == 0){ //fail filter
 	      			// NFail[k][j] += 1.;
 	      			// NFail[k].push_back( (float)(NFail[j-1] + 1.*evtWeight) );
 	      			// NFail[k].push_back(0.0);
@@ -277,7 +277,7 @@ inline void efficiency::make_plot(){
 	vector<TGraphErrors*> gr;
 	TMultiGraph* mg = new TMultiGraph();	
 	// cout << "make_plot" << endl;
-	int gr_nfilter = (int)filter_names.size();
+	int gr_nfilter = (int)filters.size();
 	Float_t gr_eff[gr_nfilter][metNBins];
 	Float_t gr_effuncert[gr_nfilter][metNBins];
 	Float_t gr_met[metNBins];
@@ -299,7 +299,7 @@ inline void efficiency::make_plot(){
 		gr_met[i] = met_plot[i];
 		gr_metuncert[i] = met_uncerts[i];
 	}
-	for(int i = 0; i < (int)filter_names.size(); i++){
+	for(int i = 0; i < (int)filters.size(); i++){
 		gr.push_back(new TGraphErrors(metNBins,gr_met,gr_eff[i],gr_metuncert,gr_effuncert[i]));
 
 		// cout << "pushback tgraph" << endl;
@@ -344,7 +344,7 @@ inline void efficiency::make_plot(){
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
 
 	TLegend* leg2 = new TLegend(0.1,0.6,0.43,0.9);
-	for(int i = 0; i < (int)filter_names.size(); i++){
+	for(int i = 0; i < (int)filters.size(); i++){
 	// TString tmpstr = Form(gr[i],filter_names[i])
 		leg2->AddEntry(gr[i],filter_names[i].Data());
 	}
@@ -392,16 +392,25 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchAddress("evtWeight", &evtWeight, &b_evtWeight);
 
 		
-		filter_names.push_back((int)globalSuperTightHalo2016Filter);
-		// filter_names.push_back("globalSuperTightHalo2016Filter");
-		// filter_names.push_back("goodVerticesFilter");
-		// filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		// filter_names.push_back("BadChargedCandidateFilter");
-		// filter_names.push_back("BadPFMuonFilter");
-		// filter_names.push_back("HBHENoiseFilter");
-		// filter_names.push_back("HBHEIsoNoiseFilter");
-		// filter_names.push_back("CSCTightHaloFilter");
-		// filter_names.push_back("METFilters");
+		filters.push_back((int)globalSuperTightHalo2016Filter);
+		filters.push_back(goodVerticesFilter);
+		filters.push_back(EcalDeadCellTriggerPrimitiveFilter);
+		filters.push_back(BadChargedCandidateFilter);
+		filters.push_back(BadPFMuonFilter);
+		filters.push_back(HBHENoiseFilter);
+		filters.push_back(HBHEIsoNoiseFilter);
+		filters.push_back(CSCTightHaloFilter);
+		filters.push_back(METFilters);
+
+		filter_names.push_back("globalSuperTightHalo2016Filter");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseFilter");
+		filter_names.push_back("HBHEIsoNoiseFilter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
 
 		TFileCollection *dyJetsToLL= new TFileCollection("dyJetsToLL","dyJetsToLL");
 		dyJetsToLL->Add("/mnt/hadoop/user/uscms01/pnfs/unl.edu/data4/cms/store/user/jaking/Ewkinos/QCD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/crab_DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8RunIIFall17MiniAODv2/190201_220245/0000/stopFlatNtuples_*");
@@ -416,7 +425,6 @@ inline void efficiency::Initialize(TString dataset){
 		chain->AddFileInfoList((TCollection*)dyJetsToLL->GetList());
 		sample = dyJetsToLL->GetName();
 		std::cout << "sample: " << sample << std::endl;
-		// NFilter = (int)filter_names.size();
 	}
 
 
@@ -436,13 +444,13 @@ inline void efficiency::Initialize(TString dataset){
 		chain->SetBranchStatus("*Filter*",1);
 		chain->SetBranchStatus("met",1);
 
-		// filter_names.push_back("goodVerticesFilter");
-		// filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
-		// filter_names.push_back("BadChargedCandidateFilter");
-		// filter_names.push_back("BadPFMuonFilter");
-		// filter_names.push_back("HBHENoiseIsoFilter");
-		// filter_names.push_back("CSCTightHaloFilter");
-		// filter_names.push_back("METFilters");
+		filter_names.push_back("goodVerticesFilter");
+		filter_names.push_back("EcalDeadCellTriggerPrimitiveFilter");
+		filter_names.push_back("BadChargedCandidateFilter");
+		filter_names.push_back("BadPFMuonFilter");
+		filter_names.push_back("HBHENoiseIsoFilter");
+		filter_names.push_back("CSCTightHaloFilter");
+		filter_names.push_back("METFilters");
 
 		//2016 dataset
 		TFileCollection *TChiToWZ = new TFileCollection("TChiToWZ","TChiToWZ");
