@@ -274,7 +274,7 @@ inline void efficiency::counter(){
 
 inline void efficiency::make_plot(){
 	vector<TGraphErrors*> gr;
-	TMultiGraph* mg = new TMultiGraph();	
+	TMultiGraph* mg = new TMultiGraph(sample,sample);	
 	// cout << "make_plot" << endl;
 	int gr_nfilter = (int)filter_names.size();
 	Float_t gr_eff[gr_nfilter][metNBins];

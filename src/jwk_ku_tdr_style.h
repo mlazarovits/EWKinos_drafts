@@ -188,6 +188,20 @@ void fixOverlay() {
 }
 
 void setTDRStyle() {
+
+  TLatex l;
+  l.SetTextFont(132);
+  l.SetNDC();
+  l.SetTextSize(0.035);
+  l.SetTextFont(42);
+  l.DrawLatex(0.47,0.943,"Fermilab TB Nov. 2018 FBK LGAD *Preliminary*");
+  l.SetTextSize(0.04);
+  l.SetTextFont(61);
+  l.DrawLatex(0.16,0.943,"CMS");
+  l.SetTextFont(52);
+  l.DrawLatex(0.23,0.943,"Preliminary");
+
+  
   TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
 
 // For the canvas:
@@ -248,7 +262,7 @@ void setTDRStyle() {
   tdrStyle->SetOptFile(0);
   tdrStyle->SetOptStat(1); // To display the mean and RMS:   SetOptStat("mr");
   tdrStyle->SetStatColor(kWhite);
-  tdrStyle->SetStatFont(22);
+  tdrStyle->SetStatFont(42);
   tdrStyle->SetStatFontSize(0.025);
   tdrStyle->SetStatTextColor(1);
   tdrStyle->SetStatFormat("6.4g");
@@ -268,7 +282,7 @@ void setTDRStyle() {
 // For the Global title:
 
   tdrStyle->SetOptTitle(1);
-  tdrStyle->SetTitleFont(22);
+  tdrStyle->SetTitleFont(42);
   tdrStyle->SetTitleColor(1);
   tdrStyle->SetTitleTextColor(1);
   tdrStyle->SetTitleFillColor(10);
@@ -284,7 +298,7 @@ void setTDRStyle() {
 // For the axis titles:
 
   tdrStyle->SetTitleColor(1, "XYZ");
-  tdrStyle->SetTitleFont(22, "XYZ");
+  tdrStyle->SetTitleFont(42, "XYZ");
   tdrStyle->SetTitleSize(0.06, "XYZ");
   tdrStyle->SetTitleXSize(0.06); // Another way to set the size?  0.02
   tdrStyle->SetTitleYSize(0.06);
@@ -295,7 +309,7 @@ void setTDRStyle() {
 // For the axis labels:
 
   tdrStyle->SetLabelColor(1, "XYZ");
-  tdrStyle->SetLabelFont(22, "XYZ");
+  tdrStyle->SetLabelFont(42, "XYZ");
   tdrStyle->SetLabelOffset(0.007, "XYZ");
   tdrStyle->SetLabelSize(0.06, "XYZ");
 
