@@ -137,7 +137,7 @@ inline efficiency::efficiency(){
 	metLow = 0;
 	metInterval = (metHigh - metLow)/metNBins;
 
-	debug = true;
+	debug = false;
 
 	// Nentries = -999;
 	// float Npass = -999;
@@ -369,8 +369,9 @@ inline void efficiency::make_plot(){
 
 	cv->SaveAs("plots/"+sample+"_filters_eff.pdf");
 
-	TFile* file = new TFile("eff_plot.root","RECREATE");
+	TFile* file = new TFile("/home/t3-ku/mlazarov/CMSSW_10_1_4_patch1/src/EWKinos_drafts/output/eff_plot.root","RECREATE");
 	cv->Write();
+	mg->Write();
 }	
 
 inline void efficiency::Initialize(TString dataset){
