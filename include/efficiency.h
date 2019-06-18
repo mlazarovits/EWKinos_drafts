@@ -174,7 +174,7 @@ inline void efficiency::counter(){
 	Neff_uncert.resize(NFilter);
 	int tot_entries;
 
-	if(debug == false){
+	if(debug == true){
 		tot_entries = 10;
 	}
 	else{
@@ -218,7 +218,7 @@ inline void efficiency::counter(){
 		fflush(stdout);
 		// cout << "entry #: " << imet << endl;
 		for(int j = 0; j < metNBins; j++){
-	  		if(met < met_bins[j+1]){
+	  		if(met > 0 && met < 1000 && met < met_bins[j+1]){
 	    
 	    		NTot[j] = NTot[j] + (float)1.*evtWeight; //total number of events in this met bin
 	    		// cout << "met bin: " << met_bins[j] << " to " << met_bins[j+1] << endl;
