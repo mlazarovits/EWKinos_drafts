@@ -2,7 +2,7 @@
 //  Jack W King III 2019
 //
 
-#include "jwk_ewkino_define_hists.h"
+#include "../include/jwk_ewkino_define_hists.h"
 
 ///-------------- String declarations-------------------------------------------------------------------------
 
