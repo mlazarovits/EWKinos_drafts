@@ -120,7 +120,8 @@ void jwk_ewkino_make_hists(){
   vector<string> wjets_total = load_gFile_WJetsToLnu();
 
   if(gSystem->AccessPathName(SingLeptonTFile.c_str())){
-    gSystem->Exec("rm"+SingLeptonTFile);
+    TString del = "rm"+SingLeptonTFile
+    gSystem->Exec(del);
   }
 
 //--------BackGrounds
