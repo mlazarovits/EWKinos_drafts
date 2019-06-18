@@ -119,10 +119,7 @@ void jwk_ewkino_make_hists(){
   vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
   vector<string> wjets_total = load_gFile_WJetsToLnu();
 
-  if(gSystem->AccessPathName(SingLeptonTFile.c_str())){
-    TString del = "rm"+SingLeptonTFile;
-    gSystem->Exec(del);
-  }
+  TFile::Open(SingLeptonTFile,"RECREATE");
 
 //--------BackGrounds
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_TChiWH_Bkg_SubDir );
