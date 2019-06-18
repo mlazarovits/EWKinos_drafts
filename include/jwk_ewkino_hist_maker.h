@@ -139,8 +139,12 @@ void histMaker::make_hists( string g_Path, vector<string> g_FileVec, string tree
 
   int Nentry = base->fChain->GetEntries();
   for( int entry = 0; entry < Nentry; entry++ ){
-    if( entry % ( std::max( 1, Nentry/20 ) ) == 0 )  cout << "Event " << entry << " | " << Nentry << endl;
+    // if( entry % ( std::max( 1, Nentry/20 ) ) == 0 )  cout << "Event " << entry << " | " << Nentry << endl;
     //if( entry > 1000 ) break;
+      if( entry % 1000000 == 0){
+        fprintf(stdout, "\r Processed %8d events of %8d", entry, Nentry);
+      }
+      fflush(stdout);
     base->GetEntry( entry );
     if( global_cuts( base ) ) continue;
     for( auto histclass : vhistclasses ){ histclass->fill_hist( base ); }
