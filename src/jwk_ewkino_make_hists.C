@@ -119,8 +119,8 @@ void jwk_ewkino_make_hists(){
   vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
   vector<string> wjets_total = load_gFile_WJetsToLnu();
 
-  if(gSystem->AccessPathName(SingLeptonTFile)){
-    TFile* file = TFile::Open(SingLeptonTFile);
+  if(gSystem->AccessPathName(SingLeptonTFile.c_str())){
+    TFile* file = TFile::Open(SingLeptonTFile.c_str());
     file->Delete();
   }
 
