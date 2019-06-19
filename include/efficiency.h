@@ -207,27 +207,27 @@ inline void efficiency::counter(){
 		filters.push_back(BadPFMuonFilter);
 		filters.push_back(CSCTightHaloFilter);
 
-		if(dataset == "dyJetsToLL"){
+		if(sample == "dyJetsToLL"){
 			filters.push_back(METFilters);
 			filters.push_back(BadChargedCandidateFilter);
 			filters.push_back(HBHENoiseFilter);
 			filters.push_back(HBHEIsoNoiseFilter);
 		}
 
-		if(dataset == "TChiToWZ"){
+		if(sample == "TChiToWZ"){
 			filters.push_back(HBHENoiseIsoFilter);
 		}
-		if(dataset == "TChiWH_HToGG"){
+		if(sample == "TChiWH_HToGG"){
 			filters.push_back(HBHENoiseIsoFilter);		
 			filters.push_back(METFilters);
 		}
 
-		if(dataset == "WJetsToLNu"){
+		if(sample == "WJetsToLNu"){
 			filters.push_back(HBHENoiseIsoFilter);
 			filters.push_back(METFilters);
 		}
 
-		if(dataset == "TTJets"){
+		if(sample == "TTJets"){
 			filters.push_back(HBHENoiseIsoFilter);
 			filters.push_back(METFilters);
 		}
