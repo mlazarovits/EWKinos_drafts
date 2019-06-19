@@ -65,13 +65,13 @@ inline std::vector<string> load_gFile_WJetsToLnu(){
 
 const string fall17_TChiWZ = "All_Sig/SMS-TChiWZ_ZToLL_mZMin-0p1_TuneCP2_13TeV-madgraphMLM-pythia8_Fall17.root";
 
-const string SigTree_SMS_200_170 = "SMS_200_170";
+const string SigTree_SMS_200_150 = "SMS_200_150";
 const string SigTree_SMS_200_1 = "SMS_200_1";
-// const string SigTree_SMS_325_175 = "SMS_325_175";
+const string SigTree_SMS_200_197 = "SMS_200_197";
 
-const string fall17_TChiWZ_SMS_200_170_SubDir =  "TChiWZ_SMS_200_170_fall2017";
+const string fall17_TChiWZ_SMS_200_150_SubDir =  "TChiWZ_SMS_200_150_fall2017";
 const string fall17_TChiWZ_SMS_200_1_SubDir =  "TChiWZ_SMS_200_1_fall2017";
-// const string fall17_TChiWZ_SMS_325_175_SubDir =  "TChiWZ_SMS_325_175_fall2017";
+const string fall17_TChiWZ_SMS_200_197_SubDir =  "TChiWZ_SMS_200_197_fall2017";
 
 const string SingLeptonTFile = "/home/t3-ku/mlazarov/CMSSW_10_1_4_patch1/src/EWKinos_drafts/output/KUEwkino_2017_singlelep_hists.root";
 const string g_Path = "/home/t3-ku/crogan/NTUPLES/StopNtuple/";
@@ -89,9 +89,10 @@ inline TFile * makeTFile( string outfile_name ){
   make_subdir( outfile, fall17_TTJetsSingLepTbar_SubDir.c_str() );
   make_subdir( outfile, fall17_TTToSemiLept_SubDir.c_str() );
   make_subdir( outfile, fall17_DYJets_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWZ_SMS_200_170_SubDir.c_str() );
-  make_subdir( outfile, SigTree_SMS_200_1.c_str() );
-  
+  make_subdir( outfile, fall17_TChiWZ_SMS_200_150_SubDir.c_str() );
+  make_subdir( outfile, fall17_TChiWZ_SMS_200_1_SubDir.c_str() );
+  make_subdir( outfile. fall17_TChiWZ_SMS_200_197_SubDir.c_str() );
+
   return outfile;
 }
 //-------------------------------------------------------------------------------------------------------
@@ -127,6 +128,7 @@ void jwk_ewkino_make_hists(){
   vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
   vector<string> wjets_total = load_gFile_WJetsToLnu();
 
+
 //--------BackGrounds
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_TChiWZ_Bkg_SubDir );
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec[0], SingLeptonTFile, fall17_WJetsToLNu100to200_SubDir );
@@ -144,10 +146,9 @@ void jwk_ewkino_make_hists(){
 
 
 //--------Signals
-  run_hist_maker( SigTree_SMS_200_170, fall17_TChiWZ, SingLeptonTFile, fall17_TChiWZ_SMS_200_170_SubDir );
+  run_hist_maker( SigTree_SMS_200_150, fall17_TChiWZ, SingLeptonTFile, fall17_TChiWZ_SMS_200_150_SubDir );
   run_hist_maker( SigTree_SMS_200_1,   fall17_TChiWZ, SingLeptonTFile, fall17_TChiWZ_SMS_200_1_SubDir );
-  // run_hist_maker( SigTree_SMS_325_175, fall17_TChiWZ, TriLeptonTFile, fall17_TChiWZ_SMS_325_175_SubDir );
-  // run_hist_maker( SigTree_SMS_850_1, fall17_TChiWH, SingLeptonTFile, fall17_TChiWH_SMS_850_1_SubDir );
+  run_hist_maker( SigTree_SMS_200_197, fall17_TChiWZ, SingLeptonTFile, fall17_TChiWZ_SMS_200_197_SubDir );
 
 }
 

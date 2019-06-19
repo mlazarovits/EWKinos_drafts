@@ -477,6 +477,7 @@ void RISR_v_PTISR_Cat3_hist::init_hist( string treeSubDir ){
   hist2d = new TH2D("RISR_v_PTISR_Cat3_hist","RISR v PTISR Cat3", g_NX, g_Xmin, g_Xmax, g_NY, g_Ymin, g_Ymax);
   hist2d->GetXaxis()->SetTitle(g_Xname.c_str());
   hist2d->GetYaxis()->SetTitle(g_Yname.c_str());
+  hist2d->SetOption("colz");
  // std::cout << "In Init from testHistTheSecond !!" << std::endl;
 
 }
@@ -512,6 +513,7 @@ void RISR_v_PTISR_Cat2_hist::init_hist( string treeSubDir ){
   hist2d = new TH2D("RISR_v_PTISR_Cat2_hist","RISR_v_PTISR_Cat2_hist", g_NX, g_Xmin, g_Xmax, g_NY, g_Ymin, g_Ymax);
   hist2d->GetXaxis()->SetTitle(g_Xname.c_str());
   hist2d->GetYaxis()->SetTitle(g_Yname.c_str());
+  hist2d->SetOption("colz");
  // std::cout << "In Init from testHistTheSecond !!" << std::endl;
 
 }
@@ -546,6 +548,7 @@ void RISR_v_PTISR_Cat1_hist::init_hist( string treeSubDir ){
   hist2d = new TH2D("RISR_v_PTISR_Cat1_hist","RISR_v_PTISR_Cat1_hist", g_NX, g_Xmin, g_Xmax, g_NY, g_Ymin, g_Ymax);
   hist2d->GetXaxis()->SetTitle(g_Xname.c_str());
   hist2d->GetYaxis()->SetTitle(g_Yname.c_str());
+  hist2d->SetOption("colz");
  // std::cout << "In Init from testHistTheSecond !!" << std::endl;
 
 }
@@ -556,6 +559,41 @@ void RISR_v_PTISR_Cat1_hist::fill_hist( ReducedBase * base ){
 
 }
 //------------------------------------------------------------------------------
+
+////////////////////////Cut Histograms////////////////////////
+//------------------------------------------------------------------------------
+
+class mlHist_tight : public parentHistClass{
+
+  public:
+  void init_hist( string treeSubDir );
+  void fill_hist( ReducedBase* base );
+
+};
+
+void mlHist_tight::init_hist( string treeSubDir ){
+
+  set_subdir(treeSubDir);
+  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
+  hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
+  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
+
+ // std::cout << "In Init from mlHist !!" << std::endl;
+
+}
+
+void mlHist_tight::fill_hist( ReducedBase* base ){
+
+  TLorentzVector * l = add4vecs( *(base->PT_lep), *(base->Eta_lep), *(base->Phi_lep), *(base->M_lep) );
+  if( base->ID_lep == 3 ) hist1d->Fill( l->M(), base->weight);
+}
+
+
+
+
+
+
+
 
 
 
@@ -570,6 +608,10 @@ bool histMaker::global_cuts( ReducedBase * base ){
 
   // if( base->PDGID_lep == 11 || base->PDGID_lep == -11) cut_nlep = false; //electron cut
   // if( base->PDGID_lep == 13 || base->PDGID_lep == -13) cut_nlep = false; //muon cut
+  if( base->ID_lep == 4 ) cut_nlep = false; //loose
+  // if( base->ID_lep == 3 ) cut_nlep = false; //medium
+  // if( base->ID_lep == 2 ) cut_nlep = false; //tight
+  if( base->PT_lep < 200 ) cut_nlep = false; //low pt cut
   
   //std::cout << " nlept " << base->Nlep << std::endl;
   //std::cout << " nlep cut " << cut_nlep << " sfos cut " << cut_sfos << std::endl;
