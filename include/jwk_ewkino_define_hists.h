@@ -566,7 +566,7 @@ bool histMaker::global_cuts( ReducedBase * base ){
 
   bool cut_nlep = true;
 
-  if( base->Nlep == 3 ) cut_nlep = false;
+  if( base->Nlep == 1 ) cut_nlep = false;
   
   //std::cout << " nlept " << base->Nlep << std::endl;
   //std::cout << " nlep cut " << cut_nlep << " sfos cut " << cut_sfos << std::endl;
