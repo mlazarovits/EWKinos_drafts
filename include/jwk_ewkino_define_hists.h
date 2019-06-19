@@ -563,30 +563,30 @@ void RISR_v_PTISR_Cat1_hist::fill_hist( ReducedBase * base ){
 ////////////////////////Cut Histograms////////////////////////
 //------------------------------------------------------------------------------
 
-class mlHist_tight : public parentHistClass{
+// class mlHist_tight : public parentHistClass{
 
-  public:
-  void init_hist( string treeSubDir );
-  void fill_hist( ReducedBase* base );
+//   public:
+//   void init_hist( string treeSubDir );
+//   void fill_hist( ReducedBase* base );
 
-};
+// };
 
-void mlHist_tight::init_hist( string treeSubDir ){
+// void mlHist_tight::init_hist( string treeSubDir ){
 
-  set_subdir(treeSubDir);
-  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
-  hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
-  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
+//   set_subdir(treeSubDir);
+//   hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
+//   hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
+//   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
 
- // std::cout << "In Init from mlHist !!" << std::endl;
+//  // std::cout << "In Init from mlHist !!" << std::endl;
 
-}
+// }
 
-void mlHist_tight::fill_hist( ReducedBase* base ){
+// void mlHist_tight::fill_hist( ReducedBase* base ){
 
-  TLorentzVector * l = add4vecs( *(base->PT_lep), *(base->Eta_lep), *(base->Phi_lep), *(base->M_lep) );
-  if( base->ID_lep == 3 ) hist1d->Fill( l->M(), base->weight);
-}
+//   TLorentzVector * l = add4vecs( *(base->PT_lep), *(base->Eta_lep), *(base->Phi_lep), *(base->M_lep) );
+//   if( base->ID_lep == 3 ) hist1d->Fill( l->M(), base->weight);
+// }
 
 
 
