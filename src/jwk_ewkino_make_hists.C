@@ -87,7 +87,9 @@ inline TFile * makeTFile( string outfile_name ){
   make_subdir( outfile, fall17_TTJetsToLNu_SubDir.c_str() );
   make_subdir( outfile, fall17_TTJetsSingLepT_SubDir.c_str() );
   make_subdir( outfile, fall17_TTJetsSingLepTbar_SubDir.c_str() );
-  make_subdir( outfile, fall17_TChiWH_SMS_850_1_SubDir.c_str() );
+  make_subdir( outfile, fall17_TTToSemiLept_SubDir.c_str() );
+  make_subdir( outfile, fall17_DYJets_SubDir.c_str() );
+  make_subdir( outfile, fall17_TChiWZ_SMS_850_1_SubDir.c_str() );
   return outfile;
 }
 //-------------------------------------------------------------------------------------------------------
