@@ -608,10 +608,10 @@ bool histMaker::global_cuts( ReducedBase * base ){
 
   // if( base->PDGID_lep == 11 || base->PDGID_lep == -11) cut_nlep = false; //electron cut
   // if( base->PDGID_lep == 13 || base->PDGID_lep == -13) cut_nlep = false; //muon cut
-  if( base->ID_lep == 4 ) cut_nlep = false; //loose
+  // if( base->ID_lep == 4 ) cut_nlep = false; //loose
   // if( base->ID_lep == 3 ) cut_nlep = false; //medium
   // if( base->ID_lep == 2 ) cut_nlep = false; //tight
-  if( base->PT_lep < 200 ) cut_nlep = false; //low pt cut
+  // if( base->PT_lep < 200 ) cut_nlep = false; //low pt cut
   
   //std::cout << " nlept " << base->Nlep << std::endl;
   //std::cout << " nlep cut " << cut_nlep << " sfos cut " << cut_sfos << std::endl;
