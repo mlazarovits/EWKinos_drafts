@@ -129,7 +129,7 @@ void mlHist::init_hist( string treeSubDir ){
   hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
   hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
- // std::cout << "In Init from mlllHist !!" << std::endl;
+ // std::cout << "In Init from mlHist !!" << std::endl;
 
 }
 
@@ -257,7 +257,7 @@ void dphiCMIHist_Cat1::init_hist( string treeSubDir ){
 
 void dphiCMIHist_Cat1::fill_hist( ReducedBase* base ){
 
-  hist1d->Fill(base->PTISR->at(0), base->weight);
+  hist1d->Fill(base->dphiCMI->at(0), base->weight);
 
 }
 //----------------------------------------------------------------------------
@@ -353,7 +353,7 @@ void dphiCMIHist_Cat2::init_hist( string treeSubDir ){
 
 void dphiCMIHist_Cat2::fill_hist( ReducedBase* base ){
 
-  hist1d->Fill(base->PTISR->at(1), base->weight);
+  hist1d->Fill(base->dphiCMI->at(1), base->weight);
 
 }
 //----------------------------------------------------------------------------
@@ -449,7 +449,7 @@ void dphiCMIHist_Cat3::init_hist( string treeSubDir ){
 
 void dphiCMIHist_Cat3::fill_hist( ReducedBase* base ){
 
-  hist1d->Fill(base->PTISR->at(2), base->weight);
+  hist1d->Fill(base->dphiCMI->at(2), base->weight);
 
 }
 //----------------------------------------------------------------------------
@@ -567,6 +567,9 @@ bool histMaker::global_cuts( ReducedBase * base ){
   bool cut_nlep = true;
 
   if( base->Nlep == 1 ) cut_nlep = false;
+
+  // if( base->PDGID_lep == 11 || base->PDGID_lep == -11) cut_nlep = false; //electron cut
+  // if( base->PDGID_lep == 13 || base->PDGID_lep == -13) cut_nlep = false; //muon cut
   
   //std::cout << " nlept " << base->Nlep << std::endl;
   //std::cout << " nlep cut " << cut_nlep << " sfos cut " << cut_sfos << std::endl;

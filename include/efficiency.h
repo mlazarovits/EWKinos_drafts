@@ -339,8 +339,9 @@ inline void efficiency::make_plot(){
 	}	
 	// cv->SetTopMargin(0.09);
 	cv->SetGrid();
-	mg->Draw("ap");
+	mg->Draw("AP");
 	mg->SetTitle(sample+" Filter Efficiencies; met (GeV); fail efficiency %");
+	mg->GetYaxis()->SetLimits(0.0,0.15)
 
 	TLegend* leg2 = new TLegend(0.1,0.6,0.43,0.9);
 	for(int i = 0; i < (int)filter_names.size(); i++){
@@ -349,7 +350,7 @@ inline void efficiency::make_plot(){
 	}
 	// leg2->SetTextSize(0.033);
 	leg2->SetFillColor(0);
-	// leg2->SetFillStyle(0); //transparent
+	leg2->SetFillStyle(0); //transparent
 	leg2->Draw("same");
 
 	cv->Update();
