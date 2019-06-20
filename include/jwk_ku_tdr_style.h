@@ -192,9 +192,6 @@ void setTDRStyle() {
   TLatex l;
   l.SetTextFont(132);
   l.SetNDC();
-  l.SetTextSize(0.035);
-  l.SetTextFont(42);
-  l.DrawLatex(0.47,0.943,"Fermilab TB Nov. 2018 FBK LGAD *Preliminary*");
   l.SetTextSize(0.04);
   l.SetTextFont(61);
   l.DrawLatex(0.16,0.943,"CMS");
