@@ -71,6 +71,8 @@ parentHistClass::parentHistClass(){
 
   subdir = "";
 
+  gPad->SetMargin(0.1,0.1,0.1,0.1);
+
 }
 
 parentHistClass::~parentHistClass(){
