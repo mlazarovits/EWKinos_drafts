@@ -100,7 +100,8 @@ class metHist : public parentHistClass{
 
 void metHist::init_hist( string treeSubDir ){
   set_subdir(treeSubDir);
-  hist1d = new TH1D("metHist","MET", 90, 100, 1000 );
+  // hist1d = new TH1D("metHist","MET", 90, 100, 1000 );
+  hist1d = new TH1D("metHist","MET", 100, 0, 1000 );
   hist1d->GetXaxis()->SetTitle("MET [GeV]");
   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
 
@@ -126,9 +127,9 @@ class mlHist : public parentHistClass{
 void mlHist::init_hist( string treeSubDir ){
 
   set_subdir(treeSubDir);
-  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 2);
+  hist1d = new TH1D("mlHist","Single Lepton Mass", 20, 0, 2);
   hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
-  hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
+  hist1d->GetYaxis()->SetTitle("Events Per 0.1 GeV Bin");
  // std::cout << "In Init from mlHist !!" << std::endl;
 
 }

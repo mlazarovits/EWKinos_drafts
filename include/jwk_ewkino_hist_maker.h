@@ -144,8 +144,8 @@ void histMaker::make_hists( string g_Path, vector<string> g_FileVec, string tree
   for( int entry = 0; entry < Nentry; entry += skip){
     // if( entry % ( std::max( 1, Nentry/20 ) ) == 0 )  cout << "Event " << entry << " | " << Nentry << endl;
     //if( entry > 1000 ) break;
-      if( entry % 1000 == 0){
-        fprintf(stdout, "\r Processed %8d events of %8d", entry, Nentry);
+      if( entry % 100 == 0){
+        fprintf(stdout, "\r Processed %8d of %8d events", entry, Nentry);
       }
       fflush(stdout);
     base->GetEntry( entry );
