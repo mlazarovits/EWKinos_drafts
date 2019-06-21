@@ -128,7 +128,7 @@ void jwk_ewkino_make_hists(){
   vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
   vector<string> wjets_total = load_gFile_WJetsToLnu();
   histMaker hist_maker;
-  hist_maker.skip = 10;
+  hist_maker.skip = 10000;
 
   TFile* file = new TFile( SingLeptonTFile.c_str(), "RECREATE" );
 
