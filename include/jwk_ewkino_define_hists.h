@@ -126,7 +126,7 @@ class mlHist : public parentHistClass{
 void mlHist::init_hist( string treeSubDir ){
 
   set_subdir(treeSubDir);
-  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 200 );
+  hist1d = new TH1D("mlHist","Single Lepton Mass", 200, 0, 2);
   hist1d->GetXaxis()->SetTitle("Single Lepton Mass [GeV]");
   hist1d->GetYaxis()->SetTitle("Events Per 10 GeV Bin");
  // std::cout << "In Init from mlHist !!" << std::endl;

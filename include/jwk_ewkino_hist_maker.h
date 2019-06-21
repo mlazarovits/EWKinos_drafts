@@ -120,6 +120,7 @@ class histMaker{
 	void make_hists( string g_Path, vector<string> g_FileVec, string treeName,  TFile * outfile, string treeSubDir );
   void make_hists( string g_Path, string g_FileName,        string treeName,  TFile * outfile, string treeSubDir );
 
+  int skip;
 };
 
 void histMaker::make_hists( string g_Path, string g_FileName, string treeName,  TFile * outfile, string treeSubDir ){
@@ -140,7 +141,7 @@ void histMaker::make_hists( string g_Path, vector<string> g_FileVec, string tree
   ReducedBase * base = new ReducedBase( chain );
 
   int Nentry = base->fChain->GetEntries();
-  for( int entry = 0; entry < Nentry; entry++ ){
+  for( int entry = 0; entry < Nentry; entry += skip){
     // if( entry % ( std::max( 1, Nentry/20 ) ) == 0 )  cout << "Event " << entry << " | " << Nentry << endl;
     //if( entry > 1000 ) break;
       if( entry % 1000000 == 0){

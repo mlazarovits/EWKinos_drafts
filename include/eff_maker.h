@@ -8,6 +8,11 @@ public:
   	void make_plots( string g_Path, string g_FileName, string treeName, TFile * outfile, string treeSubDir );
   	void counter(AUX* aux);
 
+  	bool debug; 
+
+	std::vector<string> filter_names;
+	vector<Int_t> filters;
+
   	std::vector<std::vector<float>> NPass;
 	std::vector<std::vector<float>> NFail;
 	std::vector<std::vector<float>> Neff;
@@ -28,7 +33,9 @@ void make_plots( string g_Path, vector<string> g_FileVec, string treeName,  TFil
 
 	}
 }
-inline void eff_maker::counter(AUX* aux){
+
+
+void eff_maker::counter(AUX* aux){
 	// AUX* aux = new AUX(chain);
 	// cout << "counter" << endl;
 	int NFilter = (int)filter_names.size();
@@ -38,6 +45,8 @@ inline void eff_maker::counter(AUX* aux){
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
 	int tot_entries;
+
+	debug = false;
 
 	if(debug == true){
 		tot_entries = 10;
@@ -65,9 +74,7 @@ inline void eff_maker::counter(AUX* aux){
 	}
 
 	for(int imet = 0; imet < tot_entries; imet++){
-		int met_evt = chain->GetEntry(imet);
-
-
+		int met_evt = aux->GetEntry(imet);
 		if(imet % 10000 == 0){
 			fprintf(stdout, "\r Counted events: %8d of %8d ",imet, tot_entries);
 		}
@@ -89,10 +96,6 @@ inline void eff_maker::counter(AUX* aux){
 	    				cout << filter_names[k] << ": " << filters[k] << endl;
 	    			}
 	    		}
-	    		// cout << "BadPFMuonFilter " << BadPFMuonFilter << endl;
-	    		// cout << "METFilters " << METFilters << endl;
-	    		// cout << "globalSuperTightHalo2016Filter " << globalSuperTightHalo2016Filter << endl;
-	    		// cout << "\n" << endl;
 	    		continue;
 	  		}
 	  	}
