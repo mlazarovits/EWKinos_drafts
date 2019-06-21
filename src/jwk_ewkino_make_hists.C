@@ -127,7 +127,8 @@ void run_hist_maker( string treename, string g_FileName, string outfile_name, st
 void jwk_ewkino_make_hists(){
   vector<string> bkg_vec = load_gFileVec_TChiWZ_Bkg();
   vector<string> wjets_total = load_gFile_WJetsToLnu();
-  histMaker.skip = 1000;
+  histMaker hist_maker
+  hist_maker.skip = 1000;
 
 //--------BackGrounds
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_TChiWZ_Bkg_SubDir );
