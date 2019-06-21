@@ -130,7 +130,6 @@ void jwk_ewkino_make_hists(){
   histMaker hist_maker;
   hist_maker.skip = 10000;
 
-  TFile* file = new TFile( SingLeptonTFile.c_str(), "RECREATE" );
 
 //--------BackGrounds
   run_hist_maker( BkgTree_KUAnalysis, bkg_vec,    SingLeptonTFile, fall17_TChiWZ_Bkg_SubDir );
