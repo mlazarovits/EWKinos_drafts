@@ -1,10 +1,10 @@
-#define Events_cxx
-#include "Events.h"
+#define prod2016MC_reducedNANO_Triggers_cxx
+#include "prod2016MC_reducedNANO_Triggers.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 
-void Events::Loop()
+void prod2016MC_reducedNANO_Triggers::Loop()
 {
 //   In a ROOT session, you can do:
 //      root> .L Events.C

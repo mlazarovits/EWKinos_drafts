@@ -884,6 +884,13 @@ void AUX::Init(TTree *tree)
    fChain->SetBranchAddress("genjetsLVec", &genjetsLVec, &b_genjetsLVec);
    fChain->SetBranchAddress("loose_isoTrksLVec", &loose_isoTrksLVec, &b_loose_isoTrksLVec);
    Notify();
+
+
+   fChain->SetBranchStatus("*",0);
+   fChain->SetBranchStatus("*",0);
+   fChain->SetBranchStatus("*Filter*",1);
+   fChain->SetBranchStatus("met",1);
+
 }
 
 Bool_t AUX::Notify()

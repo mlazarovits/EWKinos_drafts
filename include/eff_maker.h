@@ -35,7 +35,7 @@ void make_plots( string g_Path, vector<string> g_FileVec, string treeName,  TFil
 }
 
 
-void eff_maker::counter(AUX* aux){
+void eff_maker::counter(AUX* aux, std::vector<int> filters){
 	// AUX* aux = new AUX(chain);
 	// cout << "counter" << endl;
 	int NFilter = (int)filter_names.size();
@@ -44,15 +44,14 @@ void eff_maker::counter(AUX* aux){
 	NFail.resize(NFilter);
 	Neff.resize(NFilter);
 	Neff_uncert.resize(NFilter);
-	int tot_entries;
 
 	debug = false;
 
 	if(debug == true){
-		tot_entries = 10;
+		int tot_entries = 10;
 	}
 	else{
-		tot_entries = (int)chain->GetEntries();
+		int tot_entries = (int)aux->fChain->GetEntries();
 	}
 	
 	cout << "total entries: " << tot_entries << endl;
